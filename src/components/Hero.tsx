@@ -1,4 +1,4 @@
-import { Code2, Sparkles } from 'lucide-react';
+import { Code2, Sparkles } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -10,7 +10,7 @@ export default function Hero() {
         <div className="text-center space-y-8">
           <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 text-sm text-blue-300">
             <Sparkles className="w-4 h-4" />
-            <span>Professional Web Development Services</span>
+            <span>FC Web Development Services</span>
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
@@ -21,8 +21,8 @@ export default function Hero() {
           </h1>
 
           <p className="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
-            Clean, modern websites built fast with clear pricing.
-            Perfect for small businesses, creatives, and local shops.
+            Clean, modern websites built fast with clear pricing. Perfect for
+            small businesses, creatives, and local shops.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
@@ -31,7 +31,9 @@ export default function Hero() {
               className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg font-semibold text-lg hover:shadow-xl hover:shadow-blue-500/50 transition-all duration-300 hover:scale-105"
             >
               View Pricing
-              <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</span>
+              <span className="inline-block ml-2 group-hover:translate-x-1 transition-transform">
+                →
+              </span>
             </a>
             <a
               href="#contact"
