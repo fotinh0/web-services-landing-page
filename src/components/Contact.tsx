@@ -19,7 +19,7 @@ export default function Contact() {
             <div className="inline-flex p-4 bg-blue-500/10 rounded-full mb-4">
               <Mail className="w-8 h-8 text-blue-400" />
             </div>
-            <h3 className="font-semibold mb-2">Email Us</h3>
+            <h3 className="font-semibold mb-2">Email</h3>
             <h5 className="mb-2">foti.coding@gmail.com</h5>
             <p className="text-slate-400 text-sm">
               Get a response within 24 hours
@@ -45,7 +45,7 @@ export default function Contact() {
           </div> */}
         </div>
 
-        <div className="bg-gradient-to-br from-blue-600 to-cyan-600 rounded-2xl p-8 md:p-12 text-center shadow-2xl">
+        {/* <div className="bg-gradient-to-br from-blue-600 to-cyan-600 rounded-2xl p-8 md:p-12 text-center shadow-2xl">
           <h3 className="text-3xl font-bold mb-4">Start Your Project Today</h3>
           <p className="text-blue-50 mb-8 text-lg">
             Quick turnaround, professional results, and pricing that makes
@@ -65,7 +65,7 @@ export default function Contact() {
               View Pricing Again
             </a>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

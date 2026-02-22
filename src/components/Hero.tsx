@@ -1,4 +1,5 @@
 import { Code2, Sparkles } from "lucide-react";
+import scrollToSection from "../util/scrollToSection";
 
 export default function Hero() {
   return (
@@ -27,7 +28,7 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
             <a
-              href="#pricing"
+              onClick={() => scrollToSection("pricing")}
               className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg font-semibold text-lg hover:shadow-xl hover:shadow-blue-500/50 transition-all duration-300 hover:scale-105"
             >
               View Pricing
@@ -36,7 +37,7 @@ export default function Hero() {
               </span>
             </a>
             <a
-              href="#contact"
+              onClick={() => scrollToSection("contact")}
               className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg font-semibold text-lg hover:bg-white/20 transition-all duration-300"
             >
               Get Started

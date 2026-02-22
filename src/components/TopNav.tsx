@@ -1,15 +1,8 @@
 import { useState } from "react";
+import scrollToSection from "../util/scrollToSection";
 
 export default function TopNav() {
   const [isOpen, setIsOpen] = useState(false);
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsOpen(false);
-    }
-  };
 
   return (
     <nav className="bg-slate-900 top-0 z-50">
