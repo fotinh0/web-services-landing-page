@@ -3,38 +3,23 @@ import { ExternalLink, Award } from "lucide-react";
 const projects = [
   {
     id: 1,
-    title: "FA Euro",
-    category: "Youth Soccer Club Website",
+    title: "Destination Wedding",
+    category: "Wedding Website",
     description:
-      "Dynamic website for a youth soccer club featuring team rosters, game schedules, registration system, and parent communication hub.",
-    image: "assets/FAEuro.png",
+      "Romantic destination wedding website for a coastal celebration in Albania, with the event itinerary, travel guidance, RSVP details, and a curated guest gallery.",
+    image: "assets/wedding.png",
     features: [
-      "Team Management",
-      "Game Schedule",
-      "Player Registration",
-      "Wix Studio",
+      "Weekend Itinerary",
+      "Travel & Stay Info",
+      "RSVP Form",
+      "Photo Gallery",
+      "Guest FAQs",
+      "Responsive Design",
     ],
-    link: "https://www.faeuro.com/",
-    imageFit: "",
+    link: "https://weddingfi.netlify.app/",
   },
   {
     id: 2,
-    title: "PCI Media Inc Nonprofit Website",
-    category: "Nonprofit Organization Website",
-    description:
-      "Professional website for a nonprofit organization built on WordPress, featuring mission information, donation integration, volunteer opportunities, and impact stories.",
-    image: "assets/PCIMediaInc.png",
-    features: [
-      "Donation Integration",
-      "Volunteer Portal",
-      "Impact Stories",
-      "Mobile Responsive",
-      "WordPress",
-    ],
-    link: "https://risingimpactglobal.org/",
-  },
-  {
-    id: 3,
     title: "Personal Portfolio Website",
     category: "Portfolio Website",
     description:
@@ -48,6 +33,33 @@ const projects = [
     ],
     link: "https://foticeci.com",
   },
+  // {
+  //   id: 3,
+  //   title: "FA Euro",
+  //   category: "Youth Soccer Club Website",
+  //   description:
+  //     "Dynamic website for a youth soccer club featuring team rosters, game schedules, registration system, and parent communication hub.",
+  //   image: "assets/FAEuro.png",
+  //   features: ["Blogs & News Page", "Player Registration", "Wix Studio"],
+  //   link: "https://www.faeuro.com/",
+  //   imageFit: "",
+  // },
+  // {
+  //   id: 4,
+  //   title: "PCI Media Inc Nonprofit Website",
+  //   category: "Nonprofit Organization Website",
+  //   description:
+  //     "Professional website for a nonprofit organization built on WordPress, featuring mission information, donation integration, volunteer opportunities, and impact stories.",
+  //   image: "assets/PCIMediaInc.png",
+  //   features: [
+  //     "Donation Integration",
+  //     "Volunteer Portal",
+  //     "Impact Stories",
+  //     "Mobile Responsive",
+  //     "WordPress",
+  //   ],
+  //   link: "https://risingimpactglobal.org/",
+  // },
   // {
   //   id: 4,
   //   title: "Local Coffee Roastery",
@@ -122,8 +134,8 @@ export default function Projects() {
             Projects
           </h2>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            See the beautiful websites we've previously worked on for businesses
-            and creatives.
+            See the beautiful websites I have previously worked on for
+            businesses and creatives.
           </p>
         </div>
 

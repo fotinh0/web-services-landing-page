@@ -4,11 +4,10 @@ import PricingCard from "./PricingCard";
 const pricingPlans = [
   {
     title: "Starter Website",
-    price: "$800",
+    price: "$500",
     description: "Simple, professional online presence",
     icon: <Globe className="w-6 h-6 text-blue-600" />,
     features: [
-      { text: "Wix Studio setup" },
       { text: "Up to 4 pages" },
       { text: "Mobile-optimized design" },
       { text: "Contact / inquiry form" },
@@ -20,7 +19,7 @@ const pricingPlans = [
   },
   {
     title: "Professional Website",
-    price: "$1,200",
+    price: "$800",
     description: "For creatives showcasing their work",
     icon: <Star className="w-6 h-6 text-white" />,
     features: [
@@ -37,7 +36,7 @@ const pricingPlans = [
   },
   {
     title: "Local Shop Website",
-    price: "$1,750",
+    price: "$1,500",
     description: "For florists, boutiques & local shops",
     icon: <ShoppingBag className="w-6 h-6 text-blue-600" />,
     features: [
@@ -79,7 +78,7 @@ export default function Pricing() {
 
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto">
           <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-            <span className="text-2xl">📌</span>
+            {/* <span className="text-2xl">📌</span> */}
             Important Notes
           </h3>
           <ul className="space-y-4 text-slate-700">
