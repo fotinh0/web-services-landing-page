@@ -1,10 +1,8 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { reactRouter } from '@react-router/dev/vite';
 
-// https://vitejs.dev/config/
+// React Router's plugin replaces @vitejs/plugin-react (it includes React Fast Refresh).
+// Routing and pre-rendering are set in react-router.config.ts.
 export default defineConfig({
-  plugins: [react()],
-  optimizeDeps: {
-    exclude: ['lucide-react'],
-  },
+  plugins: [reactRouter()],
 });

@@ -1,27 +1,48 @@
+import { useEffect, useState } from "react";
+import { FOOTER, NAV_LINKS, SITE } from "../content/site";
+
+/** Footer, with the signature detail: the page's real load time. */
 export default function Footer() {
+  const [loadTime, setLoadTime] = useState<string>("");
+
+  useEffect(() => {
+    function measure() {
+      const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+      const ms = nav && nav.loadEventEnd > 0 ? nav.loadEventEnd : performance.now();
+      setLoadTime((ms / 1000).toFixed(1));
+    }
+    if (document.readyState === "complete") {
+      // loadEventEnd is filled in just after the load event finishes.
+      const id = window.setTimeout(measure, 0);
+      return () => window.clearTimeout(id);
+    }
+    window.addEventListener("load", measure, { once: true });
+    return () => window.removeEventListener("load", measure);
+  }, []);
+
   return (
-    <footer className="bg-slate-950 text-slate-400 py-8 border-t border-slate-800">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-center">
-            © {new Date().getFullYear()} FC Web Development Services. <br />{" "}
-            Built with care for local businesses.
+    <footer className="fc-footer">
+      <div className="fc-wrap fc-footer__grid">
+        <div>
+          <p className="fc-footer__name">{SITE.name}</p>
+          <p>{FOOTER.line}</p>
+          <p>
+            {SITE.location ? `${SITE.location} · ` : ""}
+            <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
           </p>
-          <div className="flex gap-6">
-            <a
-              href="#pricing"
-              className="text-sm hover:text-white transition-colors"
-            >
-              Pricing
-            </a>
-            <a
-              href="#contact"
-              className="text-sm hover:text-white transition-colors"
-            >
-              Contact
-            </a>
-          </div>
         </div>
+        <nav aria-label="Footer" className="fc-footer__links">
+          {NAV_LINKS.map((l) => (
+            <a key={l.id} href={`/#${l.id}`}>
+              {l.label}
+            </a>
+          ))}
+          <a href="/#start">Start a project</a>
+        </nav>
+      </div>
+      <div className="fc-wrap fc-footer__base">
+        <p>{FOOTER.credit}</p>
+        {loadTime && <p className="fc-footer__speed">This page loaded in {loadTime}s</p>}
       </div>
     </footer>
   );

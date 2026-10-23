@@ -1,194 +1,61 @@
-import { ExternalLink, Award } from "lucide-react";
+import type { CSSProperties } from "react";
+import { Link } from "react-router";
+import { WORK } from "../content/site";
 
-const projects = [
-  {
-    id: 1,
-    title: "Destination Wedding",
-    category: "Wedding Website",
-    description:
-      "Romantic destination wedding website for a coastal celebration in Albania, with the event itinerary, travel guidance, RSVP details, and a curated guest gallery.",
-    image: "assets/wedding.png",
-    features: [
-      "Weekend Itinerary",
-      "Travel & Stay Info",
-      "RSVP Form",
-      "Photo Gallery",
-      "Guest FAQs",
-      "Responsive Design",
-    ],
-    link: "https://weddingfi.netlify.app/",
-  },
-  {
-    id: 2,
-    title: "Personal Portfolio Website",
-    category: "Portfolio Website",
-    description:
-      "Modern portfolio website showcasing projects, skills, and experience with a clean design and smooth animations.",
-    image: "assets/portfolio.png",
-    features: [
-      "Project Showcase",
-      "Responsive Design",
-      "Smooth Animations",
-      "Contact Form",
-    ],
-    link: "https://foticeci.com",
-  },
-  // {
-  //   id: 3,
-  //   title: "FA Euro",
-  //   category: "Youth Soccer Club Website",
-  //   description:
-  //     "Dynamic website for a youth soccer club featuring team rosters, game schedules, registration system, and parent communication hub.",
-  //   image: "assets/FAEuro.png",
-  //   features: ["Blogs & News Page", "Player Registration", "Wix Studio"],
-  //   link: "https://www.faeuro.com/",
-  //   imageFit: "",
-  // },
-  // {
-  //   id: 4,
-  //   title: "PCI Media Inc Nonprofit Website",
-  //   category: "Nonprofit Organization Website",
-  //   description:
-  //     "Professional website for a nonprofit organization built on WordPress, featuring mission information, donation integration, volunteer opportunities, and impact stories.",
-  //   image: "assets/PCIMediaInc.png",
-  //   features: [
-  //     "Donation Integration",
-  //     "Volunteer Portal",
-  //     "Impact Stories",
-  //     "Mobile Responsive",
-  //     "WordPress",
-  //   ],
-  //   link: "https://risingimpactglobal.org/",
-  // },
-  // {
-  //   id: 4,
-  //   title: "Local Coffee Roastery",
-  //   category: "Starter Website",
-  //   description:
-  //     "Modern, clean website for a specialty coffee shop featuring their story, menu, and location.",
-  //   image:
-  //     "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=600",
-  //   features: ["4 Pages", "Contact Form", "Map Integration", "Social Links"],
-  //   link: "#",
-  // },
-  // {
-  //   id: 5,
-  //   title: "Boutique Fashion Store",
-  //   category: "Local Shop Website",
-  //   description:
-  //     "Elegant shopping site for a fashion boutique with product filters, wishlist, and seasonal promotions.",
-  //   image:
-  //     "https://images.pexels.com/photos/2769274/pexels-photo-2769274.jpeg?auto=compress&cs=tinysrgb&w=600",
-  //   features: [
-  //     "Shopify Store",
-  //     "Product Filters",
-  //     "Promotions",
-  //     "Cart Integration",
-  //   ],
-  //   link: "#",
-  // },
-  // {
-  //   id: 6,
-  //   title: "Wellness Coaching",
-  //   category: "Professional Website",
-  //   description:
-  //     "Professional website for a wellness coach featuring services, testimonials, and booking integration.",
-  //   image:
-  //     "https://images.pexels.com/photos/3807517/pexels-photo-3807517.jpeg?auto=compress&cs=tinysrgb&w=600",
-  //   features: [
-  //     "Service Pages",
-  //     "Testimonials",
-  //     "Contact Form",
-  //     "Professional Design",
-  //   ],
-  //   link: "#",
-  // },
-  // {
-  //   id: 7,
-  //   title: "Local Bakery",
-  //   category: "Starter Website",
-  //   description:
-  //     "Warm, inviting website for a local bakery with menu, about section, and contact information.",
-  //   image:
-  //     "https://images.pexels.com/photos/1624487/pexels-photo-1624487.jpeg?auto=compress&cs=tinysrgb&w=600",
-  //   features: [
-  //     "Menu Display",
-  //     "About Section",
-  //     "Contact Info",
-  //     "Responsive Design",
-  //   ],
-  //   link: "#",
-  // },
-];
-
+/** Work: four live sites. Links are always visible, so phone visitors can open them too. */
 export default function Projects() {
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-4 py-2 text-sm text-blue-600 mb-4">
-            <Award className="w-4 h-4" />
-            <span>Our Portfolio</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-            Projects
-          </h2>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            See the beautiful websites I have previously worked on for
-            businesses and creatives.
-          </p>
-        </div>
+    <section id="work" className="fc-section fc-section--light" aria-labelledby="work-title">
+      <div className="fc-wrap">
+        <header className="fc-head">
+          <p className="fc-eyebrow">{WORK.eyebrow}</p>
+          <h2 id="work-title">{WORK.title}</h2>
+          <p className="fc-lead">{WORK.lead}</p>
+        </header>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              className="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-            >
-              <div className="relative overflow-hidden bg-slate-200 h-56">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-white font-semibold hover:gap-3 transition-all"
-                  >
-                    View Project
-                    <ExternalLink className="w-4 h-4" />
+        <ul className="fc-work" data-reveal>
+          {WORK.items.map((item, i) => (
+            <li key={item.url} className="fc-work__card" style={{ "--i": i } as CSSProperties}>
+              <Link
+                className="fc-work__frame"
+                to={`/work/${item.slug}`}
+                viewTransition
+                tabIndex={-1}
+                aria-hidden="true"
+                style={{ "--vt": `work-${item.slug}` } as CSSProperties}
+              >
+                <span className="fc-work__chrome">
+                  <i />
+                  <i />
+                  <i />
+                  <span>{item.host}</span>
+                </span>
+                <img src={item.image} alt="" width={1280} height={800} loading="lazy" decoding="async" />
+              </Link>
+              <div className="fc-work__body">
+                <p className="fc-work__tag">{item.tag}</p>
+                <h3>{item.name}</h3>
+                <p>{item.body}</p>
+                <p className="fc-work__links">
+                  <Link className="fc-link" to={`/work/${item.slug}`} viewTransition>
+                    See the project →<span className="fc-sr">: {item.name}</span>
+                  </Link>
+                  <a className="fc-link" href={item.url} target="_blank" rel="noopener noreferrer">
+                    Visit site <span aria-hidden="true">↗</span>
+                    <span className="fc-sr"> {item.host}, opens in a new tab</span>
                   </a>
-                </div>
-              </div>
-
-              <div className="p-6">
-                <p className="text-blue-600 text-sm font-semibold mb-2">
-                  {project.category}
                 </p>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">
-                  {project.title}
-                </h3>
-                <p className="text-slate-600 text-sm mb-4 transition-all duration-300">
-                  {project.description}
-                </p>
-
-                <div className="flex flex-wrap gap-2">
-                  {project.features.map((feature, index) => (
-                    <span
-                      key={index}
-                      className="text-xs bg-blue-50 text-blue-700 px-3 py-1 rounded-full"
-                    >
-                      {feature}
-                    </span>
-                  ))}
-                </div>
               </div>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
+
+        <p className="fc-after">
+          {WORK.after}{" "}
+          <a className="fc-link" href="#who">
+            {WORK.afterLink} →
+          </a>
+        </p>
       </div>
     </section>
   );

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Forms</title>
+  </head>
+  <body>
+    <!-- Netlify reads this file at deploy time to register the start form.
+         The visible form is src/components/StartForm.tsx, which posts here.
+         Keep the field names in sync with that component. -->
+    <form name="start" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input name="bot-field" />
+      <input name="name" />
+      <input name="email" />
+      <input name="business" />
+      <input name="package" />
+      <input name="launch" />
+      <input name="website" />
+      <textarea name="notes"></textarea>
+    </form>
+  </body>
+</html>

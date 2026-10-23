@@ -1,108 +1,48 @@
-import { Globe, Star, ShoppingBag } from "lucide-react";
+import { PRICES } from "../content/site";
 import PricingCard from "./PricingCard";
-
-const pricingPlans = [
-  {
-    title: "Starter Website",
-    price: "$500",
-    description: "Simple, professional online presence",
-    icon: <Globe className="w-6 h-6 text-blue-600" />,
-    features: [
-      { text: "Up to 4 pages" },
-      { text: "Mobile-optimized design" },
-      { text: "Contact / inquiry form" },
-      { text: "Basic SEO" },
-      { text: "Social links" },
-      { text: "1 revision" },
-    ],
-    timeline: "7–10 days",
-  },
-  {
-    title: "Professional Website",
-    price: "$800",
-    description: "For creatives showcasing their work",
-    icon: <Star className="w-6 h-6 text-white" />,
-    features: [
-      { text: "Up to 8 pages" },
-      { text: "Portfolio / gallery" },
-      { text: "Testimonials" },
-      { text: "Enhanced design & styling" },
-      { text: "Conversion-focused layout" },
-      { text: "1 revision" },
-    ],
-    timeline: "10–14 days",
-    badge: "Most Popular",
-    highlighted: true,
-  },
-  {
-    title: "Local Shop Website",
-    price: "$1,500",
-    description: "For florists, boutiques & local shops",
-    icon: <ShoppingBag className="w-6 h-6 text-blue-600" />,
-    features: [
-      { text: "Shopify setup" },
-      { text: "Premium store template" },
-      { text: "Up to 15 products" },
-      { text: "Payments + delivery / pickup" },
-      { text: "Order confirmation emails" },
-      { text: "Mobile-optimized checkout" },
-      { text: "2 revisions" },
-    ],
-    timeline: "14–21 days",
-    subtitle: "Built on Shopify",
-  },
-];
 
 export default function Pricing() {
   return (
-    <section
-      id="pricing"
-      className="py-24 bg-gradient-to-br from-slate-50 to-blue-50"
-    >
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-            Clear, Simple Pricing
-          </h2>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Choose the package that fits your needs. No hidden fees, no
-            surprises.
-          </p>
-        </div>
+    <section id="prices" className="fc-section fc-section--light" aria-labelledby="prices-title">
+      <div className="fc-wrap">
+        <header className="fc-head">
+          <p className="fc-eyebrow">{PRICES.eyebrow}</p>
+          <h2 id="prices-title">{PRICES.title}</h2>
+          <p className="fc-lead">{PRICES.lead}</p>
+        </header>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {pricingPlans.map((plan, index) => (
-            <PricingCard key={index} {...plan} />
+        <div className="fc-pkgs" data-reveal>
+          {PRICES.packages.map((pkg) => (
+            <PricingCard key={pkg.id} pkg={pkg} />
           ))}
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto">
-          <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-            {/* <span className="text-2xl">📌</span> */}
-            Important Notes
-          </h3>
-          <ul className="space-y-4 text-slate-700">
-            <li className="flex items-center gap-3">
-              <span className="text-blue-600 font-bold mt-1">•</span>
-              <span>
-                Hosting, domain & platform fees are paid by the client
-              </span>
-            </li>
-            <li className="flex items-center gap-3">
-              <span className="text-blue-600 font-bold mt-1">•</span>
-              <span>
-                Client provides all content (text, images, branding, product
-                details)
-              </span>
-            </li>
-            <li className="flex items-center gap-3">
-              <span className="text-blue-600 font-bold mt-1">•</span>
-              <span>Scope is limited to the selected package</span>
-            </li>
-            <li className="flex items-center gap-3">
-              <span className="text-blue-600 font-bold mt-1">•</span>
-              <span>Timeline starts once content is received</span>
-            </li>
+        <div className="fc-costs">
+          <h3>{PRICES.separately.title}</h3>
+          <div className="fc-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Cost</th>
+                  <th scope="col">About how much</th>
+                  <th scope="col">Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                {PRICES.separately.rows.map((r) => (
+                  <tr key={r.cost}>
+                    <th scope="row">{r.cost}</th>
+                    <td>{r.amount}</td>
+                    <td>{r.note}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <ul className="fc-fine">
+            {PRICES.finePrint.map((line) => (
+              <li key={line}>{line}</li>
+            ))}
           </ul>
         </div>
       </div>

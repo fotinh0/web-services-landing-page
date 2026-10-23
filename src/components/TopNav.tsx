@@ -1,94 +1,99 @@
-import { useState } from "react";
-import scrollToSection from "../util/scrollToSection";
+import { useEffect, useState } from "react";
+import { Link } from "react-router";
+import logo from "../../assets/icon.svg";
+import { NAV_LINKS, SITE } from "../content/site";
+import { START_HREF, chooseStart } from "../lib/startProject";
 
+/**
+ * Sticky, always visible (Start stays one tap away). Compacts once the page
+ * scrolls past the top, and marks the section in view.
+ * IntersectionObserver only, never a scroll listener.
+ */
 export default function TopNav() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [compact, setCompact] = useState(false);
+  const [active, setActive] = useState<string>("");
+
+  useEffect(() => {
+    const sentinel = document.getElementById("nav-sentinel");
+    if (!sentinel || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(([entry]) => setCompact(!entry.isIntersecting));
+    io.observe(sentinel);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!("IntersectionObserver" in window)) return;
+    // "home" is observed too, so scrolling back to the top clears the highlight.
+    const sections = ["home", ...NAV_LINKS.map((l) => l.id)].map((id) => document.getElementById(id)).filter(
+      (el): el is HTMLElement => el !== null,
+    );
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px" },
+    );
+    sections.forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, []);
+
+  const close = () => setOpen(false);
 
   return (
-    <nav className="bg-slate-900 top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <button
-              onClick={() => scrollToSection("home")}
-              className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent hover:opacity-80 transition-opacity"
-            >
-              <img
-                src="https://private-user-images.githubusercontent.com/67170897/541285525-589b9bb8-164a-4ca6-89f7-291012d13a41.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3Njk1NTA2NTIsIm5iZiI6MTc2OTU1MDM1MiwicGF0aCI6Ii82NzE3MDg5Ny81NDEyODU1MjUtNTg5YjliYjgtMTY0YS00Y2E2LTg5ZjctMjkxMDEyZDEzYTQxLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjAxMjclMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwMTI3VDIxNDU1MlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTlkZGIwOTQzNDQ3ZjY0NDA3YTdjZWRkZTA0MTJiMzcxOTY4ZWFlNDI1ZDUyZDk3MjhlNjQ5OGUxOWFmYWMxZTQmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.-vYXb-3yc8xZtU7dulLytQ5xxeer9AkcxwFB7BHWEg0"
-                alt="Logo"
-                className="h-12 w-auto"
-              />
-            </button>
-          </div>
+    <>
+      <div id="nav-sentinel" aria-hidden="true" />
+      <header className={`fc-nav${compact ? " is-compact" : ""}`}>
+        <div className="fc-nav__inner">
+          <Link className="fc-nav__brand" to="/" aria-label={`${SITE.name}, home`} onClick={close}>
+            <img src={logo} alt="" width={36} height={36} />
+            <span>{SITE.name}</span>
+          </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <button
-              onClick={() => scrollToSection("projects")}
-              className="text-white hover:text-blue-600 font-medium transition-colors"
-            >
-              Projects
-            </button>
-            <button
-              onClick={() => scrollToSection("pricing")}
-              className="text-white hover:text-blue-600 font-medium transition-colors"
-            >
-              Pricing
-            </button>
-            <button
-              onClick={() => scrollToSection("contact")}
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-medium transition-colors"
-            >
-              Contact
-            </button>
-          </div>
+          <nav className="fc-nav__links" aria-label="Main">
+            {NAV_LINKS.map((l) => (
+              <a key={l.id} href={`/#${l.id}`} aria-current={active === l.id ? "true" : undefined}>
+                {l.label}
+              </a>
+            ))}
+          </nav>
 
-          {/* Mobile Menu Button */}
+          <a className="fc-nav__cta" href={START_HREF} onClick={() => chooseStart()}>
+            Start a project
+          </a>
+
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-white hover:text-blue-600 focus:outline-none"
+            type="button"
+            className="fc-nav__toggle"
+            aria-expanded={open}
+            aria-controls="fc-mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((o) => !o)}
           >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-              />
-            </svg>
+            <span aria-hidden="true" className={open ? "is-open" : undefined} />
           </button>
         </div>
 
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden pb-4">
-            <button
-              onClick={() => scrollToSection("projects")}
-              className="block w-full text-left px-3 py-2 text-white font-medium"
-            >
-              Projects
-            </button>
-            <button
-              onClick={() => scrollToSection("pricing")}
-              className="block w-full text-left px-3 py-2 text-white font-medium"
-            >
-              Pricing
-            </button>
-            <button
-              onClick={() => scrollToSection("contact")}
-              className="block w-full text-left px-3 py-2 bg-blue-600 text-white rounded-lg font-medium mt-2"
-            >
-              Contact
-            </button>
-          </div>
-        )}
-      </div>
-    </nav>
+        <nav id="fc-mobile-menu" className="fc-nav__mobile" hidden={!open} aria-label="Mobile">
+          {NAV_LINKS.map((l) => (
+            <a key={l.id} href={`/#${l.id}`} onClick={close}>
+              {l.label}
+            </a>
+          ))}
+          <a
+            className="fc-nav__cta fc-nav__cta--block"
+            href={START_HREF}
+            onClick={() => {
+              close();
+              chooseStart();
+            }}
+          >
+            Start a project
+          </a>
+        </nav>
+      </header>
+    </>
   );
 }

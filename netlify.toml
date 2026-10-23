@@ -1,0 +1,10 @@
+# Netlify build settings. Pages are pre-rendered by React Router into build/client.
+[build]
+  command = "npm run build"
+  publish = "build/client"
+
+# Long-lived caching for fingerprinted assets.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
