@@ -1,7 +1,6 @@
 import { Link } from "react-router";
 import "./hero.css";
 import { HERO as copy, TRUST } from "./heroContent";
-import { SITE } from "../../content/site";
 import { applyMotionLite } from "../../lib/motion";
 import { START_HREF, chooseStart } from "../../lib/startProject";
 
@@ -20,7 +19,7 @@ function Headline({ text, highlight }: { text: string; highlight?: string }) {
   );
 }
 
-/** Centered promise and call to action, with real sites as proof underneath. */
+/** Centered promise and call to action, with a curved edge into the next section. */
 export default function HeroSection() {
   return (
     <div className="fc-hero">
@@ -58,12 +57,22 @@ export default function HeroSection() {
               <li key={t}>{t}</li>
             ))}
           </ul>
-          <p className="fc-hero__reply">
-            <span className="fc-hero__pulse" aria-hidden="true" />
-            {SITE.replyTime}
-          </p>
         </div>
       </div>
+
+      {/* The bottom edge: a gentle hill in the next section's colour (--below in hero.css). */}
+      <svg
+        className="fc-hero__wave"
+        viewBox="0 0 1440 120"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          d="M0 74C214 122 452 30 742 50c290 20 470 66 698-14v84H0Z"
+          fill="currentColor"
+        />
+      </svg>
     </div>
   );
 }

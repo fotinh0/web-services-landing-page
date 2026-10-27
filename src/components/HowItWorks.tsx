@@ -6,7 +6,11 @@ import { HOW } from "../content/site";
 export default function HowItWorks({ level = 2 }: { level?: 1 | 2 }) {
   const Title = level === 1 ? "h1" : "h2";
   return (
-    <section id="how" className="fc-section fc-section--dark" aria-labelledby="how-title">
+    <section
+      id="how"
+      className="fc-section fc-section--light"
+      aria-labelledby="how-title"
+    >
       <div className="fc-wrap">
         <header className="fc-head">
           <p className="fc-eyebrow">{HOW.eyebrow}</p>
@@ -17,13 +21,13 @@ export default function HowItWorks({ level = 2 }: { level?: 1 | 2 }) {
         <div className="fc-steps" data-reveal>
           <span className="fc-steps__fill" aria-hidden="true" />
           <ol>
-          {HOW.steps.map((step, i) => (
-            <li key={step.title} style={{ "--i": i } as CSSProperties}>
-              <p className="fc-steps__day">{step.day}</p>
-              <h3>{step.title}</h3>
-              <p>{step.body}</p>
-            </li>
-          ))}
+            {HOW.steps.map((step, i) => (
+              <li key={step.title} style={{ "--i": i } as CSSProperties}>
+                <p className="fc-steps__day">{step.day}</p>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </li>
+            ))}
           </ol>
         </div>
 

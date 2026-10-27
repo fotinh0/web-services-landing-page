@@ -12,7 +12,6 @@ export const SITE = {
   email: "foti.coding@gmail.com",
   /** CONFIRM: your town or service area, e.g. "Queens, NY". Empty = hidden everywhere. */
   location: "",
-  replyTime: "Reply within one business day",
   /** CONFIRM: your live address, e.g. "https://fcwebservices.com". Used for share images and links. */
   url: "",
   description:

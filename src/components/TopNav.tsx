@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router";
-import logo from "../../assets/icon.svg";
+import logo from "../../assets/logo-dark.svg";
 import { CONTACT_LINK, NAV_LINKS, SITE } from "../content/site";
 
 /**
@@ -15,7 +15,9 @@ export default function TopNav() {
   useEffect(() => {
     const sentinel = document.getElementById("nav-sentinel");
     if (!sentinel || !("IntersectionObserver" in window)) return;
-    const io = new IntersectionObserver(([entry]) => setCompact(!entry.isIntersecting));
+    const io = new IntersectionObserver(([entry]) =>
+      setCompact(!entry.isIntersecting),
+    );
     io.observe(sentinel);
     return () => io.disconnect();
   }, []);
@@ -27,9 +29,13 @@ export default function TopNav() {
       <div id="nav-sentinel" aria-hidden="true" />
       <header className={`fc-nav${compact ? " is-compact" : ""}`}>
         <div className="fc-nav__inner">
-          <Link className="fc-nav__brand" to="/" aria-label={`${SITE.name}, home`} onClick={close}>
-            <img src={logo} alt="" width={36} height={36} />
-            <span>{SITE.name}</span>
+          <Link
+            className="fc-nav__brand"
+            to="/"
+            aria-label={`${SITE.name}, home`}
+            onClick={close}
+          >
+            <img src={logo} alt="" width={144} height={40} />
           </Link>
 
           <nav className="fc-nav__links" aria-label="Main">
@@ -56,13 +62,22 @@ export default function TopNav() {
           </button>
         </div>
 
-        <nav id="fc-mobile-menu" className="fc-nav__mobile" hidden={!open} aria-label="Mobile">
+        <nav
+          id="fc-mobile-menu"
+          className="fc-nav__mobile"
+          hidden={!open}
+          aria-label="Mobile"
+        >
           {NAV_LINKS.map((l) => (
             <NavLink key={l.to} to={l.to} end={l.to === "/"} onClick={close}>
               {l.label}
             </NavLink>
           ))}
-          <NavLink className="fc-nav__cta fc-nav__cta--block" to={CONTACT_LINK.to} onClick={close}>
+          <NavLink
+            className="fc-nav__cta fc-nav__cta--block"
+            to={CONTACT_LINK.to}
+            onClick={close}
+          >
             {CONTACT_LINK.label}
           </NavLink>
         </nav>

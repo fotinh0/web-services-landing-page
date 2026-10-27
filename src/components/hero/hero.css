@@ -1,6 +1,6 @@
 /* Hero: light, centered, built around one action. The promise and the start
-   button come first; real sites sit underneath as proof, cut off by the
-   section edge so the page keeps going. Every class is fc- prefixed. */
+   button come first; a curved bottom edge flows into the next section.
+   Every class is fc- prefixed. */
 
 .fc-hero {
   --night: #0f172a;
@@ -12,6 +12,9 @@
   --text-3: #64748b;
   --line: #e2e8f0;
   --wash: #eef2f6;
+  /* The wave is drawn in the colour of the section after the hero.
+     Keep in step with that section's background (Projects: --alt in site.css). */
+  --below: #eef2f6;
   --f-display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
   --f-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
   --f-body: "Albert Sans", "Segoe UI", system-ui, sans-serif;
@@ -26,23 +29,44 @@
     #ffffff;
   color: var(--text);
   font-family: var(--f-body);
-  border-bottom: 1px solid var(--line);
 }
 
-/* A faint 64px grid that fades out toward the edges: the one ornament. */
-.fc-hero::before {
+/* Two soft shapes instead of a grid: a slate glow behind the headline and a
+   faint blue one lower right. They drift slowly (see "drift" below). */
+.fc-hero::before,
+.fc-hero::after {
   content: "";
   position: absolute;
-  inset: 0;
   z-index: -1;
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 64px 64px;
-  background-position: center top;
-  opacity: 0.55;
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 0%, transparent 75%);
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 0%, transparent 75%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.fc-hero::before {
+  width: min(900px, 120vw);
+  aspect-ratio: 1;
+  top: -32%;
+  left: -18%;
+  background: radial-gradient(closest-side, #e2e8f0 0%, rgba(226, 232, 240, 0.6) 45%, rgba(226, 232, 240, 0) 100%);
+}
+.fc-hero::after {
+  width: min(720px, 100vw);
+  aspect-ratio: 1;
+  bottom: -18%;
+  right: -12%;
+  background: radial-gradient(closest-side, rgba(37, 99, 235, 0.08) 0%, rgba(37, 99, 235, 0.04) 50%, rgba(37, 99, 235, 0) 100%);
+}
+
+/* ---------- curved bottom edge ---------- */
+.fc-hero__wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  height: clamp(40px, 7vw, 110px);
+  color: var(--below);
   pointer-events: none;
 }
 
@@ -56,8 +80,9 @@
 .fc-hero__inner {
   max-width: 900px;
   margin-inline: auto;
-  padding: clamp(56px, 9vw, 112px) max(20px, env(safe-area-inset-right, 0px)) clamp(40px, 6vw, 72px)
-    max(20px, env(safe-area-inset-left, 0px));
+  /* Bottom padding = the wave's height + breathing room, so the wave never covers the copy. */
+  padding: clamp(56px, 9vw, 112px) max(20px, env(safe-area-inset-right, 0px))
+    calc(clamp(40px, 7vw, 110px) + clamp(40px, 5vw, 64px)) max(20px, env(safe-area-inset-left, 0px));
   display: grid;
   justify-items: center;
   gap: 22px;
@@ -162,11 +187,13 @@
   box-shadow: 0 0 0 4px rgba(71, 85, 105, 0.12);
 }
 
-/* ---------- hero-only button size (base buttons live in site.css) ---------- */
+/* ---------- hero-only buttons: larger, and pill-shaped (base buttons live in site.css) ---------- */
 .fc-btn--lg {
   min-height: 56px;
   padding: 0 28px;
-  border-radius: 10px;
+}
+.fc-hero .fc-btn {
+  border-radius: 999px;
 }
 
 @media (max-width: 480px) {
@@ -185,115 +212,6 @@
   }
 }
 
-/* ---------- proof: real sites, cut off by the section edge ---------- */
-.fc-hero__stage {
-  max-width: 1040px;
-  margin-inline: auto;
-  padding: 0 max(20px, env(safe-area-inset-right, 0px)) 0 max(20px, env(safe-area-inset-left, 0px));
-}
-.fc-hero__stage-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 16px;
-  margin-bottom: 14px;
-  font-family: var(--f-mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-3);
-}
-.fc-hero__work-link {
-  font-family: var(--f-body);
-  font-size: 14.5px;
-  font-weight: 600;
-  letter-spacing: 0;
-  text-transform: none;
-  color: var(--accent);
-  text-decoration: none;
-}
-.fc-hero__work-link:focus-visible,
-.fc-frame:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-.fc-hero__frames {
-  position: relative;
-  height: clamp(220px, 38vw, 430px);
-  /* Clip only the bottom edge, so shadows still show at the sides. */
-  clip-path: inset(-60px -60px 0 -60px);
-}
-.fc-frame {
-  position: absolute;
-  display: block;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  background: #ffffff;
-  color: inherit;
-  text-decoration: none;
-  transition: transform 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
-}
-.fc-frame--lead {
-  left: 0;
-  top: 0;
-  width: 80%;
-  border-radius: 14px 14px 0 0;
-  box-shadow:
-    0 40px 80px -40px rgba(15, 23, 42, 0.35),
-    0 1px 2px rgba(15, 23, 42, 0.06);
-}
-.fc-frame--second {
-  right: 0;
-  top: 22%;
-  width: 40%;
-  border-radius: 12px;
-  z-index: 1;
-  box-shadow:
-    0 30px 60px -24px rgba(15, 23, 42, 0.4),
-    0 1px 2px rgba(15, 23, 42, 0.08);
-}
-.fc-frame__chrome {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--line);
-  background: #f8fafc;
-}
-.fc-frame__chrome i {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: #cbd5e1;
-}
-.fc-frame__chrome span {
-  margin-left: 10px;
-  font-family: var(--f-mono);
-  font-size: 11.5px;
-  color: var(--text-3);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.fc-frame img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  object-position: top;
-}
-
-@media (max-width: 640px) {
-  .fc-frame--lead {
-    width: 100%;
-  }
-  .fc-frame--second {
-    display: none;
-  }
-}
-
 /* ---------- entrance: a calm, staggered rise ---------- */
 .fc-hero__in {
   animation: fc-hero-in 640ms var(--ease-out) both;
@@ -307,10 +225,6 @@
 .fc-hero__cta.fc-hero__in {
   animation-delay: 180ms;
 }
-.fc-hero__stage.fc-hero__in {
-  animation-delay: 280ms;
-  animation-duration: 800ms;
-}
 @keyframes fc-hero-in {
   from {
     opacity: 0;
@@ -322,26 +236,33 @@
   }
 }
 
-/* ---------- hover (only on devices that can hover) ---------- */
-@media (hover: hover) {
-  .fc-hero__work-link:hover {
-    text-decoration: underline;
-    text-underline-offset: 3px;
+/* ---------- drift: the two glows move slowly ---------- */
+/* Uses the independent `translate` property, so it never fights a transform. */
+.fc-hero::before {
+  animation: fc-drift 22s ease-in-out infinite alternate;
+}
+.fc-hero::after {
+  animation: fc-drift 18s ease-in-out -6s infinite alternate-reverse;
+}
+@keyframes fc-drift {
+  from {
+    translate: 0 0;
   }
-  .fc-frame:hover {
-    transform: translateY(-4px);
+  to {
+    translate: 36px 24px;
   }
 }
 
-/* ---------- low-power devices and reduced motion: no entrance, no lift ---------- */
-.motion-lite .fc-hero__in {
+/* ---------- low-power devices and reduced motion: no entrance or drift ---------- */
+.motion-lite .fc-hero__in,
+.motion-lite .fc-hero::before,
+.motion-lite .fc-hero::after {
   animation: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .fc-hero__in {
+  .fc-hero__in,
+  .fc-hero::before,
+  .fc-hero::after {
     animation: none;
-  }
-  .fc-frame {
-    transition: none;
   }
 }

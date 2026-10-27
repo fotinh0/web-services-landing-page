@@ -56,7 +56,12 @@ export default function WorkPage() {
             <h1 className="fc-page-title">{item.name}</h1>
             <p className="fc-lead">{item.body}</p>
             <div className="fc-case__actions">
-              <a className="fc-btn fc-btn--primary" href={item.url} target="_blank" rel="noopener noreferrer">
+              <a
+                className="fc-btn fc-btn--primary"
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Visit {item.host} <span aria-hidden="true">↗</span>
               </a>
               <Link className="fc-btn fc-btn--ghost" to={startLink}>
@@ -64,7 +69,10 @@ export default function WorkPage() {
               </Link>
             </div>
           </div>
-          <div className="fc-case__frame" style={{ "--vt": `work-${item.slug}` } as CSSProperties}>
+          <div
+            className="fc-case__frame"
+            style={{ "--vt": `work-${item.slug}` } as CSSProperties}
+          >
             <span className="fc-work__chrome" aria-hidden="true">
               <i />
               <i />
@@ -94,7 +102,12 @@ export default function WorkPage() {
             <div>
               <dt>Live at</dt>
               <dd>
-                <a className="fc-link" href={item.url} target="_blank" rel="noopener noreferrer">
+                <a
+                  className="fc-link"
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {item.host} <span aria-hidden="true">↗</span>
                 </a>
               </dd>
@@ -105,16 +118,23 @@ export default function WorkPage() {
 
       <section className="fc-section fc-section--tint">
         <div className="fc-wrap fc-case__next">
-          <div>
+          <div className="flex flex-col">
             <p className="fc-eyebrow">Next project</p>
-            <Link className="fc-case__next-link" to={`/work/${next.slug}`} viewTransition>
+            <Link
+              className="fc-case__next-link"
+              to={`/work/${next.slug}`}
+              viewTransition
+            >
               {next.name} →
             </Link>
           </div>
           <div className="fc-case__cta">
             <p>Want something like this for your business?</p>
             <Link className="fc-btn fc-btn--primary" to={startLink}>
-              Start my website <span className="fc-btn__arrow" aria-hidden="true">→</span>
+              Start my website{" "}
+              <span className="fc-btn__arrow" aria-hidden="true">
+                →
+              </span>
             </Link>
           </div>
         </div>

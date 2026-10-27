@@ -309,17 +309,21 @@ section[id] {
   font-size: 17px;
   margin-right: auto;
 }
+/* The full logo (mark + "FC WEB SOLUTIONS"); width follows the height. */
 .fc-nav__brand img {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  transition:
-    width var(--dur-ui) var(--ease-out),
-    height var(--dur-ui) var(--ease-out);
+  display: block;
+  width: auto;
+  height: 40px;
+  transition: height var(--dur-ui) var(--ease-out);
 }
 .fc-nav.is-compact .fc-nav__brand img {
-  width: 30px;
-  height: 30px;
+  height: 34px;
+}
+@media (max-width: 860px) {
+  .fc-nav__brand img,
+  .fc-nav.is-compact .fc-nav__brand img {
+    height: 32px;
+  }
 }
 .fc-nav__links {
   display: flex;
@@ -552,7 +556,7 @@ section[id] {
   top: 8px;
   bottom: 8px;
   width: 2px;
-  background: var(--dark-rule);
+  background: var(--rule);
 }
 .fc-steps__fill {
   background: var(--accent);
@@ -596,8 +600,8 @@ section[id] {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: var(--night);
-  border: 2px solid var(--on-dark-3);
+  background: var(--fog);
+  border: 2px solid var(--text-2);
 }
 .fc-steps h3 {
   margin: 0;
@@ -606,14 +610,14 @@ section[id] {
 }
 .fc-steps p {
   margin: 0;
-  color: var(--on-dark-2);
+  color: var(--text-2);
 }
 .fc-steps .fc-steps__day {
   font-family: var(--f-mono);
   font-size: 12.5px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--on-dark-3);
+  color: var(--text-2);
 }
 
 /* ---------- packages ---------- */
@@ -1167,11 +1171,11 @@ section[id] {
   display: grid;
   gap: 4px;
 }
-.fc-footer__name {
-  font-family: var(--f-display);
-  font-weight: 700;
-  font-size: 18px;
-  color: var(--on-dark);
+.fc-footer__logo {
+  display: block;
+  width: auto;
+  height: 44px;
+  margin-bottom: 12px;
 }
 .fc-footer__links {
   display: flex;
@@ -1476,4 +1480,184 @@ section[id] {
   ::view-transition-new(*) {
     animation: none !important;
   }
+}
+
+/* =====================================================================
+   Curves: softer, more fluid shapes across the site.
+   This layer only changes shape (radius, curved edges, pill controls),
+   never colour or layout, and it sits last so it wins over the rules
+   above. Delete this block to go back to the straight-edged version.
+   ===================================================================== */
+:root {
+  --r-sm: 12px; /* inputs, small chips */
+  --r-md: 20px; /* tables, FAQ items, fact lists */
+  --r-lg: 28px; /* cards, the form */
+  --r-xl: clamp(28px, 4vw, 56px); /* floating dark panels */
+  --r-pill: 999px;
+  --radius: var(--r-md);
+  /* How far a section's bottom edge bulges into the next one. */
+  --curve: clamp(24px, 4vw, 64px);
+}
+
+/* ---------- controls: pills everywhere ---------- */
+.fc-btn,
+.fc-nav__cta,
+.fc-copy,
+.fc-skip {
+  border-radius: var(--r-pill);
+}
+.fc-btn {
+  padding-inline: 24px;
+}
+.fc-field input,
+.fc-field select,
+.fc-field textarea {
+  border-radius: var(--r-sm);
+}
+
+/* Labels become small pills, echoing the hero's eyebrow. */
+.fc-eyebrow {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 5px 12px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-pill);
+  background: var(--paper);
+}
+.fc-section--dark .fc-eyebrow {
+  border-color: var(--dark-rule);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ---------- nav ---------- */
+/* The nav stays a full-width bar with straight edges (see the nav rules above).
+   Only its call-to-action button is pill-shaped, like every button on the site. */
+
+/* ---------- sections: dark bands float as rounded panels ---------- */
+.fc-section--dark {
+  margin: clamp(8px, 1.5vw, 16px) clamp(8px, 2vw, 24px);
+  border-radius: var(--r-xl);
+}
+/* Home: the start form runs edge to edge and sits straight on the footer,
+   rounded only at the top. (#home ~ #start only matches on the home page,
+   so /contact keeps the floating panel.) */
+#home ~ #start {
+  margin-inline: 0;
+  margin-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+/* Tinted sections curve gently into whatever comes next. */
+.fc-section--tint {
+  border-bottom-left-radius: 50% var(--curve);
+  border-bottom-right-radius: 50% var(--curve);
+  padding-bottom: calc(clamp(72px, 10vw, 120px) + var(--curve) * 0.5);
+}
+
+/* ---------- cards ---------- */
+.fc-work__card,
+.fc-pkg {
+  border-radius: var(--r-lg);
+}
+.fc-work__body {
+  padding: 24px 28px 30px;
+}
+.fc-pkg {
+  padding: 32px;
+}
+.fc-form {
+  border-radius: var(--r-lg);
+}
+.fc-table-wrap {
+  border-radius: var(--r-md);
+}
+.fc-case__frame {
+  border-radius: var(--r-lg);
+}
+
+/* The About portrait or monogram gets an organic, pebble-like outline. */
+.fc-about__photo {
+  border-radius: 46% 54% 52% 48% / 52% 46% 54% 48%;
+}
+
+/* ---------- FAQ: each question is its own soft card ---------- */
+.fc-faq__list {
+  display: grid;
+  gap: 10px;
+  border-top: 0;
+}
+.fc-faq__list details {
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  background: var(--paper);
+  padding-inline: 24px;
+  transition: border-color var(--dur-micro) var(--ease-out);
+}
+.fc-faq__list details[open] {
+  border-color: #cbd5e1;
+}
+.fc-faq__list details p {
+  padding-right: 8px;
+}
+
+/* ---------- How it works: steps sit on soft cards along the line ---------- */
+.fc-steps li {
+  padding: 18px 22px;
+  border-radius: var(--r-md);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+}
+.fc-steps li::before {
+  top: 24px;
+}
+
+/* ---------- project page facts ---------- */
+.fc-case__facts {
+  padding: 4px 22px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  background: var(--paper);
+}
+.fc-case__facts div:last-child {
+  border-bottom: 0;
+}
+
+/* ---------- closing band: a rounded card instead of a ruled strip ---------- */
+.fc-cta-band {
+  border-top: 0;
+}
+.fc-cta-band__inner {
+  padding: clamp(28px, 4vw, 44px) clamp(24px, 4vw, 48px);
+  border-radius: var(--r-lg);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+}
+.fc-section--tint .fc-cta-band__inner,
+.fc-cta-band.fc-section--tint .fc-cta-band__inner {
+  background: var(--fog);
+}
+
+/* ---------- footer ---------- */
+/* Full width with straight edges, like the nav (see the footer rules above).
+   On the home page the start section runs full width and meets the footer
+   directly; elsewhere the floating dark panel keeps a small gap above it. */
+
+@media (hover: hover) {
+  .fc-faq__list details:hover {
+    border-color: #cbd5e1;
+  }
+}
+/* The card keeps a side gutter on small screens (it replaces .fc-wrap's padding). */
+.fc-cta-band__inner {
+  max-width: min(1120px, calc(100% - 2 * max(20px, env(safe-area-inset-left, 0px))));
+}
+
+/* ---------- page endings ---------- */
+/* No bulge on a tinted section that ends the page: it would point into the footer. */
+main > .fc-section--tint:last-child {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-bottom: clamp(72px, 10vw, 120px);
 }

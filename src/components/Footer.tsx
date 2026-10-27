@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import logo from "../../assets/logo-dark.svg";
 import { CONTACT_LINK, FOOTER, NAV_LINKS, SITE } from "../content/site";
 
 /** Footer, with the signature detail: the page's real load time. */
@@ -25,7 +26,7 @@ export default function Footer() {
     <footer className="fc-footer">
       <div className="fc-wrap fc-footer__grid">
         <div>
-          <p className="fc-footer__name">{SITE.name}</p>
+          <img className="fc-footer__logo" src={logo} alt={SITE.name} width={158} height={44} />
           <p>{FOOTER.line}</p>
           <p>
             {SITE.location ? `${SITE.location} · ` : ""}
