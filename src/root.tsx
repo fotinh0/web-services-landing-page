@@ -14,15 +14,9 @@ export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Albert+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Albert+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap",
   },
 ];
-
-// Analytics: set VITE_PLAUSIBLE_DOMAIN (e.g. in Netlify's environment variables)
-// to your domain and Plausible loads. Unset = no analytics, no requests.
-const plausibleDomain = import.meta.env.VITE_PLAUSIBLE_DOMAIN as string | undefined;
-const plausibleQueue =
-  "window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)}";
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
@@ -31,15 +25,9 @@ export function Layout({ children }: { children: ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        <meta name="theme-color" content="#141A36" />
+        <meta name="theme-color" content="#0F172A" />
         <Meta />
         <Links />
-        {plausibleDomain && (
-          <>
-            <script dangerouslySetInnerHTML={{ __html: plausibleQueue }} />
-            <script defer data-domain={plausibleDomain} src="https://plausible.io/js/script.js" />
-          </>
-        )}
       </head>
       <body>
         {children}

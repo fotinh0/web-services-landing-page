@@ -1,6 +1,6 @@
+import { Link } from "react-router";
 import type { PackageInfo } from "../content/site";
 import { START_HREF, chooseStart } from "../lib/startProject";
-import { resolveHeroVariant, trackHero } from "./hero/heroExperiment";
 
 /** One package as a work order: mono spec lines, one action, no hover scaling. */
 export default function PricingCard({ pkg }: { pkg: PackageInfo }) {
@@ -33,16 +33,13 @@ export default function PricingCard({ pkg }: { pkg: PackageInfo }) {
         ))}
       </ul>
 
-      <a
+      <Link
         className={`fc-btn ${pkg.featured ? "fc-btn--primary" : "fc-btn--outline"}`}
-        href={START_HREF}
-        onClick={() => {
-          trackHero("hero_package_click", resolveHeroVariant(), { package: pkg.id, where: "prices" });
-          chooseStart({ packageId: pkg.id });
-        }}
+        to={START_HREF}
+        onClick={() => chooseStart({ packageId: pkg.id })}
       >
         {pkg.cta} <span className="fc-btn__arrow" aria-hidden="true">→</span>
-      </a>
+      </Link>
     </article>
   );
 }

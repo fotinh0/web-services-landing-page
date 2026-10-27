@@ -5,5 +5,16 @@ import type { Config } from "@react-router/dev/config";
 export default {
   appDirectory: "src",
   ssr: false,
-  prerender: ["/", "/work/fa-euro", "/work/pci-media", "/work/wedding-albania", "/work/portfolio"],
+  // Every page, plus one entry per project in WORK (content/site.ts):
+  // add "/work/<slug>" for each new project.
+  prerender: [
+    "/",
+    "/about",
+    "/work",
+    "/how-it-works",
+    "/faq",
+    "/contact",
+    "/work/wedding-albania",
+    "/work/portfolio",
+  ],
 } satisfies Config;

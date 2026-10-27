@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router";
 import type { MetaFunction } from "react-router";
 import { SITE, WORK, workBySlug } from "../content/site";
 import { pageMeta } from "../lib/meta";
+import { contactHref } from "../lib/startProject";
 
 export const meta: MetaFunction = ({ params }) => {
   const item = workBySlug(params.slug);
@@ -30,7 +31,7 @@ export default function WorkPage() {
           <p className="fc-eyebrow">Project not found</p>
           <h1 className="fc-page-title">That project isn't here.</h1>
           <p className="fc-lead">
-            <Link className="fc-link" to="/#work">
+            <Link className="fc-link" to="/work">
               See all work →
             </Link>
           </p>
@@ -41,13 +42,13 @@ export default function WorkPage() {
 
   const i = WORK.items.indexOf(item);
   const next = WORK.items[(i + 1) % WORK.items.length];
-  const startLink = `/?like=${encodeURIComponent(item.name)}#start`;
+  const startLink = contactHref({ like: item.name });
 
   return (
     <>
       <section className="fc-section fc-section--dark fc-case">
         <div className="fc-wrap">
-          <Link className="fc-case__back" to="/#work" viewTransition>
+          <Link className="fc-case__back" to="/work" viewTransition>
             ← All work
           </Link>
           <div className="fc-case__head">
@@ -58,9 +59,9 @@ export default function WorkPage() {
               <a className="fc-btn fc-btn--primary" href={item.url} target="_blank" rel="noopener noreferrer">
                 Visit {item.host} <span aria-hidden="true">↗</span>
               </a>
-              <a className="fc-btn fc-btn--ghost" href={startLink}>
+              <Link className="fc-btn fc-btn--ghost" to={startLink}>
                 Start a project like this
-              </a>
+              </Link>
             </div>
           </div>
           <div className="fc-case__frame" style={{ "--vt": `work-${item.slug}` } as CSSProperties}>
@@ -112,9 +113,9 @@ export default function WorkPage() {
           </div>
           <div className="fc-case__cta">
             <p>Want something like this for your business?</p>
-            <a className="fc-btn fc-btn--primary" href={startLink}>
+            <Link className="fc-btn fc-btn--primary" to={startLink}>
               Start my website <span className="fc-btn__arrow" aria-hidden="true">→</span>
-            </a>
+            </Link>
           </div>
         </div>
       </section>

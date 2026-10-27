@@ -1,8 +1,13 @@
-import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from "react";
 import { SITE, START } from "../content/site";
 import { START_EVENT, type StartChoice } from "../lib/startProject";
 import { startHref } from "./hero/heroContent";
-import { resolveHeroVariant, trackHero } from "./hero/heroExperiment";
 
 /**
  * The start form. Posts to Netlify Forms (the form is declared in public/__forms.html).
@@ -10,12 +15,21 @@ import { resolveHeroVariant, trackHero } from "./hero/heroExperiment";
  * in place, when the visitor leaves it. Nothing shakes or moves.
  */
 
-type Field = "name" | "email" | "business" | "package" | "launch" | "website" | "notes";
+type Field =
+  "name" | "email" | "business" | "package" | "launch" | "website" | "notes";
 type Values = Record<Field, string>;
 type Required = "name" | "email" | "business" | "package";
 type Status = "idle" | "sending" | "sent" | "error";
 
-const EMPTY: Values = { name: "", email: "", business: "", package: "", launch: "", website: "", notes: "" };
+const EMPTY: Values = {
+  name: "",
+  email: "",
+  business: "",
+  package: "",
+  launch: "",
+  website: "",
+  notes: "",
+};
 
 const PACKAGE_OPTIONS = [
   { value: "starter", label: "Starter · $500" },
@@ -31,7 +45,8 @@ const FORMS_ENDPOINT = "/__forms.html";
 
 function validate(field: Required, value: string): string {
   const v = value.trim();
-  if (field === "email") return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? "" : START.form.errors.email;
+  if (field === "email")
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? "" : START.form.errors.email;
   return v ? "" : START.form.errors[field];
 }
 
@@ -49,15 +64,21 @@ export default function StartForm() {
       setValues((v) => ({
         ...v,
         package: choice.packageId ?? v.package,
-        notes: choice.projectType && !v.notes ? `I'm building: ${choice.projectType}` : v.notes,
+        notes:
+          choice.projectType && !v.notes
+            ? `I'm building: ${choice.projectType}`
+            : v.notes,
       }));
-      window.setTimeout(() => nameRef.current?.focus({ preventScroll: true }), 450);
+      window.setTimeout(
+        () => nameRef.current?.focus({ preventScroll: true }),
+        450,
+      );
     }
     window.addEventListener(START_EVENT, onStart);
     return () => window.removeEventListener(START_EVENT, onStart);
   }, []);
 
-  // Arriving from a project page (/?like=PCI%20Media#start) or a link with ?package=professional
+  // Arriving from a project page (/contact?like=foticeci.com) or a link with ?package=professional
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const pkg = params.get("package");
@@ -65,18 +86,30 @@ export default function StartForm() {
     if (!pkg && !like) return;
     setValues((v) => ({
       ...v,
-      package: pkg && PACKAGE_OPTIONS.some((o) => o.value === pkg) ? pkg : v.package,
+      package:
+        pkg && PACKAGE_OPTIONS.some((o) => o.value === pkg) ? pkg : v.package,
       notes: like && !v.notes ? `Project I liked: ${like}` : v.notes,
     }));
   }, []);
 
-  const set = (field: Field) => (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setValues((v) => ({ ...v, [field]: value }));
-    if (field in errors) setErrors((er) => ({ ...er, [field]: validate(field as Required, value) }));
-  };
+  const set =
+    (field: Field) =>
+    (
+      e: ChangeEvent<
+        HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+      >,
+    ) => {
+      const value = e.target.value;
+      setValues((v) => ({ ...v, [field]: value }));
+      if (field in errors)
+        setErrors((er) => ({
+          ...er,
+          [field]: validate(field as Required, value),
+        }));
+    };
 
-  const check = (field: Required) => () => setErrors((er) => ({ ...er, [field]: validate(field, values[field]) }));
+  const check = (field: Required) => () =>
+    setErrors((er) => ({ ...er, [field]: validate(field, values[field]) }));
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -92,16 +125,21 @@ export default function StartForm() {
 
     setStatus("sending");
     const form = e.currentTarget;
-    const bot = (form.elements.namedItem("bot-field") as HTMLInputElement | null)?.value ?? "";
+    const bot =
+      (form.elements.namedItem("bot-field") as HTMLInputElement | null)
+        ?.value ?? "";
     try {
       const res = await fetch(FORMS_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({ "form-name": "start", "bot-field": bot, ...values }).toString(),
+        body: new URLSearchParams({
+          "form-name": "start",
+          "bot-field": bot,
+          ...values,
+        }).toString(),
       });
       if (!res.ok) throw new Error(String(res.status));
       setStatus("sent");
-      trackHero("inquiry_sent", resolveHeroVariant(), { package: values.package || "none" });
     } catch {
       setStatus("error");
     }
@@ -128,15 +166,23 @@ export default function StartForm() {
     );
   }
 
-  const describedBy = (f: Required) => (errors[f] ? `start-${f}-error` : undefined);
+  const describedBy = (f: Required) =>
+    errors[f] ? `start-${f}-error` : undefined;
 
   return (
     <div className="fc-form">
-      <form name="start" method="POST" action={FORMS_ENDPOINT} noValidate onSubmit={onSubmit}>
+      <form
+        name="start"
+        method="POST"
+        action={FORMS_ENDPOINT}
+        noValidate
+        onSubmit={onSubmit}
+      >
         <input type="hidden" name="form-name" value="start" />
         <p className="fc-hp" aria-hidden="true">
           <label>
-            Leave this empty <input name="bot-field" tabIndex={-1} autoComplete="off" />
+            Leave this empty{" "}
+            <input name="bot-field" tabIndex={-1} autoComplete="off" />
           </label>
         </p>
 
@@ -156,7 +202,11 @@ export default function StartForm() {
             aria-invalid={!!errors.name}
             aria-describedby={describedBy("name")}
           />
-          {errors.name && <p id="start-name-error" className="fc-field__error">{errors.name}</p>}
+          {errors.name && (
+            <p id="start-name-error" className="fc-field__error">
+              {errors.name}
+            </p>
+          )}
         </div>
 
         <div className="fc-field">
@@ -172,12 +222,18 @@ export default function StartForm() {
             onChange={set("email")}
             onBlur={check("email")}
             aria-invalid={!!errors.email}
-            aria-describedby={errors.email ? "start-email-error" : "start-email-help"}
+            aria-describedby={
+              errors.email ? "start-email-error" : "start-email-help"
+            }
           />
           {errors.email ? (
-            <p id="start-email-error" className="fc-field__error">{errors.email}</p>
+            <p id="start-email-error" className="fc-field__error">
+              {errors.email}
+            </p>
           ) : (
-            <p id="start-email-help" className="fc-field__help">I'll only use this to reply to you.</p>
+            <p id="start-email-help" className="fc-field__help">
+              I'll only use this to reply to you.
+            </p>
           )}
         </div>
 
@@ -194,55 +250,69 @@ export default function StartForm() {
             aria-invalid={!!errors.business}
             aria-describedby={describedBy("business")}
           />
-          {errors.business && <p id="start-business-error" className="fc-field__error">{errors.business}</p>}
+          {errors.business && (
+            <p id="start-business-error" className="fc-field__error">
+              {errors.business}
+            </p>
+          )}
         </div>
 
-        <div className="fc-field-row">
-          <div className="fc-field">
-            <label htmlFor="start-package">Which package fits?</label>
-            <select
-              id="start-package"
-              name="package"
-              value={values.package}
-              onChange={set("package")}
-              onBlur={check("package")}
-              aria-invalid={!!errors.package}
-              aria-describedby={errors.package ? "start-package-error" : "start-package-help"}
-            >
-              <option value="" disabled>
-                Choose one
+        <div className="fc-field">
+          <label htmlFor="start-package">Which package fits?</label>
+          <select
+            id="start-package"
+            name="package"
+            value={values.package}
+            onChange={set("package")}
+            onBlur={check("package")}
+            aria-invalid={!!errors.package}
+            aria-describedby={
+              errors.package ? "start-package-error" : "start-package-help"
+            }
+          >
+            <option value="" disabled>
+              Choose one
+            </option>
+            {PACKAGE_OPTIONS.map((o) => (
+              <option key={o.value} value={o.value}>
+                {o.label}
               </option>
-              {PACKAGE_OPTIONS.map((o) => (
-                <option key={o.value} value={o.value}>
-                  {o.label}
-                </option>
-              ))}
-            </select>
-            {errors.package ? (
-              <p id="start-package-error" className="fc-field__error">{errors.package}</p>
-            ) : (
-              <p id="start-package-help" className="fc-field__help">Not sure is fine. We'll pick together.</p>
-            )}
-          </div>
+            ))}
+          </select>
+          {errors.package ? (
+            <p id="start-package-error" className="fc-field__error">
+              {errors.package}
+            </p>
+          ) : (
+            <p id="start-package-help" className="fc-field__help">
+              Not sure is fine. We'll pick together.
+            </p>
+          )}
+        </div>
 
-          <div className="fc-field">
-            <label htmlFor="start-launch">
-              Ideal launch <span className="fc-optional">Optional</span>
-            </label>
-            <select id="start-launch" name="launch" value={values.launch} onChange={set("launch")}>
-              <option value="">No date yet</option>
-              {LAUNCH_OPTIONS.map((o) => (
-                <option key={o} value={o}>
-                  {o}
-                </option>
-              ))}
-            </select>
-          </div>
+        <div className="fc-field">
+          <label htmlFor="start-launch">
+            Ideal launch <span className="fc-optional">Optional</span>
+          </label>
+          <select
+            id="start-launch"
+            name="launch"
+            value={values.launch}
+            onChange={set("launch")}
+          >
+            <option value="">No date yet</option>
+            {LAUNCH_OPTIONS.map((o) => (
+              <option key={o} value={o}>
+                {o}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="fc-field">
           <label htmlFor="start-website">
-            Current website, if you have one <span className="fc-optional">Optional</span>
+            Current website, if you have one{" "}
+            <span className="fc-optional">Optional</span>
           </label>
           <input
             id="start-website"
@@ -256,7 +326,8 @@ export default function StartForm() {
 
         <div className="fc-field">
           <label htmlFor="start-notes">
-            Anything else I should know? <span className="fc-optional">Optional</span>
+            Anything else I should know?{" "}
+            <span className="fc-optional">Optional</span>
           </label>
           <textarea
             id="start-notes"
@@ -268,7 +339,11 @@ export default function StartForm() {
           />
         </div>
 
-        <button className="fc-btn fc-btn--primary fc-btn--full" type="submit" disabled={status === "sending"}>
+        <button
+          className="fc-btn fc-btn--primary fc-btn--full"
+          type="submit"
+          disabled={status === "sending"}
+        >
           {status === "sending" ? START.form.sending : START.form.submit}
           {status !== "sending" && (
             <span className="fc-btn__arrow" aria-hidden="true">

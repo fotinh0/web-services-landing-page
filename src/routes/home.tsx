@@ -1,11 +1,7 @@
 import type { MetaFunction } from "react-router";
 import HeroSection from "../components/hero/HeroSection";
 import Projects from "../components/Projects";
-import WhoFor from "../components/WhoFor";
-import HowItWorks from "../components/HowItWorks";
 import Pricing from "../components/Pricing";
-import About from "../components/About";
-import Faq from "../components/Faq";
 import Contact from "../components/Contact";
 import { SITE } from "../content/site";
 import { pageMeta } from "../lib/meta";
@@ -18,8 +14,8 @@ export const meta: MetaFunction = () =>
     path: "/",
   });
 
-// Scroll order follows the objection map in the copy deck:
-// promise → proof → fit → path → price → person → doubts → start.
+// The short path: promise → proof → price → start. About, How it works and
+// FAQ have their own pages.
 export default function Home() {
   useReveal();
 
@@ -29,11 +25,7 @@ export default function Home() {
         <HeroSection />
       </section>
       <Projects />
-      <WhoFor />
-      <HowItWorks />
       <Pricing />
-      <About />
-      <Faq />
       <Contact />
     </>
   );

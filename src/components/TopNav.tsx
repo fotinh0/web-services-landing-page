@@ -1,42 +1,22 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import logo from "../../assets/icon.svg";
-import { NAV_LINKS, SITE } from "../content/site";
-import { START_HREF, chooseStart } from "../lib/startProject";
+import { CONTACT_LINK, NAV_LINKS, SITE } from "../content/site";
 
 /**
- * Sticky, always visible (Start stays one tap away). Compacts once the page
- * scrolls past the top, and marks the section in view.
- * IntersectionObserver only, never a scroll listener.
+ * Sticky, always visible (Contact stays one tap away). Compacts once the page
+ * scrolls past the top. The current page is marked by NavLink (aria-current="page");
+ * /work/<project> keeps Work marked.
  */
 export default function TopNav() {
   const [open, setOpen] = useState(false);
   const [compact, setCompact] = useState(false);
-  const [active, setActive] = useState<string>("");
 
   useEffect(() => {
     const sentinel = document.getElementById("nav-sentinel");
     if (!sentinel || !("IntersectionObserver" in window)) return;
     const io = new IntersectionObserver(([entry]) => setCompact(!entry.isIntersecting));
     io.observe(sentinel);
-    return () => io.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!("IntersectionObserver" in window)) return;
-    // "home" is observed too, so scrolling back to the top clears the highlight.
-    const sections = ["home", ...NAV_LINKS.map((l) => l.id)].map((id) => document.getElementById(id)).filter(
-      (el): el is HTMLElement => el !== null,
-    );
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        }
-      },
-      { rootMargin: "-45% 0px -50% 0px" },
-    );
-    sections.forEach((s) => io.observe(s));
     return () => io.disconnect();
   }, []);
 
@@ -54,15 +34,15 @@ export default function TopNav() {
 
           <nav className="fc-nav__links" aria-label="Main">
             {NAV_LINKS.map((l) => (
-              <a key={l.id} href={`/#${l.id}`} aria-current={active === l.id ? "true" : undefined}>
+              <NavLink key={l.to} to={l.to} end={l.to === "/"}>
                 {l.label}
-              </a>
+              </NavLink>
             ))}
           </nav>
 
-          <a className="fc-nav__cta" href={START_HREF} onClick={() => chooseStart()}>
-            Start a project
-          </a>
+          <NavLink className="fc-nav__cta" to={CONTACT_LINK.to}>
+            {CONTACT_LINK.label}
+          </NavLink>
 
           <button
             type="button"
@@ -78,20 +58,13 @@ export default function TopNav() {
 
         <nav id="fc-mobile-menu" className="fc-nav__mobile" hidden={!open} aria-label="Mobile">
           {NAV_LINKS.map((l) => (
-            <a key={l.id} href={`/#${l.id}`} onClick={close}>
+            <NavLink key={l.to} to={l.to} end={l.to === "/"} onClick={close}>
               {l.label}
-            </a>
+            </NavLink>
           ))}
-          <a
-            className="fc-nav__cta fc-nav__cta--block"
-            href={START_HREF}
-            onClick={() => {
-              close();
-              chooseStart();
-            }}
-          >
-            Start a project
-          </a>
+          <NavLink className="fc-nav__cta fc-nav__cta--block" to={CONTACT_LINK.to} onClick={close}>
+            {CONTACT_LINK.label}
+          </NavLink>
         </nav>
       </header>
     </>

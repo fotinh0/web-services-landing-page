@@ -1,6 +1,8 @@
 import { ABOUT, SITE } from "../content/site";
 
-export default function About() {
+/** level 1 when this section is the page itself, 2 when it sits on the home page. */
+export default function About({ level = 2 }: { level?: 1 | 2 }) {
+  const Title = level === 1 ? "h1" : "h2";
   return (
     <section id="about" className="fc-section fc-section--light fc-section--tint" aria-labelledby="about-title">
       <div className="fc-wrap fc-about" data-reveal>
@@ -20,7 +22,7 @@ export default function About() {
 
         <div className="fc-about__text">
           <p className="fc-eyebrow">{ABOUT.eyebrow}</p>
-          <h2 id="about-title">{ABOUT.title}</h2>
+          <Title id="about-title">{ABOUT.title}</Title>
           {ABOUT.paragraphs.map((p) => (
             <p key={p}>{p}</p>
           ))}

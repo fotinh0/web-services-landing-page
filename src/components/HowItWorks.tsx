@@ -2,13 +2,15 @@ import type { CSSProperties } from "react";
 import { HOW } from "../content/site";
 
 /** Five dated steps. The line fills with scroll in browsers that support CSS scroll-driven animations. */
-export default function HowItWorks() {
+/** level 1 when this section is the page itself, 2 when it sits on the home page. */
+export default function HowItWorks({ level = 2 }: { level?: 1 | 2 }) {
+  const Title = level === 1 ? "h1" : "h2";
   return (
     <section id="how" className="fc-section fc-section--dark" aria-labelledby="how-title">
       <div className="fc-wrap">
         <header className="fc-head">
           <p className="fc-eyebrow">{HOW.eyebrow}</p>
-          <h2 id="how-title">{HOW.title}</h2>
+          <Title id="how-title">{HOW.title}</Title>
           <p className="fc-lead">{HOW.lead}</p>
         </header>
 

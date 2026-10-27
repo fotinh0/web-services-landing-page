@@ -1,9 +1,7 @@
-// Every word on the page below the hero lives here (hero copy: components/hero/heroContent.ts).
+// Every word on the site outside the hero lives here (hero copy: components/hero/heroContent.ts).
 // Lines marked CONFIRM are claims only you can verify. Each one is written in its
 // safest true form until you confirm the stronger version from the copy deck.
 
-import faEuroImg from "../../assets/hero/fa-euro.webp";
-import pciImg from "../../assets/hero/pci-media.webp";
 import weddingImg from "../../assets/hero/wedding.webp";
 import portfolioImg from "../../assets/hero/portfolio.webp";
 import type { PackageId } from "../components/hero/heroContent";
@@ -21,12 +19,15 @@ export const SITE = {
     "I design and build websites for local shops, studios and creatives. Fixed price from $500, live in 7–21 days, and you own everything.",
 };
 
+/** Top nav and footer, in this order. Contact is drawn as the nav's button. */
 export const NAV_LINKS = [
-  { id: "work", label: "Work" },
-  { id: "how", label: "How it works" },
-  { id: "prices", label: "Prices" },
-  { id: "about", label: "About" },
+  { to: "/", label: "Home" },
+  { to: "/about", label: "About" },
+  { to: "/work", label: "Work" },
+  { to: "/how-it-works", label: "How it works" },
+  { to: "/faq", label: "FAQ" },
 ];
+export const CONTACT_LINK = { to: "/contact", label: "Contact" };
 
 // ---------------------------------------------------------------------------
 // Work
@@ -49,45 +50,26 @@ export interface WorkItem {
 export const WORK = {
   eyebrow: "Recent work",
   title: "Real sites, live right now.",
-  lead: "A soccer club, a nonprofit, a wedding and my own portfolio. Each one had a different job, and each one is live, so open it on your phone.",
+  lead: "A destination wedding and my own portfolio. Each one had a different job, and both are live, so open them on your phone.",
   items: [
-    {
-      slug: "fa-euro",
-      name: "FA Euro New York",
-      tag: "Youth soccer club · Wix Studio",
-      // CONFIRM: what you built and what the staff now update themselves.
-      body: "A busy club site with news, programs, tryouts and registration in one place.",
-      url: "https://www.faeuro.com/",
-      host: "faeuro.com",
-      image: faEuroImg,
-      alt: "FA Euro New York club website with news and player photos",
-      platform: "Wix Studio",
-      features: ["News and blog", "Programs and tryouts", "Player registration", "Club information for parents"],
-    },
-    {
-      slug: "pci-media",
-      name: "PCI Media",
-      tag: "Nonprofit · WordPress",
-      // CONFIRM: your role. (pcimedia.org confirmed as the live domain.)
-      body: "A nonprofit that uses storytelling for social change, with its mission, programs and donations clear on any screen.",
-      url: "https://www.pcimedia.org/",
-      host: "pcimedia.org",
-      image: pciImg,
-      alt: "PCI Media nonprofit homepage in orange and teal",
-      platform: "WordPress",
-      features: ["Mission and programs", "Donation integration", "Volunteer opportunities", "Impact stories", "Works on every screen"],
-    },
     {
       slug: "wedding-albania",
       name: "A wedding in Albania",
       tag: "My own project · Custom build",
       body: "My own wedding site. Guests flying in from abroad needed the weekend plan, travel tips and an RSVP in one place.",
       url: "https://weddingfi.netlify.app/",
-      host: "weddingfi.netlify.app",
+      host: "indianafoti.com",
       image: weddingImg,
       alt: "Wedding website with a couple on a seaside terrace at sunset",
       platform: "Custom build",
-      features: ["Weekend itinerary", "Travel and stay info", "RSVP form", "Photo gallery", "Guest FAQs", "Works on every phone"],
+      features: [
+        "Weekend itinerary",
+        "Travel and stay info",
+        "RSVP form",
+        "Photo gallery",
+        "Guest FAQs",
+        "Works on every phone",
+      ],
     },
     {
       slug: "portfolio",
@@ -99,53 +81,22 @@ export const WORK = {
       image: portfolioImg,
       alt: "Dark portfolio website for software engineer Foti Ceci",
       platform: "Custom build",
-      features: ["Project showcase", "Smooth animations", "Contact form", "Works on every screen"],
+      features: [
+        "Project showcase",
+        "Smooth animations",
+        "Contact form",
+        "Works on every screen",
+      ],
     },
   ] satisfies WorkItem[],
-  after: "Your business isn't a soccer club? That's fine. Every site starts from what your customers need to do: book, order, call or find you.",
-  afterLink: "See who I build for",
+  after:
+    "Don't see a business like yours? That's fine. Every site starts from what your customers need to do: book, order, call or find you.",
+  afterLink: "Tell me what you do",
 };
 
 export function workBySlug(slug: string | undefined): WorkItem | undefined {
   return WORK.items.find((w) => w.slug === slug);
 }
-
-// ---------------------------------------------------------------------------
-// Who it's for
-// ---------------------------------------------------------------------------
-
-export const WHO = {
-  eyebrow: "Who I build for",
-  title: "Built for the way your business works.",
-  lead: "Pick the one that sounds like you. Each one shows the package that usually fits.",
-  rows: [
-    {
-      title: "Shops that sell",
-      quote: "My Instagram looks better than my website, and customers keep asking if they can order online.",
-      body: "Florists, boutiques, bakeries and gift shops. Your products online, with pickup or local delivery and a checkout that works on a phone. You add new products yourself in Shopify.",
-      packageId: "shop" as PackageId,
-      fits: "Local Shop · $1,500 · 14–21 days",
-      link: "See the Local Shop package",
-    },
-    {
-      title: "Creatives & practitioners",
-      quote: "I'm good at what I do, but my site makes me look small.",
-      body: "Photographers, coaches, stylists, therapists and trades. A portfolio or services page that shows your work at its best and makes it easy to get in touch.",
-      packageId: "professional" as PackageId,
-      fits: "Professional · $800 · 10–14 days",
-      link: "See the Professional package",
-    },
-    {
-      title: "Events, clubs & nonprofits",
-      quote: "We need this live before registration opens.",
-      body: "Weddings, sports clubs, community groups and nonprofits. Schedules, sign-ups, RSVPs or donations, live before your date.",
-      packageId: "starter" as PackageId,
-      fits: "Starter or Professional · from $500",
-      link: "Compare packages",
-    },
-  ],
-  footnote: "Not on the list? Tell me what you do. If I'm not the right fit, I'll say so.",
-};
 
 // ---------------------------------------------------------------------------
 // How it works
@@ -156,13 +107,34 @@ export const HOW = {
   title: "Two weeks from your content to launch.",
   lead: "You run your business. I run the project. Here's exactly what happens, and when.",
   steps: [
-    { day: "Day 0", title: "A 20-minute call", body: "You tell me about your business and what customers need to do on the site. I send a fixed price and a launch date." },
-    { day: "Days 1–3", title: "You send what you have", body: "I send a one-page checklist: logo, photos, a few lines about you, your hours. Rough notes are fine. I'll tell you exactly what's needed." },
-    { day: "Days 4–9", title: "I build it", body: "You get a private link to watch it come together on your own phone." },
-    { day: "Day 10", title: "You review it", body: "One round of changes is included. Send them as a list, a voice note or a call." },
-    { day: "Day 14", title: "Launch", body: "I connect your domain, set you up on Google, and show you how to update it yourself." },
+    {
+      day: "Day 0",
+      title: "A 20-minute call",
+      body: "You tell me about your business and what customers need to do on the site. I send a fixed price and a launch date.",
+    },
+    {
+      day: "Days 1–3",
+      title: "You send what you have",
+      body: "I send a one-page checklist: logo, photos, a few lines about you, your hours. Rough notes are fine. I'll tell you exactly what's needed.",
+    },
+    {
+      day: "Days 4–9",
+      title: "I build it",
+      body: "You get a private link to watch it come together on your own phone.",
+    },
+    {
+      day: "Day 10",
+      title: "You review it",
+      body: "One round of changes is included. Send them as a list, a voice note or a call.",
+    },
+    {
+      day: "Day 14",
+      title: "Launch",
+      body: "I connect your domain, set you up on Google, and show you how to update it yourself.",
+    },
   ],
-  footnote: "Example timeline for the Professional package. The clock starts when I have your content. Shops on Shopify take 14–21 days because there are products to load and payments to test.",
+  footnote:
+    "Example timeline for the Professional package. The clock starts when I have your content. Shops on Shopify take 14–21 days because there are products to load and payments to test.",
 };
 
 // ---------------------------------------------------------------------------
@@ -193,7 +165,12 @@ export const PRICES = {
       price: "$500",
       forLine: "A simple, professional home online",
       pages: "Up to 4 pages",
-      includes: ["Works on every phone", "Contact form", "Set up on Google", "Links to your socials"],
+      includes: [
+        "Works on every phone",
+        "Contact form",
+        "Set up on Google",
+        "Links to your socials",
+      ],
       rounds: "1 round of changes",
       days: "7–10 days",
       cta: "Start with Starter",
@@ -204,7 +181,12 @@ export const PRICES = {
       price: "$800",
       forLine: "Showing your work and winning clients",
       pages: "Up to 8 pages",
-      includes: ["Everything in Starter", "Portfolio or gallery", "Space for client reviews", "Layout built to get calls and bookings"],
+      includes: [
+        "Everything in Starter",
+        "Portfolio or gallery",
+        "Space for client reviews",
+        "Layout built to get calls and bookings",
+      ],
       rounds: "1 round of changes",
       days: "10–14 days",
       cta: "Start with Professional",
@@ -217,7 +199,13 @@ export const PRICES = {
       price: "$1,500",
       forLine: "Selling products online",
       pages: "Shopify store, up to 15 products loaded",
-      includes: ["Premium Shopify theme", "Card payments", "Pickup or local delivery", "Order confirmation emails", "Checkout that works on a phone"],
+      includes: [
+        "Premium Shopify theme",
+        "Card payments",
+        "Pickup or local delivery",
+        "Order confirmation emails",
+        "Checkout that works on a phone",
+      ],
       rounds: "2 rounds of changes",
       days: "14–21 days",
       cta: "Start my shop",
@@ -226,9 +214,21 @@ export const PRICES = {
   separately: {
     title: "Paid separately, to them, not to me",
     rows: [
-      { cost: "Domain (yourname.com)", amount: "Roughly $10–20 a year", note: "Registered in your name. You keep it forever." },
-      { cost: "Hosting, Starter and Professional", amount: "About $30 a year", note: "I'll confirm the exact amount before we start." },
-      { cost: "Shopify, Local Shop", amount: "$39/month, or $29/month billed yearly", note: "Shopify Basic as of May 2026, plus Shopify's card fees on each sale." },
+      {
+        cost: "Domain (yourname.com)",
+        amount: "Roughly $10–20 a year",
+        note: "Registered in your name. You keep it forever.",
+      },
+      {
+        cost: "Hosting, Starter and Professional",
+        amount: "About $30 a year",
+        note: "I'll confirm the exact amount before we start.",
+      },
+      {
+        cost: "Shopify, Local Shop",
+        amount: "$39/month, or $29/month billed yearly",
+        note: "Shopify Basic as of May 2026, plus Shopify's card fees on each sale.",
+      },
     ],
   },
   finePrint: [
@@ -254,7 +254,11 @@ export const ABOUT = {
     // Confirmed for every project. Custom builds include access to the code repository.
     "Everything is yours. The domain, the hosting and every login are in your name from day one. If I'm ever unavailable, any web developer can pick it up.",
   ],
-  link: { label: "See my engineering work", url: "https://foticeci.com", host: "foticeci.com" },
+  link: {
+    label: "See my engineering work",
+    url: "https://foticeci.com",
+    host: "foticeci.com",
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -275,7 +279,7 @@ export const FAQ = {
     },
     {
       q: "What does it cost after launch?",
-      a: "Only your domain and hosting, paid directly to them. Shopify stores also pay Shopify's monthly plan. The numbers are in the Prices section.",
+      a: "Only your domain and hosting, paid directly to them. Shopify stores also pay Shopify's monthly plan. The numbers are listed under Prices on the home page.",
     },
     {
       q: "I don't have good photos or know what to write. Is that a problem?",
@@ -308,23 +312,41 @@ export const START = {
   eyebrow: "Start a project",
   title: "Tell me about your business.",
   body: "Two minutes now, and you'll have a fixed price and a launch date within one business day. No obligation.",
-  reassurance: ["Fixed price from $500", "Live in 7–21 days", "You own everything"],
+  reassurance: [
+    "Fixed price from $500",
+    "Live in 7–21 days",
+    "You own everything",
+  ],
   form: {
     timeHint: "Takes about 2 minutes",
-    submit: "Send to Foti",
+    submit: "Send",
     sending: "Sending…",
-    successTitle: (first: string) => (first ? `Thanks, ${first}. It's in my inbox.` : "Thanks. It's in my inbox."),
+    successTitle: (first: string) =>
+      first
+        ? `Thanks, ${first}. It's in my inbox.`
+        : "Thanks. It's in my inbox.",
     successBody: (email: string) =>
       `I'll reply to ${email || "you"} within one business day with a price and a launch date. Nothing by then? Check spam, or email me at ${SITE.email}.`,
     networkError: `That didn't send. Your answers are still here, so try again, or email me at ${SITE.email}.`,
     errors: {
       name: "Add your name so I know who I'm writing to.",
       email: "Add an email I can reply to, like you@yourbusiness.com.",
-      business: "Tell me your business name and what you do, even in a few words.",
-      package: "Pick one, or choose \"Not sure yet\".",
+      business:
+        "Tell me your business name and what you do, even in a few words.",
+      package: 'Pick one, or choose "Not sure yet".',
     },
   },
   emailLine: "Or email me directly:",
+};
+
+// ---------------------------------------------------------------------------
+// Closing band on the inner pages (About, Work, How it works, FAQ)
+// ---------------------------------------------------------------------------
+
+export const PAGE_CTA = {
+  title: "Tell me about your business.",
+  body: "Two minutes now, and you'll have a fixed price and a launch date within one business day.",
+  button: "Start a project",
 };
 
 export const FOOTER = {

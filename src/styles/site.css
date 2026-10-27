@@ -3,26 +3,25 @@
    80 / 140 / 240 / 480ms, three easings, transform + opacity only. */
 
 :root {
-  --harbor: #141a36;
-  --ink: #0e1329;
-  --fog: #f2f6f5;
+  /* Cool slate with one blue. Blue is the only accent: buttons, links, focus
+     rings, the active nav underline, the featured package edge and the
+     timeline. Everything else is slate. */
+  --night: #0f172a;
+  --ink: #020617;
+  --fog: #f8fafc;
   --paper: #ffffff;
-  --sunk: #e7eeec;
-  --tide: #1ea0b5;
-  --tide-deep: #0f7585;
-  --moss: #2ac186;
-  --moss-deep: #178a5e;
-  --mint: #72cdb9;
-  --slate: #56617a;
-  --text: #141a36;
-  --text-2: #56617a;
-  --rule: #d3ddda;
-  --on-dark: #e9f0ef;
-  --on-dark-2: #c3ced6;
-  --on-dark-3: #95a2b8;
-  --dark-rule: #2b3557;
-  --error: #b5452f;
-  --grad: linear-gradient(90deg, var(--tide), var(--moss));
+  --alt: #eef2f6;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-on-dark: #93c5fd; /* blue as text or focus ring on --night */
+  --text: #0f172a;
+  --text-2: #475569;
+  --rule: #e2e8f0;
+  --on-dark: #f8fafc;
+  --on-dark-2: #cbd5e1;
+  --on-dark-3: #94a3b8;
+  --dark-rule: #1e293b;
+  --error: #b91c1c;
 
   --f-display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
   --f-body: "Albert Sans", "Segoe UI", system-ui, sans-serif;
@@ -58,13 +57,13 @@
   text-wrap: balance;
 }
 .fc-site :focus-visible {
-  outline: 2px solid var(--tide-deep);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 .fc-section--dark :focus-visible,
 .fc-nav :focus-visible,
 .fc-footer :focus-visible {
-  outline-color: var(--mint);
+  outline-color: var(--accent-on-dark);
 }
 section[id] {
   scroll-margin-top: 64px;
@@ -131,10 +130,10 @@ section[id] {
   color: var(--text);
 }
 .fc-section--tint {
-  background: var(--paper);
+  background: var(--alt);
 }
 .fc-section--dark {
-  background: var(--harbor);
+  background: var(--night);
   color: var(--on-dark);
 }
 .fc-head {
@@ -149,13 +148,16 @@ section[id] {
   font-size: 12.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--tide-deep);
+  color: var(--text-2);
 }
 .fc-section--dark .fc-eyebrow {
-  color: var(--mint);
+  color: var(--on-dark-3);
 }
+.fc-head h1,
 .fc-head h2,
+.fc-about__text h1,
 .fc-about__text h2,
+.fc-start h1,
 .fc-start h2 {
   margin: 0;
   font-size: clamp(32px, 4.4vw, 48px);
@@ -183,10 +185,10 @@ section[id] {
 
 /* ---------- links + buttons ---------- */
 .fc-link {
-  color: var(--tide-deep);
+  color: var(--accent);
   font-weight: 600;
   text-decoration: none;
-  background: var(--grad) left bottom / 0% 2px no-repeat;
+  background: linear-gradient(currentColor, currentColor) left bottom / 0% 2px no-repeat;
   padding-bottom: 2px;
   transition: background-size var(--dur-ui) var(--ease-out);
 }
@@ -194,7 +196,64 @@ section[id] {
   background-size: 100% 2px;
 }
 .fc-section--dark .fc-link {
-  color: var(--mint);
+  color: var(--accent-on-dark);
+}
+/* Shared buttons, used on every page (hero, packages, form, project pages). */
+.fc-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 22px;
+  border-radius: 9px;
+  font-family: var(--f-body);
+  font-weight: 600;
+  font-size: 17px;
+  text-decoration: none;
+  transition:
+    transform 140ms var(--ease-out),
+    background-color 140ms var(--ease-out),
+    border-color 140ms var(--ease-out),
+    box-shadow 140ms var(--ease-out);
+}
+/* Buttons appear on light and dark bands; plain blue clears 3:1 on both. */
+.fc-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.fc-btn--primary {
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+}
+.fc-btn:active {
+  transform: scale(0.98);
+  transition-duration: 80ms;
+}
+.fc-btn__arrow {
+  transition: transform 140ms var(--ease-out);
+}
+.fc-btn--ghost {
+  color: var(--text);
+  border: 1px solid #334155;
+}
+@media (hover: hover) {
+  .fc-btn--primary:hover:not(:active) {
+    transform: translateY(-1px);
+    background: var(--accent-hover);
+  }
+  .fc-btn:hover .fc-btn__arrow {
+    transform: translateX(3px);
+  }
+  .fc-btn--ghost:hover {
+    background: rgba(255, 255, 255, 0.07);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fc-btn,
+  .fc-btn__arrow {
+    transition: none;
+  }
 }
 .fc-btn--outline {
   color: var(--text);
@@ -216,7 +275,7 @@ section[id] {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--harbor);
+  background: var(--night);
   color: var(--on-dark);
   padding-top: env(safe-area-inset-top, 0px);
   border-bottom: 1px solid transparent;
@@ -282,16 +341,19 @@ section[id] {
   right: 0;
   bottom: 0;
   height: 2px;
-  background: var(--grad);
+  background: var(--accent);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--dur-ui) var(--ease-std);
 }
-.fc-nav__links a[aria-current="true"] {
+.fc-nav__links a[aria-current="page"] {
   color: var(--on-dark);
 }
-.fc-nav__links a[aria-current="true"]::after {
+.fc-nav__links a[aria-current="page"]::after {
   transform: scaleX(1);
+}
+.fc-nav__mobile a[aria-current="page"]:not(.fc-nav__cta) {
+  color: var(--accent-on-dark);
 }
 .fc-nav__cta {
   display: inline-flex;
@@ -299,8 +361,8 @@ section[id] {
   min-height: 42px;
   padding: 0 16px;
   border-radius: 8px;
-  background: var(--on-dark);
-  color: var(--harbor);
+  background: var(--accent);
+  color: #ffffff;
   font-weight: 600;
   font-size: 15px;
   text-decoration: none;
@@ -470,62 +532,11 @@ section[id] {
   font-family: var(--f-mono);
   font-size: 12px;
   letter-spacing: 0.04em;
-  color: var(--tide-deep);
+  color: var(--text-2);
 }
 .fc-work__body .fc-link {
   justify-self: start;
   margin-top: 6px;
-}
-
-/* ---------- who ---------- */
-.fc-who {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  border-top: 1px solid var(--rule);
-}
-.fc-who__row {
-  display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr) minmax(0, 1.1fr);
-  gap: 12px 40px;
-  padding: 32px 0;
-  border-bottom: 1px solid var(--rule);
-}
-@media (max-width: 860px) {
-  .fc-who__row {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-.fc-who__name h3 {
-  margin: 0;
-  font-size: 24px;
-  font-weight: 600;
-}
-.fc-who__fits {
-  margin: 8px 0 0;
-  font-family: var(--f-mono);
-  font-size: 12.5px;
-  color: var(--tide-deep);
-}
-.fc-who__quote {
-  margin: 0;
-  font-family: var(--f-display);
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 1.35;
-  color: var(--text);
-}
-.fc-who__body {
-  display: grid;
-  gap: 10px;
-  align-content: start;
-}
-.fc-who__body p {
-  margin: 0;
-  color: var(--text-2);
-}
-.fc-who__body .fc-link {
-  justify-self: start;
 }
 
 /* ---------- how ---------- */
@@ -544,7 +555,7 @@ section[id] {
   background: var(--dark-rule);
 }
 .fc-steps__fill {
-  background: linear-gradient(var(--tide), var(--moss));
+  background: var(--accent);
   transform-origin: top;
 }
 @supports (animation-timeline: view()) {
@@ -585,8 +596,8 @@ section[id] {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: var(--harbor);
-  border: 2px solid var(--mint);
+  background: var(--night);
+  border: 2px solid var(--on-dark-3);
 }
 .fc-steps h3 {
   margin: 0;
@@ -602,7 +613,7 @@ section[id] {
   font-size: 12.5px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--mint);
+  color: var(--on-dark-3);
 }
 
 /* ---------- packages ---------- */
@@ -634,14 +645,14 @@ section[id] {
     border-color var(--dur-micro) var(--ease-out);
 }
 .fc-pkg.is-featured {
-  border-color: color-mix(in srgb, var(--moss) 55%, var(--rule));
+  border-color: #cbd5e1;
 }
 .fc-pkg.is-featured::before {
   content: "";
   position: absolute;
   inset: 0 0 auto;
   height: 4px;
-  background: var(--grad);
+  background: var(--accent);
 }
 .fc-pkg__head {
   display: grid;
@@ -708,8 +719,8 @@ section[id] {
   top: 0.55em;
   width: 9px;
   height: 5px;
-  border-left: 2px solid var(--moss-deep);
-  border-bottom: 2px solid var(--moss-deep);
+  border-left: 2px solid var(--text-2);
+  border-bottom: 2px solid var(--text-2);
   transform: rotate(-45deg);
 }
 .fc-pkg .fc-btn {
@@ -752,7 +763,7 @@ section[id] {
   letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--text-2);
-  background: var(--sunk);
+  background: var(--alt);
 }
 .fc-table-wrap tbody th {
   font-weight: 600;
@@ -831,17 +842,14 @@ section[id] {
 .fc-about__photo--mono {
   display: grid;
   place-items: center;
-  background: var(--harbor);
+  background: var(--night);
   font-family: var(--f-display);
   font-weight: 700;
   font-size: clamp(72px, 12vw, 120px);
   letter-spacing: -0.06em;
 }
 .fc-about__photo--mono span {
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--accent-on-dark);
 }
 @media (max-width: 760px) {
   .fc-about__photo {
@@ -869,7 +877,7 @@ section[id] {
   color: var(--text-2);
 }
 .fc-about__text .fc-eyebrow {
-  color: var(--tide-deep);
+  color: var(--text-2);
 }
 .fc-about__text .fc-link {
   justify-self: start;
@@ -903,7 +911,7 @@ section[id] {
   font-family: var(--f-mono);
   font-size: 22px;
   line-height: 1;
-  color: var(--tide-deep);
+  color: var(--text-2);
   transition: transform var(--dur-ui) var(--ease-std);
 }
 .fc-faq__list details[open] summary::after {
@@ -966,8 +974,8 @@ section[id] {
   top: 0.5em;
   width: 9px;
   height: 5px;
-  border-left: 2px solid var(--moss);
-  border-bottom: 2px solid var(--moss);
+  border-left: 2px solid var(--on-dark-3);
+  border-bottom: 2px solid var(--on-dark-3);
   transform: rotate(-45deg);
 }
 .fc-start__reply {
@@ -983,8 +991,8 @@ section[id] {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--moss);
-  box-shadow: 0 0 0 4px rgba(42, 193, 134, 0.18);
+  background: var(--on-dark-3);
+  box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.25);
 }
 
 .fc-form {
@@ -1001,7 +1009,7 @@ section[id] {
   gap: 18px;
 }
 .fc-form :focus-visible {
-  outline-color: var(--tide-deep);
+  outline-color: var(--accent);
 }
 .fc-form__hint {
   margin: 0;
@@ -1042,7 +1050,7 @@ section[id] {
   width: 100%;
   min-height: 48px;
   padding: 11px 14px;
-  border: 1px solid #b9c6c3;
+  border: 1px solid #cbd5e1;
   border-radius: 8px;
   background: var(--paper);
   color: var(--text);
@@ -1055,13 +1063,13 @@ section[id] {
 }
 .fc-field input::placeholder,
 .fc-field textarea::placeholder {
-  color: #8a95a8;
+  color: #64748b;
 }
 .fc-field input:focus,
 .fc-field select:focus,
 .fc-field textarea:focus {
-  border-color: var(--tide-deep);
-  outline: 2px solid color-mix(in srgb, var(--tide) 35%, transparent);
+  border-color: var(--accent);
+  outline: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
   outline-offset: 0;
 }
 .fc-field [aria-invalid="true"] {
@@ -1096,7 +1104,7 @@ section[id] {
   color: var(--text-2);
 }
 .fc-form__email .fc-link {
-  color: var(--tide-deep);
+  color: var(--accent);
 }
 .fc-copy {
   margin-left: 6px;
@@ -1184,7 +1192,7 @@ section[id] {
 .fc-footer__speed {
   font-family: var(--f-mono);
   font-size: 12.5px;
-  color: var(--mint);
+  color: var(--on-dark-2);
 }
 
 /* ---------- back to top ---------- */
@@ -1197,7 +1205,7 @@ section[id] {
   height: 48px;
   border-radius: 50%;
   border: 1px solid var(--dark-rule);
-  background: var(--harbor);
+  background: var(--night);
   color: var(--on-dark);
   font-size: 20px;
   cursor: pointer;
@@ -1217,8 +1225,32 @@ section[id] {
     transform var(--dur-ui) var(--ease-out);
 }
 .fc-totop:focus-visible {
-  outline: 2px solid var(--mint);
+  outline: 2px solid var(--accent-on-dark);
   outline-offset: 3px;
+}
+
+/* ---------- closing band on inner pages ---------- */
+.fc-cta-band {
+  padding-block: clamp(48px, 7vw, 80px);
+  border-top: 1px solid var(--rule);
+}
+.fc-cta-band__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px 40px;
+}
+.fc-cta-band h2 {
+  margin: 0;
+  font-size: clamp(26px, 3.2vw, 36px);
+  font-weight: 700;
+  line-height: 1.1;
+}
+.fc-cta-band p {
+  margin: 8px 0 0;
+  max-width: 52ch;
+  color: var(--text-2);
 }
 
 /* ---------- hover: only where a pointer can hover ---------- */
@@ -1229,19 +1261,22 @@ section[id] {
   .fc-nav__links a:hover {
     color: var(--on-dark);
   }
+  .fc-nav__cta:hover {
+    background: var(--accent-hover);
+  }
   .fc-work__card:hover {
     transform: translateY(-2px);
-    border-color: color-mix(in srgb, var(--tide) 45%, var(--rule));
+    border-color: color-mix(in srgb, var(--text-2) 45%, var(--rule));
   }
   .fc-pkg:hover {
     transform: translateY(-2px);
-    border-color: color-mix(in srgb, var(--tide) 45%, var(--rule));
+    border-color: color-mix(in srgb, var(--text-2) 45%, var(--rule));
   }
   .fc-btn--outline:hover {
-    border-color: var(--tide-deep);
+    border-color: var(--text);
   }
   .fc-faq__list summary:hover {
-    color: var(--tide-deep);
+    color: var(--text-2);
   }
 }
 
@@ -1294,7 +1329,7 @@ section[id] {
   max-width: 760px;
 }
 .fc-case__head .fc-eyebrow {
-  color: var(--mint);
+  color: var(--on-dark-3);
 }
 .fc-case__actions {
   display: flex;
@@ -1304,7 +1339,7 @@ section[id] {
 }
 .fc-case .fc-btn--ghost {
   color: var(--on-dark);
-  border: 1px solid #3a4466;
+  border: 1px solid #334155;
 }
 .fc-case__frame {
   margin-top: clamp(36px, 5vw, 56px);
@@ -1360,8 +1395,8 @@ section[id] {
   top: 0.55em;
   width: 10px;
   height: 5px;
-  border-left: 2px solid var(--moss-deep);
-  border-bottom: 2px solid var(--moss-deep);
+  border-left: 2px solid var(--text-2);
+  border-bottom: 2px solid var(--text-2);
   transform: rotate(-45deg);
 }
 .fc-case__facts {
@@ -1422,7 +1457,7 @@ section[id] {
 @media (hover: hover) {
   .fc-case__back:hover,
   .fc-case__next-link:hover {
-    color: var(--tide);
+    color: var(--accent);
   }
 }
 

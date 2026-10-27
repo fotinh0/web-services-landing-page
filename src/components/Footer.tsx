@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { FOOTER, NAV_LINKS, SITE } from "../content/site";
+import { Link } from "react-router";
+import { CONTACT_LINK, FOOTER, NAV_LINKS, SITE } from "../content/site";
 
 /** Footer, with the signature detail: the page's real load time. */
 export default function Footer() {
@@ -33,11 +34,11 @@ export default function Footer() {
         </div>
         <nav aria-label="Footer" className="fc-footer__links">
           {NAV_LINKS.map((l) => (
-            <a key={l.id} href={`/#${l.id}`}>
+            <Link key={l.to} to={l.to}>
               {l.label}
-            </a>
+            </Link>
           ))}
-          <a href="/#start">Start a project</a>
+          <Link to={CONTACT_LINK.to}>{CONTACT_LINK.label}</Link>
         </nav>
       </div>
       <div className="fc-wrap fc-footer__base">

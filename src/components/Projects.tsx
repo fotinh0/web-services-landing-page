@@ -1,15 +1,18 @@
 import type { CSSProperties } from "react";
 import { Link } from "react-router";
 import { WORK } from "../content/site";
+import { CONTACT_HREF } from "../lib/startProject";
 
-/** Work: four live sites. Links are always visible, so phone visitors can open them too. */
-export default function Projects() {
+/** Work: live client and personal sites. Links are always visible, so phone visitors can open them too. */
+/** level 1 when this section is the page itself, 2 when it sits on the home page. */
+export default function Projects({ level = 2 }: { level?: 1 | 2 }) {
+  const Title = level === 1 ? "h1" : "h2";
   return (
-    <section id="work" className="fc-section fc-section--light" aria-labelledby="work-title">
+    <section id="work" className="fc-section fc-section--light fc-section--tint" aria-labelledby="work-title">
       <div className="fc-wrap">
         <header className="fc-head">
           <p className="fc-eyebrow">{WORK.eyebrow}</p>
-          <h2 id="work-title">{WORK.title}</h2>
+          <Title id="work-title">{WORK.title}</Title>
           <p className="fc-lead">{WORK.lead}</p>
         </header>
 
@@ -52,9 +55,9 @@ export default function Projects() {
 
         <p className="fc-after">
           {WORK.after}{" "}
-          <a className="fc-link" href="#who">
+          <Link className="fc-link" to={CONTACT_HREF}>
             {WORK.afterLink} →
-          </a>
+          </Link>
         </p>
       </div>
     </section>
