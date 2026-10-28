@@ -42,6 +42,7 @@
 
 /* ---------- base ---------- */
 .fc-site {
+  position: relative; /* containing block for #top-marker */
   background: var(--fog);
   color: var(--text);
   font-family: var(--f-body);
@@ -76,9 +77,11 @@ section[id] {
   height: 1px;
   outline: none;
 }
+/* Shows the back-to-top button after ~1.5 screens. Capped at the page's own
+   bottom, so on a short page it can't stretch the page below the footer. */
 #top-marker {
   position: absolute;
-  top: 150vh;
+  top: min(150vh, calc(100% - 1px));
   left: 0;
   width: 1px;
   height: 1px;

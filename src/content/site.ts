@@ -103,37 +103,37 @@ export function workBySlug(slug: string | undefined): WorkItem | undefined {
 
 export const HOW = {
   eyebrow: "How it works",
-  title: "Two weeks from your content to launch.",
-  lead: "You run your business. I run the project. Here's exactly what happens, and when.",
+  title: "From first conversation to finished website.",
+  lead: "A straightforward process, a clear price, and no guesswork. Here's what to expect at every stage.",
   steps: [
     {
-      day: "Day 0",
-      title: "A 20-minute call",
-      body: "You tell me about your business and what customers need to do on the site. I send a fixed price and a launch date.",
+      day: "Day 0 — Let's talk",
+      title: "A 30-minute call",
+      body: "We'll talk about your business, your goals, and what your website needs to do. I'll recommend the right package and confirm your price and expected launch date.",
     },
     {
-      day: "Days 1–3",
-      title: "You send what you have",
-      body: "I send a one-page checklist: logo, photos, a few lines about you, your hours. Rough notes are fine. I'll tell you exactly what's needed.",
+      day: "Days 1–3 — Get the essentials together",
+      title: "I'll guide you through it",
+      body: "I'll send you a simple checklist covering your logo, photos, business details, and anything else I need. Rough notes are fine — you don't need to have everything perfectly written.",
     },
     {
-      day: "Days 4–9",
-      title: "I build it",
-      body: "You get a private link to watch it come together on your own phone.",
+      day: "Days 4–9 — I build your website",
+      title: "Your site starts taking shape",
+      body: "I'll design and build your website around your business and your customers. You'll get a private preview link so you can follow the progress and see how it looks on your phone.",
     },
     {
-      day: "Day 10",
-      title: "You review it",
-      body: "One round of changes is included. Send them as a list, a voice note or a call.",
+      day: "Review — Make it yours",
+      title: "You tell me what needs adjusting",
+      body: "Once the site is ready, you'll review it and send me your feedback. Your package includes one or two rounds of revisions, depending on which option you choose.",
     },
     {
-      day: "Day 14",
-      title: "Launch",
-      body: "I connect your domain, set you up on Google, and show you how to update it yourself.",
+      day: "Launch — Ready for the world",
+      title: "Your website goes live",
+      body: "Once you've approved everything, I'll connect your domain, take care of the agreed Google setup, and walk you through how to manage your website.",
     },
   ],
   footnote:
-    "Example timeline for the Professional package. The clock starts when I have your content. Shops on Shopify take 14–21 days because there are products to load and payments to test.",
+    "These are example stages for the Professional package, not fixed calendar dates. Your timeline starts when I've received your content and the information I need. Starter websites typically take 7–10 days, Professional websites 10–14 days, and Shopify stores 14–21 days. I'll confirm your expected launch date before work begins.",
 };
 
 // ---------------------------------------------------------------------------
