@@ -21,9 +21,6 @@ export default function Contact({ level = 2 }: { level?: 1 | 2 }) {
               <li key={r}>{r}</li>
             ))}
           </ul>
-          <p className="fc-start__reply">
-            <span className="fc-dot" aria-hidden="true" />
-          </p>
         </div>
         <StartForm />
       </div>

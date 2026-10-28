@@ -2,19 +2,30 @@ import { Link } from "react-router";
 import type { PackageInfo } from "../content/site";
 import { START_HREF, chooseStart } from "../lib/startProject";
 
-/** One package as a work order: mono spec lines, one action, no hover scaling. */
+/**
+ * One package. Its five parts (head, stats, list, running costs, action) sit on
+ * rows shared with the other cards, so the packages compare line by line.
+ * A list that starts "Everything in …" shows only what this package adds.
+ */
 export default function PricingCard({ pkg }: { pkg: PackageInfo }) {
+  const [first, ...rest] = pkg.includes;
+  const base = first?.startsWith("Everything in ") ? first : null;
+  const items = base ? rest : pkg.includes;
+
   return (
     <article id={`package-${pkg.id}`} className={`fc-pkg${pkg.featured ? " is-featured" : ""}`}>
       <header className="fc-pkg__head">
         <h3>{pkg.name}</h3>
-        <p className="fc-pkg__price">{pkg.price}</p>
+        <p className="fc-pkg__price">
+          {pkg.price}
+          <span>fixed price</span>
+        </p>
         <p className="fc-pkg__for">{pkg.forLine}</p>
       </header>
 
-      <dl className="fc-pkg__spec">
+      <dl className="fc-pkg__stats">
         <div>
-          <dt>Pages</dt>
+          <dt>{pkg.sizeLabel ?? "Pages"}</dt>
           <dd>{pkg.pages}</dd>
         </div>
         <div>
@@ -27,11 +38,19 @@ export default function PricingCard({ pkg }: { pkg: PackageInfo }) {
         </div>
       </dl>
 
-      <ul className="fc-pkg__list">
-        {pkg.includes.map((line) => (
-          <li key={line}>{line}</li>
-        ))}
-      </ul>
+      <div className="fc-pkg__includes">
+        {base && <p className="fc-pkg__base">{base}, plus:</p>}
+        <ul className={`fc-pkg__list${base ? " is-plus" : ""}`}>
+          {items.map((line) => (
+            <li key={line}>{line}</li>
+          ))}
+        </ul>
+      </div>
+
+      <p className="fc-pkg__running">
+        <span>Running costs</span>
+        {pkg.running}
+      </p>
 
       <Link
         className={`fc-btn ${pkg.featured ? "fc-btn--primary" : "fc-btn--outline"}`}

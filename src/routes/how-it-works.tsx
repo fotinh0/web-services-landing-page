@@ -6,14 +6,18 @@ import { pageMeta } from "../lib/meta";
 import { useReveal } from "../lib/useReveal";
 
 export const meta: MetaFunction = () =>
-  pageMeta({ title: `How it works · ${SITE.name}`, description: HOW.lead, path: "/how-it-works" });
+  pageMeta({
+    title: `How it works · ${SITE.name}`,
+    description: HOW.lead,
+    path: "/how-it-works",
+  });
 
 export default function HowItWorksPage() {
   useReveal();
   return (
     <>
       <HowItWorks level={1} />
-      <PageCta />
+      <PageCta tint />
     </>
   );
 }

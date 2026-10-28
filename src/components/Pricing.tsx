@@ -17,33 +17,34 @@ export default function Pricing() {
           ))}
         </div>
 
+        {/* Running costs on the left, practical notes on the right. */}
         <div className="fc-costs">
-          <h3>{PRICES.separately.title}</h3>
-          <div className="fc-table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">Cost</th>
-                  <th scope="col">About how much</th>
-                  <th scope="col">Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                {PRICES.separately.rows.map((r) => (
-                  <tr key={r.cost}>
-                    <th scope="row">{r.cost}</th>
-                    <td>{r.amount}</td>
-                    <td>{r.note}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="fc-costs__block">
+            <h3>{PRICES.separately.title}</h3>
+            <ul className="fc-costs__list">
+              {PRICES.separately.rows.map((r) => (
+                <li key={r.cost} className="fc-cost">
+                  <div className="fc-cost__top">
+                    <p className="fc-cost__name">
+                      <strong>{r.cost}</strong>
+                      <span className="fc-cost__for">{r.appliesTo}</span>
+                    </p>
+                    <p className="fc-cost__amount">{r.amount}</p>
+                  </div>
+                  <p className="fc-cost__note">{r.note}</p>
+                </li>
+              ))}
+            </ul>
           </div>
-          <ul className="fc-fine">
-            {PRICES.finePrint.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
+
+          <div className="fc-costs__block">
+            <h3>{PRICES.finePrintTitle}</h3>
+            <ul className="fc-fine">
+              {PRICES.finePrint.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

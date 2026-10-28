@@ -34,7 +34,7 @@ const EMPTY: Values = {
 const PACKAGE_OPTIONS = [
   { value: "starter", label: "Starter · $500" },
   { value: "professional", label: "Professional · $800" },
-  { value: "shop", label: "Local Shop · $1,500" },
+  { value: "shop", label: "Local Shop · $2,000" },
   { value: "unsure", label: "Not sure yet" },
 ];
 
@@ -210,7 +210,7 @@ export default function StartForm() {
         </div>
 
         <div className="fc-field">
-          <label htmlFor="start-email">Email</label>
+          <label htmlFor="start-email">Email address</label>
           <input
             id="start-email"
             name="email"
@@ -238,7 +238,9 @@ export default function StartForm() {
         </div>
 
         <div className="fc-field">
-          <label htmlFor="start-business">Business name and what you do</label>
+          <label htmlFor="start-business">
+            Your business name and what you do
+          </label>
           <input
             id="start-business"
             name="business"
@@ -258,7 +260,7 @@ export default function StartForm() {
         </div>
 
         <div className="fc-field">
-          <label htmlFor="start-package">Which package fits?</label>
+          <label htmlFor="start-package">Which package fits your needs?</label>
           <select
             id="start-package"
             name="package"
@@ -292,7 +294,8 @@ export default function StartForm() {
 
         <div className="fc-field">
           <label htmlFor="start-launch">
-            Ideal launch <span className="fc-optional">Optional</span>
+            When would you ideally like to launch?{" "}
+            <span className="fc-optional">Optional</span>
           </label>
           <select
             id="start-launch"

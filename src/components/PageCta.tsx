@@ -15,7 +15,10 @@ export default function PageCta({ tint = false }: { tint?: boolean }) {
           <p>{PAGE_CTA.body}</p>
         </div>
         <Link className="fc-btn fc-btn--primary" to={CONTACT_HREF}>
-          {PAGE_CTA.button} <span className="fc-btn__arrow" aria-hidden="true">→</span>
+          {PAGE_CTA.button}{" "}
+          <span className="fc-btn__arrow" aria-hidden="true">
+            →
+          </span>
         </Link>
       </div>
     </section>

@@ -21,9 +21,9 @@ export const SITE = {
 /** Top nav and footer, in this order. Contact is drawn as the nav's button. */
 export const NAV_LINKS = [
   { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
   { to: "/work", label: "Work" },
   { to: "/how-it-works", label: "How it works" },
+  { to: "/about", label: "About" },
   { to: "/faq", label: "FAQ" },
 ];
 export const CONTACT_LINK = { to: "/contact", label: "Contact" };
@@ -48,14 +48,14 @@ export interface WorkItem {
 
 export const WORK = {
   eyebrow: "Recent work",
-  title: "Real sites, live right now.",
-  lead: "A destination wedding and my own portfolio. Each one had a different job, and both are live, so open them on your phone.",
+  title: "Real projects. Real websites. Live for you to explore.",
+  lead: "Every project is different. Here's a look at what I build and how I turn ideas into websites that work.",
   items: [
     {
       slug: "wedding-albania",
       name: "A wedding in Albania",
-      tag: "My own project · Custom build",
-      body: "My own wedding site. Guests flying in from abroad needed the weekend plan, travel tips and an RSVP in one place.",
+      tag: "Wedding website · Custom build",
+      body: "I built my own wedding website to help guests travelling from abroad find everything they needed in one place — from the weekend schedule and travel tips to RSVPs.",
       url: "https://weddingfi.netlify.app/",
       host: "indianafoti.com",
       image: weddingImg,
@@ -73,8 +73,8 @@ export const WORK = {
     {
       slug: "portfolio",
       name: "foticeci.com",
-      tag: "My portfolio · Custom build",
-      body: "Where my engineering work lives: apps and tools built with teams around the world.",
+      tag: "Personal portfolio · Custom build",
+      body: "My personal portfolio, built to showcase my engineering work, projects, and experience working with teams around the world.",
       url: "https://foticeci.com",
       host: "foticeci.com",
       image: portfolioImg,
@@ -89,8 +89,8 @@ export const WORK = {
     },
   ] satisfies WorkItem[],
   after:
-    "Don't see a business like yours? That's fine. Every site starts from what your customers need to do: book, order, call or find you.",
-  afterLink: "Tell me what you do",
+    "Don't see a business like yours? That's fine. Your website should fit your business, not a template. Whether you need more enquiries, easier bookings, online sales, or simply a professional online presence, we'll build around what your customers need.",
+  afterLink: "Tell me about your business",
 };
 
 export function workBySlug(slug: string | undefined): WorkItem | undefined {
@@ -145,8 +145,13 @@ export interface PackageInfo {
   name: string;
   price: string;
   forLine: string;
+  /** The size stat's label. Defaults to "Pages". */
+  sizeLabel?: string;
   pages: string;
+  /** Start with "Everything in <package>" to show the rest as additions ("+"). */
   includes: string[];
+  /** What it costs to keep running, summed from PRICES.separately. Keep in step with it. */
+  running: string;
   rounds: string;
   days: string;
   cta: string;
@@ -156,38 +161,42 @@ export interface PackageInfo {
 export const PRICES = {
   eyebrow: "Prices",
   title: "Three packages. One fixed price each.",
-  lead: "The price you see is the price you pay me. The only other costs are your domain and hosting, listed below.",
+  lead: "The price you see is what you pay me. No hidden development fees. You only pay your domain and hosting separately, or your Shopify subscription for an online store.",
   packages: [
     {
       id: "starter",
       name: "Starter",
       price: "$500",
-      forLine: "A simple, professional home online",
-      pages: "Up to 4 pages",
+      forLine:
+        "A professional website that gives your business a strong first impression.",
+      pages: "Up to 4",
       includes: [
-        "Works on every phone",
+        "Responsive design for phones, tablets, and desktops",
         "Contact form",
-        "Set up on Google",
-        "Links to your socials",
+        "Basic Google indexing and SEO setup",
+        "Social media links",
       ],
-      rounds: "1 round of changes",
+      rounds: "1 round",
       days: "7–10 days",
+      running: "Domain + hosting, about $40–50 a year",
       cta: "Start with Starter",
     },
     {
       id: "professional",
       name: "Professional",
       price: "$800",
-      forLine: "Showing your work and winning clients",
-      pages: "Up to 8 pages",
+      forLine:
+        "A website built to showcase your work, build trust, and turn visitors into enquiries.",
+      pages: "Up to 8",
       includes: [
         "Everything in Starter",
-        "Portfolio or gallery",
-        "Space for client reviews",
-        "Layout built to get calls and bookings",
+        "Portfolio or image gallery",
+        "Conversion-focused calls to action",
+        "Booking integration or enhanced contact forms",
       ],
-      rounds: "1 round of changes",
+      rounds: "2 rounds",
       days: "10–14 days",
+      running: "Domain + hosting, about $40–50 a year",
       cta: "Start with Professional",
       // Highlighted only. Not labelled "Most chosen" until that's true.
       featured: true,
@@ -195,46 +204,53 @@ export const PRICES = {
     {
       id: "shop",
       name: "Local Shop",
-      price: "$1,500",
-      forLine: "Selling products online",
-      pages: "Shopify store, up to 15 products loaded",
+      price: "$2,000",
+      forLine:
+        "An online store that makes it easy for customers to browse, order, and pay.",
+      sizeLabel: "Products",
+      pages: "Up to 15",
       includes: [
-        "Premium Shopify theme",
-        "Card payments",
-        "Pickup or local delivery",
-        "Order confirmation emails",
-        "Checkout that works on a phone",
+        "Custom Shopify Store",
+        "Card payment setup",
+        "Integrated Shipping",
+        "Shopify Tutorial Walkthrough",
+        "Fully Editable In Shopify CMS",
       ],
-      rounds: "2 rounds of changes",
+      rounds: "2 rounds",
       days: "14–21 days",
+      running: "Domain + Shopify, from $29 a month",
       cta: "Start my shop",
     },
   ] satisfies PackageInfo[],
   separately: {
-    title: "Paid separately, to them, not to me",
+    title: "These costs go to the service provider, not to me.",
     rows: [
       {
         cost: "Domain (yourname.com)",
-        amount: "Roughly $10–20 a year",
-        note: "Registered in your name. You keep it forever.",
+        appliesTo: "All packages",
+        amount: "Roughly $10–30 a year",
+        note: "Your domain is registered in your name, so you retain control of it.",
       },
       {
-        cost: "Hosting, Starter and Professional",
+        cost: "Hosting",
+        appliesTo: "Starter · Professional",
         amount: "About $30 a year",
         note: "I'll confirm the exact amount before we start.",
       },
       {
-        cost: "Shopify, Local Shop",
+        cost: "Shopify plan",
+        appliesTo: "Local Shop",
         amount: "$39/month, or $29/month billed yearly",
         note: "Shopify Basic as of May 2026, plus Shopify's card fees on each sale.",
       },
     ],
   },
+  finePrintTitle: "Good to know",
   finePrint: [
-    "You send the photos, logo and details. I'll tell you exactly what's needed.",
-    "The clock starts when I have your content.",
-    "Need more pages, products or changes later? I'll quote it before doing any work.",
-    "Not sure which package? Pick the closest one. We'll confirm it on the call.",
+    "You provide the content. Send me your photos, logo, and business details. I'll tell you exactly what I need.",
+    "The timeline starts when your content is ready. That way, you know what to expect from the start.",
+    "Need more later? If you need extra pages, products, or revisions, I'll quote the additional work before doing anything.",
+    "Not sure which package fits? Choose the closest match. We'll confirm the right option together on a call.",
   ],
 };
 
@@ -248,10 +264,11 @@ export const ABOUT = {
   /** Drop a portrait into assets/ and import it here. Until then a monogram shows. */
   portrait: undefined as string | undefined,
   paragraphs: [
-    "Hi, I'm Foti. By day I'm a software engineer. I build web apps with teams around the world, so I know what makes a site fast, secure and easy to find.",
-    "FC Web Services is how I bring that to local businesses. No agency, no account manager, no hand-offs. The person you talk to on the first call is the person who builds your site.",
+    "Hi, I'm Foti. I'm a software engineer by day, building web applications alongside teams around the world. That experience means I bring more than good design to your website. I know how to build sites that are fast, reliable, secure, and built to last.",
+    "FC Web Solutions is where I bring that expertise to businesses that want a better online presence, without the agency overhead.",
+    "No account managers. No middlemen. No hand-offs. You work directly with me, from our first conversation to launch.",
     // Confirmed for every project. Custom builds include access to the code repository.
-    "Everything is yours. The domain, the hosting and every login are in your name from day one. If I'm ever unavailable, any web developer can pick it up.",
+    "And when your site is live, it's yours. Your domain, hosting, and account credentials stay in your name. No lock-in, no unnecessary dependency. If you ever need another developer, they can pick up where I left off.",
   ],
   link: {
     label: "See my engineering work",
@@ -310,15 +327,15 @@ export const FAQ = {
 export const START = {
   eyebrow: "Start a project",
   title: "Tell me about your business.",
-  body: "Two minutes now, and you'll have a fixed price and a launch date within one business day. No obligation.",
+  body: "Answer a few quick questions, and I'll get back to you within one business day with a fixed price and an estimated launch date.",
   reassurance: [
     "Fixed price from $500",
     "Live in 7–21 days",
-    "You own everything",
+    "You own your website",
   ],
   form: {
     timeHint: "Takes about 2 minutes",
-    submit: "Send",
+    submit: "Send my enquiry",
     sending: "Sending…",
     successTitle: (first: string) =>
       first
@@ -344,11 +361,11 @@ export const START = {
 
 export const PAGE_CTA = {
   title: "Tell me about your business.",
-  body: "Two minutes now, and you'll have a fixed price and a launch date within one business day.",
-  button: "Start a project",
+  body: "Answer a few quick questions, and within one business day, you'll receive a fixed-price quote and a target launch date. No guesswork, no obligation.",
+  button: "Tell me about your project",
 };
 
 export const FOOTER = {
-  line: "Websites for local businesses, built by Foti Ceci",
+  line: "Websites for professionals and local businesses, built by Foti Ceci",
   credit: "© 2026 Foti Ceci",
 };

@@ -49,18 +49,23 @@ export function startHref(
 // Reassurance under the buttons
 // ---------------------------------------------------------------------------
 
-export const TRUST = ["Fixed price from $500", "Live in 7–21 days", "You own everything"];
+export const TRUST = [
+  "Fixed price from $500",
+  "Live in 7–21 days",
+  "You own everything",
+];
 
 // ---------------------------------------------------------------------------
 // Hero copy
 // ---------------------------------------------------------------------------
 
 export const HERO: HeroCopy = {
-  eyebrow: "Websites for local shops, studios & creatives",
+  eyebrow: "CUSTOM-DESIGNED. HAND-CODED. BUILT TO PERFORM.",
   headline: "A website as good as your business.",
   highlight: "as good as",
   // Price and timeline sit in TRUST right under the buttons, so the subhead doesn't repeat them.
-  subhead: "I design and build it for you, start to finish, and you deal with me the whole way.",
+  subhead:
+    "I design and develop custom websites that make your business look its best, build trust with potential customers, and turn more visits into inquiries.",
   primaryLabel: "Start my website",
   secondaryLabel: "See prices",
   secondaryHref: "/#prices",

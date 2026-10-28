@@ -621,11 +621,25 @@ section[id] {
 }
 
 /* ---------- packages ---------- */
+/* Three cards on shared rows (subgrid), so name, price, stats, list, running
+   costs and button line up across packages and differences read straight across. */
 .fc-pkgs {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
   align-items: stretch;
+}
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 961px) {
+    .fc-pkgs {
+      row-gap: 0;
+    }
+    .fc-pkgs > .fc-pkg {
+      grid-row: span 5;
+      grid-template-rows: subgrid;
+      row-gap: 22px;
+    }
+  }
 }
 @media (max-width: 960px) {
   .fc-pkgs {
@@ -636,8 +650,8 @@ section[id] {
 .fc-pkg {
   position: relative;
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
-  gap: 20px;
+  grid-template-rows: auto auto 1fr auto auto;
+  gap: 22px;
   padding: 28px;
   background: var(--paper);
   border: 1px solid var(--rule);
@@ -660,163 +674,240 @@ section[id] {
 }
 .fc-pkg__head {
   display: grid;
-  gap: 4px;
+  gap: 6px;
+  align-content: start;
 }
 .fc-pkg__head h3 {
   margin: 0;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
 }
 .fc-pkg__price {
-  margin: 4px 0 0;
+  margin: 2px 0 0;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
   font-family: var(--f-display);
-  font-size: 44px;
+  font-size: 46px;
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
-.fc-pkg__for {
-  margin: 6px 0 0;
+.fc-pkg__price span {
+  font-family: var(--f-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
   color: var(--text-2);
 }
-.fc-pkg__spec {
+.fc-pkg__for {
+  margin: 4px 0 0;
+  color: var(--text-2);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* The three numbers people compare: label left, bold value right, one row each.
+   The rows line up across cards, so the values read straight across. */
+.fc-pkg__stats {
   margin: 0;
   display: grid;
-  gap: 6px;
-  padding: 14px 0;
-  border-block: 1px solid var(--rule);
-  font-family: var(--f-mono);
-  font-size: 13px;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  background: var(--fog);
 }
-.fc-pkg__spec div {
+.fc-pkg__stats div {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   gap: 12px;
+  padding: 11px 16px;
+  min-width: 0;
 }
-.fc-pkg__spec dt {
-  color: var(--text-2);
+.fc-pkg__stats div + div {
+  border-top: 1px solid var(--rule);
+}
+.fc-pkg__stats dt {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  font-size: 11.5px;
+  color: var(--text-2);
 }
-.fc-pkg__spec dd {
+.fc-pkg__stats dd {
   margin: 0;
+  font-family: var(--f-display);
+  font-size: 16px;
+  font-weight: 600;
   text-align: right;
+}
+
+.fc-pkg__includes {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+.fc-pkg__base {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
 }
 .fc-pkg__list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 8px;
+  gap: 9px;
   align-content: start;
 }
 .fc-pkg__list li {
   position: relative;
-  padding-left: 22px;
+  padding-left: 24px;
+  line-height: 1.45;
 }
 .fc-pkg__list li::before {
   content: "";
   position: absolute;
   left: 2px;
-  top: 0.55em;
+  top: 0.5em;
   width: 9px;
   height: 5px;
   border-left: 2px solid var(--text-2);
   border-bottom: 2px solid var(--text-2);
   transform: rotate(-45deg);
 }
+/* Additions on top of another package: a plus instead of a tick. */
+.fc-pkg__list.is-plus li::before {
+  content: "+";
+  top: 0;
+  width: auto;
+  height: auto;
+  border: 0;
+  transform: none;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.fc-pkg__running {
+  margin: 0;
+  display: grid;
+  gap: 2px;
+  padding-top: 16px;
+  border-top: 1px dashed #cbd5e1;
+  font-size: 14.5px;
+  color: var(--text-2);
+}
+.fc-pkg__running span {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 .fc-pkg .fc-btn {
   justify-content: center;
 }
+
+/* ---------- running costs and practical notes ---------- */
 .fc-costs {
-  margin-top: 48px;
+  margin-top: clamp(40px, 6vw, 64px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 48px);
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .fc-costs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.fc-costs__block {
   display: grid;
   gap: 16px;
-  max-width: 900px;
 }
 .fc-costs h3 {
   margin: 0;
   font-size: 20px;
   font-weight: 600;
 }
-.fc-table-wrap {
-  overflow-x: auto;
+.fc-costs__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   border: 1px solid var(--rule);
   border-radius: var(--radius);
   background: var(--paper);
 }
-.fc-table-wrap table {
-  width: 100%;
-  min-width: 560px;
-  border-collapse: collapse;
-  font-size: 15.5px;
+.fc-cost {
+  display: grid;
+  gap: 6px;
+  padding: 18px 22px;
 }
-.fc-table-wrap th,
-.fc-table-wrap td {
-  text-align: left;
-  vertical-align: top;
-  padding: 13px 16px;
-  border-bottom: 1px solid var(--rule);
+.fc-cost + .fc-cost {
+  border-top: 1px solid var(--rule);
 }
-.fc-table-wrap thead th {
-  font-family: var(--f-mono);
-  font-size: 11.5px;
-  font-weight: 500;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--text-2);
-  background: var(--alt);
+.fc-cost__top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px 20px;
 }
-.fc-table-wrap tbody th {
+.fc-cost__name {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+.fc-cost__name strong {
   font-weight: 600;
 }
-.fc-table-wrap tbody td:last-child {
+/* Which packages the cost applies to. */
+.fc-cost__for {
+  padding: 2px 9px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
   color: var(--text-2);
+  white-space: nowrap;
 }
-.fc-table-wrap tr:last-child th,
-.fc-table-wrap tr:last-child td {
-  border-bottom: 0;
+.fc-cost__amount {
+  margin: 0;
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
-@media (max-width: 600px) {
-  .fc-table-wrap table,
-  .fc-table-wrap tbody,
-  .fc-table-wrap tr,
-  .fc-table-wrap th,
-  .fc-table-wrap td {
-    display: block;
-    min-width: 0;
-  }
-  .fc-table-wrap thead {
-    display: none;
-  }
-  .fc-table-wrap tr {
-    padding: 14px 16px;
-    border-bottom: 1px solid var(--rule);
-  }
-  .fc-table-wrap tr:last-child {
-    border-bottom: 0;
-  }
-  .fc-table-wrap tbody th,
-  .fc-table-wrap tbody td {
-    padding: 0;
-    border: 0;
-  }
-  .fc-table-wrap tbody td:nth-child(2) {
-    font-family: var(--f-mono);
-    font-size: 14px;
-    margin-top: 4px;
-  }
+.fc-cost__note {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-2);
 }
 .fc-fine {
   margin: 0;
-  padding-left: 1.1em;
-  list-style: disc;
+  padding: 0;
+  list-style: none;
   display: grid;
-  gap: 6px;
+  gap: 12px;
   color: var(--text-2);
   font-size: 15.5px;
+}
+.fc-fine li {
+  position: relative;
+  padding-left: 22px;
+  line-height: 1.5;
+}
+.fc-fine li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid #94a3b8;
 }
 
 /* ---------- about ---------- */
@@ -1515,20 +1606,22 @@ section[id] {
   border-radius: var(--r-sm);
 }
 
-/* Labels become small pills, echoing the hero's eyebrow. */
+/* Labels: a short leading hairline, echoing the hero's eyebrow. No box. */
 .fc-eyebrow {
   justify-self: start;
   display: inline-flex;
   align-items: center;
+  gap: 12px;
   width: fit-content;
-  padding: 5px 12px;
-  border: 1px solid var(--rule);
-  border-radius: var(--r-pill);
-  background: var(--paper);
+  letter-spacing: 0.12em;
 }
-.fc-section--dark .fc-eyebrow {
-  border-color: var(--dark-rule);
-  background: rgba(255, 255, 255, 0.04);
+.fc-eyebrow::before {
+  content: "";
+  flex: none;
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
 }
 
 /* ---------- nav ---------- */
@@ -1569,9 +1662,6 @@ section[id] {
 }
 .fc-form {
   border-radius: var(--r-lg);
-}
-.fc-table-wrap {
-  border-radius: var(--r-md);
 }
 .fc-case__frame {
   border-radius: var(--r-lg);
@@ -1652,6 +1742,16 @@ section[id] {
 /* The card keeps a side gutter on small screens (it replaces .fc-wrap's padding). */
 .fc-cta-band__inner {
   max-width: min(1120px, calc(100% - 2 * max(20px, env(safe-area-inset-left, 0px))));
+}
+
+/* ---------- section followed by the closing band ---------- */
+/* Both sections' padding stacked into a ~240px empty gap (About, Work, FAQ).
+   Keep the curve, but let the closing card sit close beneath it. */
+main > .fc-section--tint:has(+ .fc-cta-band) {
+  padding-bottom: calc(clamp(40px, 5vw, 64px) + var(--curve) * 0.5);
+}
+main > .fc-section + .fc-cta-band {
+  padding-top: clamp(24px, 3vw, 40px);
 }
 
 /* ---------- page endings ---------- */

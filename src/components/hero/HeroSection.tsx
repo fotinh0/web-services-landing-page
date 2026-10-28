@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import "./hero.css";
-import { HERO as copy, TRUST } from "./heroContent";
+import { HERO as copy } from "./heroContent";
 import { applyMotionLite } from "../../lib/motion";
 import { START_HREF, chooseStart } from "../../lib/startProject";
 
@@ -52,11 +52,11 @@ export default function HeroSection() {
             </Link>
           </div>
 
-          <ul className="fc-hero__trust">
+          {/* <ul className="fc-hero__trust">
             {TRUST.map((t) => (
               <li key={t}>{t}</li>
             ))}
-          </ul>
+          </ul> */}
         </div>
       </div>
 

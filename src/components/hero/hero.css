@@ -25,7 +25,11 @@
   overflow: hidden;
   isolation: isolate;
   background:
-    radial-gradient(1100px 520px at 50% -12%, var(--wash) 0%, rgba(238, 242, 246, 0) 72%),
+    radial-gradient(
+      1100px 520px at 50% -12%,
+      var(--wash) 0%,
+      rgba(238, 242, 246, 0) 72%
+    ),
     #ffffff;
   color: var(--text);
   font-family: var(--f-body);
@@ -46,14 +50,24 @@
   aspect-ratio: 1;
   top: -32%;
   left: -18%;
-  background: radial-gradient(closest-side, #e2e8f0 0%, rgba(226, 232, 240, 0.6) 45%, rgba(226, 232, 240, 0) 100%);
+  background: radial-gradient(
+    closest-side,
+    #e2e8f0 0%,
+    rgba(226, 232, 240, 0.6) 45%,
+    rgba(226, 232, 240, 0) 100%
+  );
 }
 .fc-hero::after {
   width: min(720px, 100vw);
   aspect-ratio: 1;
   bottom: -18%;
   right: -12%;
-  background: radial-gradient(closest-side, rgba(37, 99, 235, 0.08) 0%, rgba(37, 99, 235, 0.04) 50%, rgba(37, 99, 235, 0) 100%);
+  background: radial-gradient(
+    closest-side,
+    rgba(37, 99, 235, 0.08) 0%,
+    rgba(37, 99, 235, 0.04) 50%,
+    rgba(37, 99, 235, 0) 100%
+  );
 }
 
 /* ---------- curved bottom edge ---------- */
@@ -82,7 +96,8 @@
   margin-inline: auto;
   /* Bottom padding = the wave's height + breathing room, so the wave never covers the copy. */
   padding: clamp(56px, 9vw, 112px) max(20px, env(safe-area-inset-right, 0px))
-    calc(clamp(40px, 7vw, 110px) + clamp(40px, 5vw, 64px)) max(20px, env(safe-area-inset-left, 0px));
+    calc(clamp(40px, 7vw, 110px) + clamp(40px, 5vw, 64px))
+    max(20px, env(safe-area-inset-left, 0px));
   display: grid;
   justify-items: center;
   gap: 22px;
@@ -93,15 +108,23 @@
   margin: 0;
   display: inline-flex;
   align-items: center;
-  padding: 6px 14px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.8);
-  font-family: var(--f-mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
+  gap: 14px;
+  /* font-family: var(--f-mono); */
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-2);
+}
+/* A hairline on each side instead of a pill: quieter, and it centres the label. */
+.fc-hero__eyebrow::before,
+.fc-hero__eyebrow::after {
+  content: "";
+  flex: none;
+  width: 32px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.45;
 }
 
 .fc-hero__title {
@@ -116,12 +139,12 @@
 }
 /* The highlight is a change of voice, not of colour: an italic serif. */
 .fc-hero__title em {
-  font-family: var(--f-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 1.08em;
+  /* font-family: var(--f-serif); */
+  /* font-style: italic; */
+  /* font-weight: 400; */
+  /* font-size: 1.08em; */
   letter-spacing: -0.01em;
-  padding-right: 0.04em;
+  /* padding-right: 0.04em; */
   color: var(--accent);
 }
 
@@ -197,11 +220,14 @@
 }
 
 @media (max-width: 480px) {
-  /* Keeps the label pill on one line on phones. */
+  /* Phones: a touch smaller and no hairlines, so the label fits on one line. */
   .fc-hero__eyebrow {
-    padding: 5px 12px;
-    font-size: 10.5px;
-    letter-spacing: 0.05em;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+  .fc-hero__eyebrow::before,
+  .fc-hero__eyebrow::after {
+    display: none;
   }
   .fc-hero__actions {
     width: 100%;
