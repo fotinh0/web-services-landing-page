@@ -69,17 +69,38 @@ export default function WorkPage() {
               </Link>
             </div>
           </div>
-          <div
-            className="fc-case__frame"
-            style={{ "--vt": `work-${item.slug}` } as CSSProperties}
-          >
-            <span className="fc-work__chrome" aria-hidden="true">
-              <i />
-              <i />
-              <i />
-              <span>{item.host}</span>
-            </span>
-            <img src={item.image} alt={item.alt} width={1280} height={800} />
+          {/* The same site on a desktop and on a phone. The desktop frame keeps the
+              card's view-transition name, so it still morphs in from the Work list. */}
+          <div className="fc-devices">
+            <figure className="fc-devices__desktop">
+              <div
+                className="fc-case__frame"
+                style={{ "--vt": `work-${item.slug}` } as CSSProperties}
+              >
+                <span className="fc-work__chrome" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                  <span>{item.host}</span>
+                </span>
+                <img src={item.image} alt={item.alt} width={1280} height={800} />
+              </div>
+              <figcaption>Desktop</figcaption>
+            </figure>
+            <figure className="fc-devices__phone">
+              <div className="fc-phone">
+                <span className="fc-phone__notch" aria-hidden="true" />
+                <img
+                  src={item.mobileImage}
+                  alt={item.mobileAlt}
+                  width={390}
+                  height={844}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <figcaption>Mobile</figcaption>
+            </figure>
           </div>
         </div>
       </section>

@@ -1440,7 +1440,6 @@ section[id] {
   border: 1px solid #334155;
 }
 .fc-case__frame {
-  margin-top: clamp(36px, 5vw, 56px);
   border: 1px solid var(--dark-rule);
   border-radius: 12px;
   overflow: hidden;
@@ -1458,6 +1457,75 @@ section[id] {
   object-fit: cover;
   object-position: top;
 }
+/* ---------- device preview: desktop frame with a phone overlapping its corner ---------- */
+.fc-devices {
+  position: relative;
+  margin-top: clamp(36px, 5vw, 56px);
+}
+.fc-devices figure {
+  margin: 0;
+}
+.fc-devices figcaption {
+  margin-top: 12px;
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--on-dark-3);
+}
+.fc-devices__desktop {
+  width: 84%;
+}
+.fc-devices__phone {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: clamp(120px, 22%, 250px);
+  text-align: center;
+}
+/* A plain phone: dark bezel, rounded corners, a small notch. */
+.fc-phone {
+  position: relative;
+  padding: 7px;
+  border: 1px solid #334155;
+  border-radius: clamp(24px, 3.4vw, 40px);
+  background: var(--ink);
+  box-shadow:
+    0 30px 60px -20px rgba(2, 6, 23, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+.fc-phone img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 390 / 844;
+  object-fit: cover;
+  object-position: top;
+  border-radius: clamp(18px, 2.7vw, 33px);
+}
+.fc-phone__notch {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  translate: -50% 0;
+  width: 30%;
+  height: clamp(10px, 1.4vw, 18px);
+  border-radius: 999px;
+  background: var(--ink);
+  z-index: 1;
+}
+@media (max-width: 640px) {
+  .fc-devices__desktop {
+    width: 88%;
+  }
+  .fc-devices__phone {
+    width: 34%;
+  }
+  .fc-devices figcaption {
+    font-size: 10.5px;
+  }
+}
+
 .fc-case__body {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);

@@ -4,6 +4,8 @@
 
 import weddingImg from "../../assets/hero/wedding.webp";
 import portfolioImg from "../../assets/hero/portfolio.webp";
+import weddingMobileImg from "../../assets/hero/wedding-mobile.webp";
+import portfolioMobileImg from "../../assets/hero/portfolio-mobile.webp";
 import type { PackageId } from "../components/hero/heroContent";
 
 export const SITE = {
@@ -41,6 +43,9 @@ export interface WorkItem {
   host: string;
   image: string;
   alt: string;
+  /** The same site on a phone (390×844 screenshot), for the project page's device preview. */
+  mobileImage: string;
+  mobileAlt: string;
   platform: string;
   /** What's on the site. From your original project notes. */
   features: string[];
@@ -60,6 +65,8 @@ export const WORK = {
       host: "indianafoti.com",
       image: weddingImg,
       alt: "Wedding website with a couple on a seaside terrace at sunset",
+      mobileImage: weddingMobileImg,
+      mobileAlt: "The wedding website on a phone: names, dates and the \"We're getting married\" photo",
       platform: "Custom build",
       features: [
         "Weekend itinerary",
@@ -79,6 +86,8 @@ export const WORK = {
       host: "foticeci.com",
       image: portfolioImg,
       alt: "Dark portfolio website for software engineer Foti Ceci",
+      mobileImage: portfolioMobileImg,
+      mobileAlt: "The portfolio on a phone: a dark page introducing Foti Ceci as a software engineer",
       platform: "Custom build",
       features: [
         "Project showcase",
