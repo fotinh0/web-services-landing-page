@@ -85,9 +85,9 @@ export const WORK = {
       url: "https://foticeci.com",
       host: "foticeci.com",
       image: portfolioImg,
-      alt: "Dark portfolio website for software engineer Foti Ceci",
+      alt: "Foti Ceci's portfolio: a dark page with his name, the title Frontend Engineer in green, and a See my work button",
       mobileImage: portfolioMobileImg,
-      mobileAlt: "The portfolio on a phone: a dark page introducing Foti Ceci as a software engineer",
+      mobileAlt: "The portfolio on a phone: Foti Ceci's name, the title Frontend Engineer and a green See my work button",
       platform: "Custom build",
       features: [
         "Project showcase",
