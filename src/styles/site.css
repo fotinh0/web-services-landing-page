@@ -191,7 +191,8 @@ section[id] {
   color: var(--accent);
   font-weight: 600;
   text-decoration: none;
-  background: linear-gradient(currentColor, currentColor) left bottom / 0% 2px no-repeat;
+  background: linear-gradient(currentColor, currentColor) left bottom / 0% 2px
+    no-repeat;
   padding-bottom: 2px;
   transition: background-size var(--dur-ui) var(--ease-out);
 }
@@ -430,7 +431,8 @@ section[id] {
 .fc-nav__mobile {
   display: grid;
   gap: 2px;
-  padding: 8px max(20px, env(safe-area-inset-right, 0px)) 20px max(20px, env(safe-area-inset-left, 0px));
+  padding: 8px max(20px, env(safe-area-inset-right, 0px)) 20px
+    max(20px, env(safe-area-inset-left, 0px));
   border-top: 1px solid var(--dark-rule);
 }
 .fc-nav__mobile[hidden] {
@@ -475,6 +477,24 @@ section[id] {
 @media (max-width: 760px) {
   .fc-work {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+/* With an odd number of projects, the first one spans the row as a wide
+   featured card (screenshot left, text right), so no card sits alone. */
+@media (min-width: 761px) {
+  .fc-work > .fc-work__card:first-child:nth-last-child(odd) {
+    grid-column: 1 / -1;
+    grid-template-rows: none;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    align-items: center;
+  }
+  .fc-work > .fc-work__card:first-child:nth-last-child(odd) .fc-work__frame {
+    border-bottom: 0;
+    border-right: 1px solid var(--rule);
+    align-self: stretch;
+  }
+  .fc-work > .fc-work__card:first-child:nth-last-child(odd) .fc-work__body {
+    padding: clamp(24px, 3.5vw, 44px);
   }
 }
 .fc-work__card {
@@ -536,9 +556,11 @@ section[id] {
   color: var(--text-2);
 }
 .fc-work__body .fc-work__tag {
-  font-family: var(--f-mono);
+  /* font-family: var(--f-mono); */
   font-size: 12px;
-  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  /* letter-spacing: 0.04em; */
+  letter-spacing: 0.14em;
   color: var(--text-2);
 }
 .fc-work__body .fc-link {
@@ -1812,7 +1834,10 @@ section[id] {
 }
 /* The card keeps a side gutter on small screens (it replaces .fc-wrap's padding). */
 .fc-cta-band__inner {
-  max-width: min(1120px, calc(100% - 2 * max(20px, env(safe-area-inset-left, 0px))));
+  max-width: min(
+    1120px,
+    calc(100% - 2 * max(20px, env(safe-area-inset-left, 0px)))
+  );
 }
 
 /* ---------- section followed by the closing band ---------- */

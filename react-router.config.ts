@@ -14,6 +14,7 @@ export default {
     "/how-it-works",
     "/faq",
     "/contact",
+    "/work/ks-media-weddings",
     "/work/wedding-albania",
     "/work/portfolio",
   ],

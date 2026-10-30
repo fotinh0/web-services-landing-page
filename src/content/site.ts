@@ -6,6 +6,8 @@ import weddingImg from "../../assets/hero/wedding.webp";
 import portfolioImg from "../../assets/hero/portfolio.webp";
 import weddingMobileImg from "../../assets/hero/wedding-mobile.webp";
 import portfolioMobileImg from "../../assets/hero/portfolio-mobile.webp";
+import ksMediaImg from "../../assets/hero/ks-media.webp";
+import ksMediaMobileImg from "../../assets/hero/ks-media-mobile.webp";
 import type { PackageId } from "../components/hero/heroContent";
 
 export const SITE = {
@@ -57,16 +59,41 @@ export const WORK = {
   lead: "Every project is different. Here's a look at what I build and how I turn ideas into websites that work.",
   items: [
     {
+      // Client work, so it leads the list (and gets the wide featured card).
+      slug: "ks-media-weddings",
+      name: "KS Media Weddings",
+      // CONFIRM: "Custom build" is a guess; change it if the site runs on a platform.
+      tag: "Wedding videographer · Custom build",
+      body: "A website for a Los Angeles wedding videographer. The films lead, the packages and process are clear, and couples can check availability in one short form.",
+      url: "https://ks-media-weddings.com/",
+      host: "ks-media-weddings.com",
+      image: ksMediaImg,
+      alt: "KS Media Weddings homepage: a couple dancing at sunset behind the headline Films that let you feel it all again",
+      mobileImage: ksMediaMobileImg,
+      mobileAlt:
+        "KS Media Weddings on a phone: the sunset dance film with Watch the films and Inquire buttons",
+      platform: "Custom build",
+      features: [
+        "Full-screen film in the hero",
+        "Featured films gallery",
+        "Three packages, compared side by side",
+        "Four-step process",
+        "Kind words from couples",
+        "Inquiry form with date, venue and guest count",
+      ],
+    },
+    {
       slug: "wedding-albania",
       name: "A wedding in Albania",
       tag: "Wedding website · Custom build",
-      body: "I built my own wedding website to help guests travelling from abroad find everything they needed in one place — from the weekend schedule and travel tips to RSVPs.",
+      body: "A wedding website designed to help guests travelling from abroad find everything they needed in one place, from the weekend schedule and travel tips to RSVPs.",
       url: "https://weddingfi.netlify.app/",
       host: "indianafoti.com",
       image: weddingImg,
-      alt: "Wedding website with a couple on a seaside terrace at sunset",
+      alt: "Indiana & Foti wedding website: a black-and-white and a colour photo of the couple by the sea, behind the script headline We're getting married",
       mobileImage: weddingMobileImg,
-      mobileAlt: "The wedding website on a phone: names, dates and the \"We're getting married\" photo",
+      mobileAlt:
+        "The wedding website on a phone: the couple's names, the July 31 – August 1, 2026 date strip and We're getting married over a black-and-white photo",
       platform: "Custom build",
       features: [
         "Weekend itinerary",
@@ -81,13 +108,14 @@ export const WORK = {
       slug: "portfolio",
       name: "foticeci.com",
       tag: "Personal portfolio · Custom build",
-      body: "My personal portfolio, built to showcase my engineering work, projects, and experience working with teams around the world.",
+      body: "A personal portfolio built to showcase engineering work and personal projects.",
       url: "https://foticeci.com",
       host: "foticeci.com",
       image: portfolioImg,
       alt: "Foti Ceci's portfolio: a dark page with his name, the title Frontend Engineer in green, and a See my work button",
       mobileImage: portfolioMobileImg,
-      mobileAlt: "The portfolio on a phone: Foti Ceci's name, the title Frontend Engineer and a green See my work button",
+      mobileAlt:
+        "The portfolio on a phone: Foti Ceci's name, the title Frontend Engineer and a green See my work button",
       platform: "Custom build",
       features: [
         "Project showcase",
