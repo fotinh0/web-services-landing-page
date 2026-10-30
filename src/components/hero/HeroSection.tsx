@@ -13,7 +13,7 @@ function Headline({ text, highlight }: { text: string; highlight?: string }) {
   return (
     <>
       {before}
-      <em>{highlight}</em>
+      <span className="fc-hero__highlight">{highlight}</span>
       {after}
     </>
   );

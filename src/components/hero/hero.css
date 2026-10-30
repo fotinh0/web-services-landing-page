@@ -138,14 +138,14 @@
   max-width: 14ch;
 }
 /* The highlight is a change of voice, not of colour: an italic serif. */
-.fc-hero__title em {
+.fc-hero__title .fc-hero__highlight {
   /* font-family: var(--f-serif); */
   /* font-style: italic; */
   /* font-weight: 400; */
   /* font-size: 1.08em; */
   letter-spacing: -0.01em;
   /* padding-right: 0.04em; */
-  color: var(--accent);
+  /* color: var(--accent); */
 }
 
 .fc-hero__sub {
