@@ -101,15 +101,11 @@ export default function StartForm() {
     ) => {
       const value = e.target.value;
       setValues((v) => ({ ...v, [field]: value }));
-      if (field in errors)
-        setErrors((er) => ({
-          ...er,
-          [field]: validate(field as Required, value),
-        }));
+      // Fields are only checked on submit. After a failed submit, an error
+      // clears as soon as the field is fixed, but typing never adds one.
+      if (errors[field as Required] && !validate(field as Required, value))
+        setErrors((er) => ({ ...er, [field]: "" }));
     };
-
-  const check = (field: Required) => () =>
-    setErrors((er) => ({ ...er, [field]: validate(field, values[field]) }));
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -188,143 +184,135 @@ export default function StartForm() {
 
         <p className="fc-form__hint">{START.form.timeHint}</p>
 
-        <div className="fc-field">
-          <label htmlFor="start-name">Your name</label>
-          <input
-            ref={nameRef}
-            id="start-name"
-            name="name"
-            autoComplete="name"
-            placeholder="Maria Lopez"
-            value={values.name}
-            onChange={set("name")}
-            onBlur={check("name")}
-            aria-invalid={!!errors.name}
-            aria-describedby={describedBy("name")}
-          />
-          {errors.name && (
-            <p id="start-name-error" className="fc-field__error">
-              {errors.name}
-            </p>
-          )}
+        {/* Short fields share a row on wider screens; they stack on phones. */}
+        <div className="fc-form__row">
+          <div className="fc-field">
+            <label htmlFor="start-name">Your name</label>
+            <input
+              ref={nameRef}
+              id="start-name"
+              name="name"
+              autoComplete="name"
+              placeholder="Maria Lopez"
+              value={values.name}
+              onChange={set("name")}
+              aria-invalid={!!errors.name}
+              aria-describedby={describedBy("name")}
+            />
+            {errors.name && (
+              <p id="start-name-error" className="fc-field__error">
+                {errors.name}
+              </p>
+            )}
+          </div>
+          <div className="fc-field">
+            <label htmlFor="start-email">Email address</label>
+            <input
+              id="start-email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              inputMode="email"
+              placeholder="you@yourbusiness.com"
+              value={values.email}
+              onChange={set("email")}
+              aria-invalid={!!errors.email}
+              aria-describedby={
+                errors.email ? "start-email-error" : "start-email-help"
+              }
+            />
+            {errors.email && (
+              <p id="start-email-error" className="fc-field__error">
+                {errors.email}
+              </p>
+            )}
+          </div>
         </div>
 
-        <div className="fc-field">
-          <label htmlFor="start-email">Email address</label>
-          <input
-            id="start-email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            inputMode="email"
-            placeholder="you@yourbusiness.com"
-            value={values.email}
-            onChange={set("email")}
-            onBlur={check("email")}
-            aria-invalid={!!errors.email}
-            aria-describedby={
-              errors.email ? "start-email-error" : "start-email-help"
-            }
-          />
-          {errors.email ? (
-            <p id="start-email-error" className="fc-field__error">
-              {errors.email}
-            </p>
-          ) : (
-            <p id="start-email-help" className="fc-field__help">
-              I'll only use this to reply to you.
-            </p>
-          )}
+        <div className="fc-form__row">
+          <div className="fc-field">
+            <label htmlFor="start-business">
+              Your business name and what you do
+            </label>
+            <input
+              id="start-business"
+              name="business"
+              autoComplete="organization"
+              placeholder="Bloom & Co., a flower shop"
+              value={values.business}
+              onChange={set("business")}
+              aria-invalid={!!errors.business}
+              aria-describedby={describedBy("business")}
+            />
+            {errors.business && (
+              <p id="start-business-error" className="fc-field__error">
+                {errors.business}
+              </p>
+            )}
+          </div>
+          <div className="fc-field">
+            <label htmlFor="start-website">
+              Current website <span className="fc-optional">Optional</span>
+            </label>
+            <input
+              id="start-website"
+              name="website"
+              autoComplete="url"
+              placeholder="yourbusiness.com"
+              value={values.website}
+              onChange={set("website")}
+            />
+          </div>
         </div>
 
-        <div className="fc-field">
-          <label htmlFor="start-business">
-            Your business name and what you do
-          </label>
-          <input
-            id="start-business"
-            name="business"
-            autoComplete="organization"
-            placeholder="Bloom & Co., a flower shop"
-            value={values.business}
-            onChange={set("business")}
-            onBlur={check("business")}
-            aria-invalid={!!errors.business}
-            aria-describedby={describedBy("business")}
-          />
-          {errors.business && (
-            <p id="start-business-error" className="fc-field__error">
-              {errors.business}
-            </p>
-          )}
-        </div>
-
-        <div className="fc-field">
-          <label htmlFor="start-package">Which package fits your needs?</label>
-          <select
-            id="start-package"
-            name="package"
-            value={values.package}
-            onChange={set("package")}
-            onBlur={check("package")}
-            aria-invalid={!!errors.package}
-            aria-describedby={
-              errors.package ? "start-package-error" : "start-package-help"
-            }
-          >
-            <option value="" disabled>
-              Choose one
-            </option>
-            {PACKAGE_OPTIONS.map((o) => (
-              <option key={o.value} value={o.value}>
-                {o.label}
+        <div className="fc-form__row">
+          <div className="fc-field">
+            <label htmlFor="start-package">
+              Which package fits your needs?
+            </label>
+            <select
+              id="start-package"
+              name="package"
+              value={values.package}
+              onChange={set("package")}
+              aria-invalid={!!errors.package}
+              aria-describedby={
+                errors.package ? "start-package-error" : "start-package-help"
+              }
+            >
+              <option value="" disabled>
+                Choose one
               </option>
-            ))}
-          </select>
-          {errors.package ? (
-            <p id="start-package-error" className="fc-field__error">
-              {errors.package}
-            </p>
-          ) : (
-            <p id="start-package-help" className="fc-field__help">
-              Not sure is fine. We'll pick together.
-            </p>
-          )}
-        </div>
-
-        <div className="fc-field">
-          <label htmlFor="start-launch">
-            When would you ideally like to launch?{" "}
-            <span className="fc-optional">Optional</span>
-          </label>
-          <select
-            id="start-launch"
-            name="launch"
-            value={values.launch}
-            onChange={set("launch")}
-          >
-            <option value="">No date yet</option>
-            {LAUNCH_OPTIONS.map((o) => (
-              <option key={o} value={o}>
-                {o}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="fc-field">
-          <label htmlFor="start-website">
-            Current website, if you have one{" "}
-            <span className="fc-optional">Optional</span>
-          </label>
-          <input
-            id="start-website"
-            name="website"
-            autoComplete="url"
-            placeholder="yourbusiness.com"
-            value={values.website}
-            onChange={set("website")}
-          />
+              {PACKAGE_OPTIONS.map((o) => (
+                <option key={o.value} value={o.value}>
+                  {o.label}
+                </option>
+              ))}
+            </select>
+            {errors.package && (
+              <p id="start-package-error" className="fc-field__error">
+                {errors.package}
+              </p>
+            )}
+          </div>
+          <div className="fc-field">
+            <label htmlFor="start-launch">
+              Ideal launch date <span className="fc-optional">Optional</span>
+            </label>
+            <select
+              id="start-launch"
+              name="launch"
+              value={values.launch}
+              onChange={set("launch")}
+            >
+              <option value="">No date yet</option>
+              {LAUNCH_OPTIONS.map((o) => (
+                <option key={o} value={o}>
+                  {o}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className="fc-field">

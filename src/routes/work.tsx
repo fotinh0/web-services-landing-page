@@ -11,7 +11,7 @@ export const meta: MetaFunction = ({ params }) => {
   return pageMeta({
     title: `${item.name} · ${SITE.name}`,
     description: item.body,
-    path: `/work/${item.slug}`,
+    path: `/portfolio/${item.slug}`,
     image: item.image,
   });
 };
@@ -31,8 +31,8 @@ export default function WorkPage() {
           <p className="fc-eyebrow">Project not found</p>
           <h1 className="fc-page-title">That project isn't here.</h1>
           <p className="fc-lead">
-            <Link className="fc-link" to="/work">
-              See all work →
+            <Link className="fc-link" to="/portfolio">
+              See the full portfolio →
             </Link>
           </p>
         </div>
@@ -48,8 +48,8 @@ export default function WorkPage() {
     <>
       <section className="fc-section fc-section--dark fc-case">
         <div className="fc-wrap">
-          <Link className="fc-case__back" to="/work" viewTransition>
-            ← All work
+          <Link className="fc-case__back" to="/portfolio" viewTransition>
+            ← Portfolio
           </Link>
           <div className="fc-case__head">
             <p className="fc-eyebrow">{item.tag}</p>
@@ -143,7 +143,7 @@ export default function WorkPage() {
             <p className="fc-eyebrow">Next project</p>
             <Link
               className="fc-case__next-link"
-              to={`/work/${next.slug}`}
+              to={`/portfolio/${next.slug}`}
               viewTransition
             >
               {next.name} →

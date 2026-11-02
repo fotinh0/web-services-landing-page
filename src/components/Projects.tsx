@@ -1,9 +1,8 @@
 import type { CSSProperties } from "react";
 import { Link } from "react-router";
 import { WORK } from "../content/site";
-import { CONTACT_HREF } from "../lib/startProject";
 
-/** Work: live client and personal sites. Links are always visible, so phone visitors can open them too. */
+/** Work: one tile per project, a screenshot and a short caption. The full story is on /portfolio/<slug>. */
 /** level 1 when this section is the page itself, 2 when it sits on the home page. */
 export default function Projects({ level = 2 }: { level?: 1 | 2 }) {
   const Title = level === 1 ? "h1" : "h2";
@@ -16,31 +15,29 @@ export default function Projects({ level = 2 }: { level?: 1 | 2 }) {
       <div className="fc-wrap">
         <header className="fc-head">
           <p className="fc-eyebrow">{WORK.eyebrow}</p>
-          <Title id="work-title">{WORK.title}</Title>
-          <p className="fc-lead">{WORK.lead}</p>
+          <Title id="work-title">
+            <span className="fc-head__soft">{WORK.titleSoft}</span>
+            <br />
+            <span className="fc-head__strong">{WORK.title}</span>
+          </Title>
         </header>
 
         <ul className="fc-work" data-reveal>
           {WORK.items.map((item, i) => (
             <li
               key={item.url}
-              className="fc-work__card"
+              className="fc-work__tile"
               style={{ "--i": i } as CSSProperties}
             >
+              {/* The caption below is the real link; this one is a bigger target for pointers. */}
               <Link
                 className="fc-work__frame"
-                to={`/work/${item.slug}`}
+                to={`/portfolio/${item.slug}`}
                 viewTransition
                 tabIndex={-1}
                 aria-hidden="true"
                 style={{ "--vt": `work-${item.slug}` } as CSSProperties}
               >
-                <span className="fc-work__chrome">
-                  <i />
-                  <i />
-                  <i />
-                  <span>{item.host}</span>
-                </span>
                 <img
                   src={item.image}
                   alt=""
@@ -50,43 +47,44 @@ export default function Projects({ level = 2 }: { level?: 1 | 2 }) {
                   decoding="async"
                 />
               </Link>
-              <div className="fc-work__body">
-                <p className="fc-work__tag">{item.tag}</p>
-                <h3>{item.name}</h3>
-                <p>{item.body}</p>
-                <p className="fc-work__links">
-                  <Link
-                    className="fc-link"
-                    to={`/work/${item.slug}`}
-                    viewTransition
-                  >
-                    See the project →
-                    <span className="fc-sr">: {item.name}</span>
-                  </Link>
-                  <a
-                    className="fc-link"
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Visit site <span aria-hidden="true">↗</span>
-                    <span className="fc-sr">
-                      {" "}
-                      {item.host}, opens in a new tab
-                    </span>
-                  </a>
-                </p>
-              </div>
+              <Link
+                className="fc-work__caption"
+                to={`/portfolio/${item.slug}`}
+                viewTransition
+              >
+                <span>
+                  {/* Category only ("Wedding videographer"); the build type is on the project page. */}
+                  <span className="fc-work__tag">{item.tag.split(" · ")[0]}</span>
+                  <h3>{item.name}</h3>
+                </span>
+                <span className="fc-work__go" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" focusable="false">
+                    <path
+                      d="M7 17 17 7M8 7h9v9"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+              </Link>
             </li>
           ))}
         </ul>
 
-        <p className="fc-after">
-          {WORK.after}{" "}
-          <Link className="fc-link" to={CONTACT_HREF}>
-            {WORK.afterLink} →
-          </Link>
-        </p>
+        {/* Home only: on /portfolio the visitor is already on the projects page. */}
+        {level === 2 && (
+          <div className="fc-work__after">
+            <Link className="fc-btn fc-btn--outline fc-btn--pill" to="/portfolio">
+              {WORK.moreLabel}{" "}
+              <span className="fc-btn__arrow" aria-hidden="true">
+                →
+              </span>
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

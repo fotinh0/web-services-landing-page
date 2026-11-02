@@ -4,16 +4,17 @@
 
 .fc-hero {
   --night: #0f172a;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --accent-on-dark: #93c5fd;
+  --accent: #0f172a;
+  --accent-hover: #1e293b;
+  --on-accent: #ffffff;
+  --accent-on-dark: #eef2f6;
   --text: #0f172a;
   --text-2: #475569;
   --text-3: #64748b;
   --line: #e2e8f0;
   --wash: #eef2f6;
   /* The wave is drawn in the colour of the section after the hero.
-     Keep in step with that section's background (Projects: --alt in site.css). */
+     Keep in step with that section's background (Why us: --alt in site.css). */
   --below: #eef2f6;
   --f-display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
   --f-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
@@ -36,7 +37,7 @@
 }
 
 /* Two soft shapes instead of a grid: a slate glow behind the headline and a
-   faint blue one lower right. They drift slowly (see "drift" below). */
+   faint one lower right. They drift slowly (see "drift" below). */
 .fc-hero::before,
 .fc-hero::after {
   content: "";
@@ -64,9 +65,9 @@
   right: -12%;
   background: radial-gradient(
     closest-side,
-    rgba(37, 99, 235, 0.08) 0%,
-    rgba(37, 99, 235, 0.04) 50%,
-    rgba(37, 99, 235, 0) 100%
+    rgba(238, 242, 246, 0.9) 0%,
+    rgba(238, 242, 246, 0.5) 50%,
+    rgba(238, 242, 246, 0) 100%
   );
 }
 
@@ -79,7 +80,7 @@
   z-index: 2;
   display: block;
   width: 100%;
-  height: clamp(40px, 7vw, 110px);
+  height: var(--wave-h);
   color: var(--below);
   pointer-events: none;
 }
@@ -94,37 +95,15 @@
 .fc-hero__inner {
   max-width: 900px;
   margin-inline: auto;
-  /* Bottom padding = the wave's height + breathing room, so the wave never covers the copy. */
+  /* Bottom padding = the wave's height + the shared gap before a wave
+     (--space-wave in site.css), so the wave never covers the copy. */
   padding: clamp(56px, 9vw, 112px) max(20px, env(safe-area-inset-right, 0px))
-    calc(clamp(40px, 7vw, 110px) + clamp(40px, 5vw, 64px))
+    calc(var(--wave-h) + var(--space-wave))
     max(20px, env(safe-area-inset-left, 0px));
   display: grid;
   justify-items: center;
   gap: 22px;
   text-align: center;
-}
-
-.fc-hero__eyebrow {
-  margin: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  /* font-family: var(--f-mono); */
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-2);
-}
-/* A hairline on each side instead of a pill: quieter, and it centres the label. */
-.fc-hero__eyebrow::before,
-.fc-hero__eyebrow::after {
-  content: "";
-  flex: none;
-  width: 32px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.45;
 }
 
 .fc-hero__title {
@@ -150,8 +129,8 @@
 
 .fc-hero__sub {
   margin: 0;
-  max-width: 44ch;
-  font-size: clamp(17px, 1.7vw, 20px);
+  max-width: 56ch; /* one line on desktop */
+  font-size: clamp(18px, 1.9vw, 22px);
   line-height: 1.55;
   color: var(--text-2);
 }
@@ -168,30 +147,6 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px;
-}
-.fc-hero__trust {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px 22px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 15px;
-  color: var(--text-2);
-}
-.fc-hero__trust li {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.fc-hero__trust li::before {
-  content: "";
-  width: 10px;
-  height: 5px;
-  border-left: 2px solid var(--text-2);
-  border-bottom: 2px solid var(--text-2);
-  transform: translateY(-2px) rotate(-45deg);
 }
 .fc-hero__reply {
   margin: 0;
@@ -221,14 +176,6 @@
 
 @media (max-width: 480px) {
   /* Phones: a touch smaller and no hairlines, so the label fits on one line. */
-  .fc-hero__eyebrow {
-    font-size: 11px;
-    letter-spacing: 0.1em;
-  }
-  .fc-hero__eyebrow::before,
-  .fc-hero__eyebrow::after {
-    display: none;
-  }
   .fc-hero__actions {
     width: 100%;
   }

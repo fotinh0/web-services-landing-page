@@ -1,52 +1,60 @@
+import { Link } from "react-router";
 import { PRICES } from "../content/site";
 import PricingCard from "./PricingCard";
 
-export default function Pricing() {
+/**
+ * Prices. On Home (level 2): summary cards and one "Compare packages" button.
+ * On /pricing (level 1): full cards, with a wave into the running costs below.
+ */
+export default function Pricing({ level = 2 }: { level?: 1 | 2 }) {
+  const Title = level === 1 ? "h1" : "h2";
+  const detailed = level === 1;
   return (
-    <section id="prices" className="fc-section fc-section--light" aria-labelledby="prices-title">
+    <section
+      id="prices"
+      className={`fc-section fc-section--light${detailed ? " fc-section--wave" : ""}`}
+      aria-labelledby="prices-title"
+    >
       <div className="fc-wrap">
         <header className="fc-head">
           <p className="fc-eyebrow">{PRICES.eyebrow}</p>
-          <h2 id="prices-title">{PRICES.title}</h2>
-          <p className="fc-lead">{PRICES.lead}</p>
+          <Title id="prices-title">
+            <span className="fc-head__soft">{PRICES.titleSoft}</span>
+            <br />
+            <span className="fc-head__strong">{PRICES.title}</span>
+          </Title>
         </header>
 
         <div className="fc-pkgs" data-reveal>
           {PRICES.packages.map((pkg) => (
-            <PricingCard key={pkg.id} pkg={pkg} />
+            <PricingCard key={pkg.id} pkg={pkg} detailed={detailed} />
           ))}
         </div>
 
-        {/* Running costs on the left, practical notes on the right. */}
-        <div className="fc-costs">
-          <div className="fc-costs__block">
-            <h3>{PRICES.separately.title}</h3>
-            <ul className="fc-costs__list">
-              {PRICES.separately.rows.map((r) => (
-                <li key={r.cost} className="fc-cost">
-                  <div className="fc-cost__top">
-                    <p className="fc-cost__name">
-                      <strong>{r.cost}</strong>
-                      <span className="fc-cost__for">{r.appliesTo}</span>
-                    </p>
-                    <p className="fc-cost__amount">{r.amount}</p>
-                  </div>
-                  <p className="fc-cost__note">{r.note}</p>
-                </li>
-              ))}
-            </ul>
+        {!detailed && (
+          <div className="fc-pkgs__after">
+            <Link className="fc-btn fc-btn--primary fc-btn--pill" to="/pricing">
+              {PRICES.compareLabel}{" "}
+              <span className="fc-btn__arrow" aria-hidden="true">
+                →
+              </span>
+            </Link>
           </div>
-
-          <div className="fc-costs__block">
-            <h3>{PRICES.finePrintTitle}</h3>
-            <ul className="fc-fine">
-              {PRICES.finePrint.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        )}
       </div>
+
+      {/* /pricing: the bottom edge waves into the tinted running costs below. */}
+      {detailed && (
+        <svg
+          className="fc-wave"
+          viewBox="0 0 1440 120"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path d="M0 74C214 122 452 30 742 50c290 20 470 66 698-14v84H0Z" fill="currentColor" />
+        </svg>
+      )}
     </section>
   );
 }

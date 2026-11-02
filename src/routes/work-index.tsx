@@ -6,7 +6,7 @@ import { pageMeta } from "../lib/meta";
 import { useReveal } from "../lib/useReveal";
 
 export const meta: MetaFunction = () =>
-  pageMeta({ title: `Work · ${SITE.name}`, description: WORK.lead, path: "/work" });
+  pageMeta({ title: `Portfolio · ${SITE.name}`, description: WORK.description, path: "/portfolio" });
 
 export default function WorkIndexPage() {
   useReveal();

@@ -17,7 +17,7 @@ export default function FaqPage() {
   return (
     <>
       <Faq level={1} />
-      <PageCta tint />
+      <PageCta />
     </>
   );
 }

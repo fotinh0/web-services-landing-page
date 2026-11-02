@@ -3,17 +3,26 @@
    80 / 140 / 240 / 480ms, three easings, transform + opacity only. */
 
 :root {
-  /* Cool slate with one blue. Blue is the only accent: buttons, links, focus
-     rings, the active nav underline, the featured package edge and the
-     timeline. Everything else is slate. */
+  /* Three colours: navy #0f172a (headings, buttons, links, dark bands),
+     white with a soft #eef2f6 wash at the top of the page (--page-bg), and
+     #eef2f6 for tinted sections and accents on dark bands. Greys below are
+     only for secondary text and borders. */
   --night: #0f172a;
   --ink: #020617;
-  --fog: #f8fafc;
+  --fog: #ffffff;
   --paper: #ffffff;
   --alt: #eef2f6;
-  --accent: #2563eb;
-  --accent-hover: #1d4ed8;
-  --accent-on-dark: #93c5fd; /* blue as text or focus ring on --night */
+  --page-bg:
+    radial-gradient(
+      1100px 520px at 50% -12%,
+      #eef2f6 0%,
+      rgba(238, 242, 246, 0) 72%
+    ),
+    #ffffff;
+  --accent: #0f172a;
+  --accent-hover: #1e293b;
+  --on-accent: #ffffff; /* text on an --accent button */
+  --accent-on-dark: #eef2f6; /* accent as text or focus ring on --night */
   --text: #0f172a;
   --text-2: #475569;
   --rule: #e2e8f0;
@@ -22,6 +31,21 @@
   --on-dark-3: #94a3b8;
   --dark-rule: #1e293b;
   --error: #b91c1c;
+
+  /* Page width: 1120px, plus up to 80px each side on large screens. */
+  --bleed: 0px;
+  --page-w: calc(1120px + 2 * var(--bleed));
+
+  /* Spacing, shared by every section so the rhythm stays the same down the page. */
+  --space-section: clamp(72px, 10vw, 120px); /* top and bottom of a section */
+  --space-head: clamp(36px, 5vw, 56px); /* section heading to its content */
+  --space-after: clamp(40px, 5vw, 56px); /* content to a closing button */
+  --wave-h: clamp(40px, 7vw, 110px); /* height of a wavy section edge */
+  --space-wave: clamp(
+    48px,
+    6vw,
+    80px
+  ); /* content to a wave, and a wave to content */
 
   --f-display: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
   --f-body: "Albert Sans", "Segoe UI", system-ui, sans-serif;
@@ -39,11 +63,16 @@
   --radius: 10px;
   interpolate-size: allow-keywords;
 }
+@media (min-width: 761px) {
+  :root {
+    --bleed: clamp(0px, (100vw - 1160px) / 2, 80px);
+  }
+}
 
 /* ---------- base ---------- */
 .fc-site {
   position: relative; /* containing block for #top-marker */
-  background: var(--fog);
+  background: var(--page-bg);
   color: var(--text);
   font-family: var(--f-body);
   font-size: 17px;
@@ -119,21 +148,38 @@ section[id] {
 }
 
 /* ---------- layout ---------- */
+/* One page width for everything: the nav, every section, the contact form and
+   the footer share the same two edges. Large screens get up to 80px more on
+   each side (--page-w in :root). */
 .fc-wrap {
-  max-width: 1120px;
+  max-width: var(--page-w);
   margin-inline: auto;
   padding-left: max(20px, env(safe-area-inset-left, 0px));
   padding-right: max(20px, env(safe-area-inset-right, 0px));
 }
 .fc-section {
-  padding-block: clamp(72px, 10vw, 120px);
+  padding-block: var(--space-section);
 }
 .fc-section--light {
-  background: var(--fog);
+  background: transparent; /* shows --page-bg from .fc-site */
   color: var(--text);
 }
 .fc-section--tint {
   background: var(--alt);
+}
+/* On navy the navy accent would vanish, so dark bands swap it for the light
+   colour; the white form card inside the contact band swaps it back. */
+.fc-section--dark,
+.fc-nav,
+.fc-footer {
+  --accent: var(--accent-on-dark);
+  --accent-hover: #ffffff;
+  --on-accent: var(--night);
+}
+.fc-section--dark .fc-form {
+  --accent: var(--night);
+  --accent-hover: #1e293b;
+  --on-accent: #ffffff;
 }
 .fc-section--dark {
   background: var(--night);
@@ -143,7 +189,7 @@ section[id] {
   display: grid;
   gap: 14px;
   max-width: 720px;
-  margin-bottom: clamp(36px, 5vw, 56px);
+  margin-bottom: var(--space-head);
 }
 .fc-eyebrow {
   margin: 0;
@@ -151,11 +197,12 @@ section[id] {
   font-size: 12.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: inherit; /* same colour as the headings: navy on light, light on dark */
+}
+/* .fc-section--dark .fc-eyebrow {
   color: var(--text-2);
-}
-.fc-section--dark .fc-eyebrow {
   color: var(--on-dark-3);
-}
+} */
 .fc-head h1,
 .fc-head h2,
 .fc-about__text h1,
@@ -220,14 +267,14 @@ section[id] {
     border-color 140ms var(--ease-out),
     box-shadow 140ms var(--ease-out);
 }
-/* Buttons appear on light and dark bands; plain blue clears 3:1 on both. */
+/* Dark bands swap --accent for the light colour, so the ring shows on both. */
 .fc-btn:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 .fc-btn--primary {
   background: var(--accent);
-  color: #ffffff;
+  color: var(--on-accent);
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
 }
 .fc-btn:active {
@@ -254,6 +301,8 @@ section[id] {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .fc-work__frame img,
+  .fc-work__go,
   .fc-btn,
   .fc-btn__arrow {
     transition: none;
@@ -289,7 +338,7 @@ section[id] {
   border-bottom-color: var(--dark-rule);
 }
 .fc-nav__inner {
-  max-width: 1200px;
+  max-width: var(--page-w);
   margin-inline: auto;
   height: var(--nav-h);
   padding-left: max(20px, env(safe-area-inset-left, 0px));
@@ -313,7 +362,7 @@ section[id] {
   font-size: 17px;
   margin-right: auto;
 }
-/* The full logo (mark + "FC WEB SOLUTIONS"); width follows the height. */
+/* The full logo (mark + "FC WEB DEVELOPMENT"); width follows the height. */
 .fc-nav__brand img {
   display: block;
   width: auto;
@@ -370,7 +419,7 @@ section[id] {
   padding: 0 16px;
   border-radius: 8px;
   background: var(--accent);
-  color: #ffffff;
+  color: var(--on-accent);
   font-weight: 600;
   font-size: 15px;
   text-decoration: none;
@@ -466,53 +515,47 @@ section[id] {
 }
 
 /* ---------- work ---------- */
+/* Heading lines in their own colour: a softer slate grey, and a pure black. */
+.fc-head__soft {
+  color: var(--text-2);
+}
+.fc-head__strong {
+  color: #000000;
+}
+/* Home: the hero's own bottom spacing already separates it from Why us,
+   so Why us starts closer. */
+#home + #why {
+  padding-top: var(--space-wave);
+}
+
+/* Tiles: a rounded screenshot and a one-line caption. No card box. */
 .fc-work {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(20px, 3vw, 32px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(28px, 3vw, 36px) clamp(20px, 2.4vw, 28px);
 }
 @media (max-width: 760px) {
   .fc-work {
     grid-template-columns: minmax(0, 1fr);
   }
 }
-/* With an odd number of projects, the first one spans the row as a wide
-   featured card (screenshot left, text right), so no card sits alone. */
-@media (min-width: 761px) {
-  .fc-work > .fc-work__card:first-child:nth-last-child(odd) {
-    grid-column: 1 / -1;
-    grid-template-rows: none;
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-    align-items: center;
-  }
-  .fc-work > .fc-work__card:first-child:nth-last-child(odd) .fc-work__frame {
-    border-bottom: 0;
-    border-right: 1px solid var(--rule);
-    align-self: stretch;
-  }
-  .fc-work > .fc-work__card:first-child:nth-last-child(odd) .fc-work__body {
-    padding: clamp(24px, 3.5vw, 44px);
-  }
-}
-.fc-work__card {
+.fc-work__tile {
   display: grid;
-  grid-template-rows: auto 1fr;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: 12px;
-  overflow: hidden;
+  gap: 16px;
+  align-content: start;
   min-width: 0;
-  transition:
-    transform var(--dur-micro) var(--ease-out),
-    border-color var(--dur-micro) var(--ease-out);
 }
 .fc-work__frame {
   display: block;
-  background: var(--ink);
-  border-bottom: 1px solid var(--rule);
+  overflow: hidden;
+  border-radius: var(--r-md);
+  background: var(--paper);
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.06),
+    0 12px 32px -18px rgba(15, 23, 42, 0.35);
 }
 .fc-work__chrome {
   display: flex;
@@ -539,115 +582,386 @@ section[id] {
   aspect-ratio: 16 / 10;
   object-fit: cover;
   object-position: top;
+  transition: transform var(--dur-reveal) var(--ease-out);
 }
-.fc-work__body {
+.fc-work__caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-inline: 2px;
+  color: var(--text);
+  text-decoration: none;
+}
+.fc-work__caption > span:first-child {
   display: grid;
-  gap: 8px;
-  align-content: start;
-  padding: 22px 24px 26px;
+  gap: 4px;
+  min-width: 0;
 }
-.fc-work__body h3 {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 600;
-}
-.fc-work__body p {
-  margin: 0;
-  color: var(--text-2);
-}
-.fc-work__body .fc-work__tag {
-  /* font-family: var(--f-mono); */
+.fc-work__tag {
   font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  /* letter-spacing: 0.04em; */
-  letter-spacing: 0.14em;
   color: var(--text-2);
 }
-.fc-work__body .fc-link {
-  justify-self: start;
-  margin-top: 6px;
+.fc-work__caption h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.fc-work__go {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--text) 22%, transparent);
+  color: var(--text);
+  transition:
+    background-color var(--dur-micro) var(--ease-out),
+    color var(--dur-micro) var(--ease-out),
+    border-color var(--dur-micro) var(--ease-out);
+}
+@media (hover: hover) {
+  .fc-work__tile:hover .fc-work__frame img {
+    transform: scale(1.03);
+  }
+  .fc-work__tile:hover .fc-work__go {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+  }
+}
+.fc-work__after {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-after);
+}
+.fc-btn--pill {
+  border-radius: var(--r-pill);
 }
 
-/* ---------- how ---------- */
-.fc-steps {
+/* ---------- why us ---------- */
+/* Drawing on the left, heading and text on the right, on the same tint as
+   Work so the two read as one band. Stacked on phones. */
+.fc-why {
+  background: var(--alt);
+}
+.fc-why__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(40px, 6vw, 88px);
+}
+@media (max-width: 860px) {
+  .fc-why__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+/* A real project on a browser and a phone: the phone overlaps the browser's
+   lower right corner, and a small tag sits on its top edge. */
+.fc-why__devices {
   position: relative;
-  padding-left: 36px;
+  padding: 26px 0 clamp(40px, 7vw, 72px);
 }
-.fc-steps::before,
-.fc-steps__fill {
-  content: "";
+.fc-why__browser {
+  width: 84%;
+  overflow: hidden;
+  border-radius: 14px;
+  background: var(--paper);
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.06),
+    0 24px 48px -24px rgba(15, 23, 42, 0.4);
+}
+.fc-why__chrome {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.fc-why__chrome i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #cbd5e1;
+}
+.fc-why__chrome span {
+  flex: 1;
+  max-width: 60%;
+  margin-left: 10px;
+  padding: 3px 12px;
+  border-radius: var(--r-pill);
+  background: var(--alt);
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  color: var(--text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fc-why__browser img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top;
+}
+/* Reuses the project page's phone frame (.fc-phone), placed and softened here. */
+.fc-why__phone.fc-phone {
   position: absolute;
-  left: 9px;
-  top: 8px;
-  bottom: 8px;
-  width: 2px;
-  background: var(--rule);
+  right: 0;
+  bottom: 0;
+  width: 30%;
+  padding: 6px;
+  border-radius: clamp(22px, 3vw, 34px);
+  box-shadow: 0 24px 48px -18px rgba(15, 23, 42, 0.45);
 }
-.fc-steps__fill {
-  background: var(--accent);
-  transform-origin: top;
+.fc-why__phone.fc-phone img {
+  border-radius: clamp(16px, 2.3vw, 28px);
 }
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .fc-steps__fill {
-      animation: fc-fill linear both;
-      animation-timeline: view();
-      animation-range: entry 25% cover 60%;
-    }
-  }
+.fc-why__phone .fc-phone__notch {
+  top: 12px;
+  height: clamp(8px, 1.1vw, 14px);
 }
-@keyframes fc-fill {
-  from {
-    transform: scaleY(0);
-  }
-  to {
-    transform: scaleY(1);
-  }
+.fc-why__tag {
+  position: absolute;
+  top: 0;
+  right: 22%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--r-pill);
+  background: var(--night);
+  color: var(--on-dark);
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 12px 24px -12px rgba(15, 23, 42, 0.5);
 }
-.fc-steps ol {
+.fc-why__text .fc-head {
+  margin-bottom: clamp(20px, 3vw, 28px);
+}
+.fc-why__p {
+  margin: 0;
+  max-width: 54ch;
+  font-size: 17.5px;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+.fc-why__p + .fc-why__p {
+  margin-top: 18px;
+}
+
+/* ---------- features ---------- */
+/* A white band between the tinted Why us and Work sections. Six tinted cards
+   (the same tint as the price cards), three across, two on tablets, one on phones. */
+.fc-features {
+  background: var(--paper);
+}
+/* A white section whose bottom edge waves into the tinted section after it
+   (the hero's wave, in the tint). Used by "What you get" and /pricing. */
+.fc-section--wave {
+  position: relative;
+  /* Room for the wave, so it never covers the content. */
+  padding-bottom: calc(var(--space-wave) + var(--wave-h));
+}
+.fc-wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  display: block;
+  width: 100%;
+  height: var(--wave-h);
+  color: var(--alt);
+  pointer-events: none;
+}
+/* Work starts closer, since the wave already separates the two. */
+#features + #work {
+  padding-top: var(--space-wave);
+}
+.fc-features__grid {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 34px;
-  max-width: 680px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
 }
-.fc-steps li {
-  position: relative;
+@media (max-width: 860px) {
+  .fc-features__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .fc-features__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.fc-feature {
   display: grid;
-  gap: 4px;
+  gap: 8px;
+  align-content: start;
+  padding: clamp(24px, 2.6vw, 32px);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  background: var(--alt);
 }
-.fc-steps li::before {
-  content: "";
-  position: absolute;
-  left: -32px;
-  top: 4px;
-  width: 12px;
-  height: 12px;
+.fc-feature__icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 10px;
   border-radius: 50%;
-  background: var(--fog);
-  border: 2px solid var(--text-2);
+  background: var(--night);
+  color: var(--on-dark);
 }
-.fc-steps h3 {
+.fc-feature h3 {
   margin: 0;
-  font-size: 21px;
+  font-size: 19px;
   font-weight: 600;
 }
-.fc-steps p {
+.fc-feature p {
   margin: 0;
+  font-size: 15.5px;
   color: var(--text-2);
 }
-.fc-steps .fc-steps__day {
-  font-family: var(--f-mono);
-  font-size: 12.5px;
-  letter-spacing: 0.06em;
+/* The phone and the code tag drift gently, out of step with each other. */
+@media (prefers-reduced-motion: no-preference) {
+  .fc-why__phone,
+  .fc-why__tag {
+    animation: fc-why-float 7s ease-in-out infinite alternate;
+  }
+  .fc-why__tag {
+    animation-duration: 6s;
+    animation-delay: -2s;
+  }
+}
+.motion-lite .fc-why__phone,
+.motion-lite .fc-why__tag {
+  animation: none;
+}
+@keyframes fc-why-float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-8px);
+  }
+}
+
+/* ---------- how ---------- */
+/* One step per row, stacked in a single column. Inside a row: the number,
+   then the label and title, then the description; they stack on phones.
+   Same card style as "What you get". */
+.fc-how {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(12px, 1.6vw, 16px);
+}
+.fc-how__step,
+.fc-how__timing {
+  display: grid;
+  align-items: center;
+  gap: 16px clamp(24px, 4vw, 56px);
+  padding: clamp(22px, 2.6vw, 32px) clamp(22px, 3vw, 40px);
+  border-radius: var(--r-md);
+}
+.fc-how__step {
+  grid-template-columns: auto minmax(0, 0.8fr) minmax(0, 1.2fr);
+  border: 1px solid var(--rule);
+  background: var(--paper);
+}
+.fc-how__num {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--night);
+  color: var(--on-dark);
+  font-family: var(--f-display);
+  font-size: 20px;
+  font-weight: 700;
+}
+.fc-how__lead {
+  display: grid;
+  gap: 6px;
+}
+.fc-how__day {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-2);
 }
+.fc-how h3 {
+  margin: 0;
+  font-size: clamp(19px, 1.8vw, 22px);
+  font-weight: 600;
+}
+.fc-how__body {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-2);
+}
+.fc-how__timing {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  background: var(--night);
+  color: var(--on-dark);
+}
+.fc-how__timing .fc-how__lead p {
+  margin: 0;
+  font-size: 15px;
+  color: var(--on-dark-3);
+}
+.fc-how__timing dl {
+  margin: 0;
+  display: grid;
+}
+.fc-how__timing dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--dark-rule);
+}
+.fc-how__timing dl div:last-child {
+  border-bottom: 0;
+}
+.fc-how__timing dt {
+  color: var(--on-dark-2);
+}
+.fc-how__timing dd {
+  margin: 0;
+  font-weight: 600;
+}
+@media (max-width: 760px) {
+  .fc-how__step {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+  }
+  .fc-how__body {
+    grid-column: 1 / -1;
+  }
+  .fc-how__timing {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
 
 /* ---------- packages ---------- */
-/* Three cards on shared rows (subgrid), so name, price, stats, list, running
-   costs and button line up across packages and differences read straight across. */
+/* Three cards side by side. On /pricing the detailed cards share rows
+   (subgrid), so numbers, lists, running costs and buttons line up across
+   packages and the differences read straight across. */
 .fc-pkgs {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -659,7 +973,7 @@ section[id] {
     .fc-pkgs {
       row-gap: 0;
     }
-    .fc-pkgs > .fc-pkg {
+    .fc-pkgs > .fc-pkg--detail {
       grid-row: span 5;
       grid-template-rows: subgrid;
       row-gap: 22px;
@@ -675,10 +989,11 @@ section[id] {
 .fc-pkg {
   position: relative;
   display: grid;
-  grid-template-rows: auto auto 1fr auto auto;
+  align-content: start;
   gap: 22px;
   padding: 28px;
-  background: var(--paper);
+  /* Same tint as the Work section. */
+  background: var(--alt);
   border: 1px solid var(--rule);
   border-radius: 12px;
   overflow: hidden;
@@ -686,6 +1001,13 @@ section[id] {
   transition:
     transform var(--dur-micro) var(--ease-out),
     border-color var(--dur-micro) var(--ease-out);
+}
+.fc-pkg--detail {
+  grid-template-rows: auto auto 1fr auto auto;
+}
+.fc-pkg--detail .fc-pkg__head {
+  padding-bottom: 24px;
+  border-bottom: 1px solid #cbd5e1;
 }
 .fc-pkg.is-featured {
   border-color: #cbd5e1;
@@ -697,23 +1019,24 @@ section[id] {
   height: 4px;
   background: var(--accent);
 }
+/* Name, then a large price, then one line on who it's for. */
 .fc-pkg__head {
   display: grid;
-  gap: 6px;
+  gap: 10px;
   align-content: start;
 }
 .fc-pkg__head h3 {
   margin: 0;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
 }
 .fc-pkg__price {
-  margin: 2px 0 0;
+  margin: 0;
   display: flex;
   align-items: baseline;
   gap: 10px;
   font-family: var(--f-display);
-  font-size: 46px;
+  font-size: clamp(38px, 3.8vw, 46px);
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1;
@@ -727,50 +1050,15 @@ section[id] {
   color: var(--text-2);
 }
 .fc-pkg__for {
-  margin: 4px 0 0;
+  margin: 0;
   color: var(--text-2);
   font-size: 16px;
   line-height: 1.5;
 }
 
-/* The three numbers people compare: label left, bold value right, one row each.
-   The rows line up across cards, so the values read straight across. */
-.fc-pkg__stats {
-  margin: 0;
-  display: grid;
-  border: 1px solid var(--rule);
-  border-radius: 14px;
-  background: var(--fog);
-}
-.fc-pkg__stats div {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 12px;
-  padding: 11px 16px;
-  min-width: 0;
-}
-.fc-pkg__stats div + div {
-  border-top: 1px solid var(--rule);
-}
-.fc-pkg__stats dt {
-  font-family: var(--f-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-2);
-}
-.fc-pkg__stats dd {
-  margin: 0;
-  font-family: var(--f-display);
-  font-size: 16px;
-  font-weight: 600;
-  text-align: right;
-}
-
 .fc-pkg__includes {
   display: grid;
-  gap: 10px;
+  gap: 12px;
   align-content: start;
 }
 .fc-pkg__base {
@@ -783,24 +1071,28 @@ section[id] {
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 9px;
+  gap: 12px;
   align-content: start;
+  font-size: 15.5px;
 }
 .fc-pkg__list li {
   position: relative;
-  padding-left: 24px;
+  padding-left: 26px;
   line-height: 1.45;
 }
 .fc-pkg__list li::before {
   content: "";
   position: absolute;
   left: 2px;
-  top: 0.5em;
-  width: 9px;
+  top: 0.45em;
+  width: 10px;
   height: 5px;
-  border-left: 2px solid var(--text-2);
-  border-bottom: 2px solid var(--text-2);
+  border-left: 2px solid var(--text);
+  border-bottom: 2px solid var(--text);
   transform: rotate(-45deg);
+}
+.fc-pkg__stats strong {
+  font-weight: 700;
 }
 /* Additions on top of another package: a plus instead of a tick. */
 .fc-pkg__list.is-plus li::before {
@@ -818,92 +1110,95 @@ section[id] {
   margin: 0;
   display: grid;
   gap: 2px;
-  padding-top: 16px;
-  border-top: 1px dashed #cbd5e1;
+  padding-top: 18px;
+  border-top: 1px solid #cbd5e1;
   font-size: 14.5px;
   color: var(--text-2);
 }
 .fc-pkg__running span {
-  font-family: var(--f-mono);
+  /* font-family: var(--f-mono); */
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
+/* Home: one button under the cards, to the full comparison on /pricing. */
+.fc-pkgs__after {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-after);
+}
+/* Full-width button at the bottom of every card. */
 .fc-pkg .fc-btn {
   justify-content: center;
+  width: 100%;
 }
 
-/* ---------- running costs and practical notes ---------- */
-.fc-costs {
-  margin-top: clamp(40px, 6vw, 64px);
-  display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-  gap: clamp(28px, 4vw, 48px);
-  align-items: start;
+/* ---------- running costs and practical notes (/pricing) ---------- */
+/* Three white cost cards on the tint (like "What you get"), then a navy card
+   with the practical notes (like the timing card on How it works). */
+#prices + .fc-costs {
+  padding-top: var(--space-wave);
 }
-@media (max-width: 860px) {
-  .fc-costs {
-    grid-template-columns: minmax(0, 1fr);
-  }
+/* Square bottom edge (no curve like the other tinted sections), so the
+   padding drops the extra room the curve needed. Pricing's running costs and
+   the FAQ. */
+main > .fc-section--tint.fc-costs,
+main > .fc-section--tint#faq {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-bottom: var(--space-section);
 }
-.fc-costs__block {
-  display: grid;
-  gap: 16px;
-}
-.fc-costs h3 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 600;
-}
-.fc-costs__list {
+.fc-costs__grid {
   list-style: none;
   margin: 0;
   padding: 0;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  background: var(--paper);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+}
+@media (max-width: 860px) {
+  .fc-costs__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .fc-cost {
   display: grid;
   gap: 6px;
-  padding: 18px 22px;
-}
-.fc-cost + .fc-cost {
-  border-top: 1px solid var(--rule);
-}
-.fc-cost__top {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 6px 20px;
-}
-.fc-cost__name {
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 10px;
-}
-.fc-cost__name strong {
-  font-weight: 600;
-}
-/* Which packages the cost applies to. */
-.fc-cost__for {
-  padding: 2px 9px;
+  align-content: start;
+  padding: clamp(24px, 2.6vw, 32px);
   border: 1px solid var(--rule);
-  border-radius: 999px;
-  font-family: var(--f-mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
+  border-radius: var(--r-md);
+  background: var(--paper);
+}
+.fc-cost__icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  background: var(--night);
+  color: var(--on-dark);
+}
+.fc-cost__for {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--text-2);
-  white-space: nowrap;
+}
+.fc-cost h3 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
 }
 .fc-cost__amount {
-  margin: 0;
+  margin: 6px 0 0;
   font-family: var(--f-display);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 .fc-cost__note {
   margin: 0;
@@ -911,36 +1206,66 @@ section[id] {
   color: var(--text-2);
 }
 .fc-fine {
+  display: grid;
+  grid-template-columns: minmax(0, 0.6fr) minmax(0, 1.4fr);
+  gap: 16px clamp(24px, 4vw, 56px);
+  margin-top: clamp(16px, 2vw, 24px);
+  padding: clamp(24px, 3vw, 40px);
+  border-radius: var(--r-md);
+  background: var(--night);
+  color: var(--on-dark);
+}
+@media (max-width: 760px) {
+  .fc-fine {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.fc-fine h3 {
+  margin: 0;
+  font-size: clamp(19px, 1.8vw, 22px);
+  font-weight: 600;
+}
+.fc-fine ul {
+  list-style: none;
   margin: 0;
   padding: 0;
-  list-style: none;
   display: grid;
-  gap: 12px;
-  color: var(--text-2);
-  font-size: 15.5px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 32px;
+}
+@media (max-width: 560px) {
+  .fc-fine ul {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .fc-fine li {
   position: relative;
-  padding-left: 22px;
-  line-height: 1.5;
+  padding-left: 26px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--on-dark-2);
 }
 .fc-fine li::before {
   content: "";
   position: absolute;
-  left: 0;
-  top: 0.62em;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: 2px solid #94a3b8;
+  left: 2px;
+  top: 0.45em;
+  width: 10px;
+  height: 5px;
+  border-left: 2px solid var(--on-dark);
+  border-bottom: 2px solid var(--on-dark);
+  transform: rotate(-45deg);
 }
 
 /* ---------- about ---------- */
+/* Portrait (or monogram) on the left, heading and intro on the right, on the
+   tint; stacked on phones. The "How I work" band below reuses the
+   "What you get" cards. */
 .fc-about {
   display: grid;
-  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
-  gap: clamp(32px, 6vw, 72px);
-  align-items: start;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 88px);
+  align-items: center;
 }
 @media (max-width: 760px) {
   .fc-about {
@@ -950,14 +1275,15 @@ section[id] {
 .fc-about__who {
   margin: 0;
   display: grid;
-  gap: 14px;
+  gap: 16px;
 }
 .fc-about__photo {
   width: 100%;
-  max-width: 300px;
+  max-width: 420px;
   aspect-ratio: 1;
-  border-radius: 14px;
+  border-radius: var(--r-lg);
   object-fit: cover;
+  box-shadow: 0 24px 48px -24px rgba(15, 23, 42, 0.4);
 }
 .fc-about__photo--mono {
   display: grid;
@@ -965,7 +1291,7 @@ section[id] {
   background: var(--night);
   font-family: var(--f-display);
   font-weight: 700;
-  font-size: clamp(72px, 12vw, 120px);
+  font-size: clamp(96px, 12vw, 150px);
   letter-spacing: -0.06em;
 }
 .fc-about__photo--mono span {
@@ -973,7 +1299,7 @@ section[id] {
 }
 @media (max-width: 760px) {
   .fc-about__photo {
-    max-width: 200px;
+    max-width: 320px;
   }
 }
 .fc-about__who figcaption {
@@ -989,21 +1315,70 @@ section[id] {
 }
 .fc-about__text {
   display: grid;
-  gap: 16px;
+  gap: 18px;
   max-width: 62ch;
 }
-.fc-about__text p {
+.fc-about__text .fc-head {
+  margin-bottom: 4px;
+}
+.fc-about__text > p {
   margin: 0;
+  font-size: 17.5px;
+  line-height: 1.7;
   color: var(--text-2);
 }
-.fc-about__text .fc-eyebrow {
-  color: var(--text-2);
-}
-.fc-about__text .fc-link {
+.fc-about__text .fc-btn {
   justify-self: start;
+  margin-top: 6px;
+}
+.fc-about-values {
+  background: var(--paper);
+}
+/* White cards band, then the white closing card: one gap, not two stacked. */
+main > .fc-about-values:has(+ .fc-cta-band) {
+  padding-bottom: clamp(16px, 2vw, 24px);
 }
 
 /* ---------- faq ---------- */
+/* Heading and a navy "Still have a question?" card on the left (it stays in
+   view while the questions scroll), the questions on the right; stacked on
+   phones. Questions are white cards on the tint (see "FAQ: each question is
+   its own soft card" below). */
+.fc-faq {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(32px, 6vw, 88px);
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .fc-faq {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.fc-faq__ask {
+  /* On navy the accent swaps to the light colour, like the dark bands. */
+  --accent: var(--accent-on-dark);
+  --accent-hover: #ffffff;
+  --on-accent: var(--night);
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+  padding: clamp(24px, 3vw, 36px);
+  border-radius: var(--r-md);
+  background: var(--night);
+  color: var(--on-dark);
+}
+.fc-faq__ask h2 {
+  margin: 0;
+  font-size: clamp(19px, 1.8vw, 22px);
+  font-weight: 600;
+}
+.fc-faq__ask p {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: var(--on-dark-2);
+}
+
 .fc-faq__list {
   max-width: 780px;
   border-top: 1px solid var(--rule);
@@ -1069,6 +1444,67 @@ section[id] {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+/* On a dark band the heading's two lines switch to the light colours. */
+.fc-section--dark .fc-head__soft {
+  color: var(--on-dark-3);
+}
+.fc-section--dark .fc-head__strong {
+  color: inherit;
+}
+/* Contact page: the light version. The form is a white card on the tint,
+   with the same border as the other cards. */
+.fc-start--page .fc-form {
+  border: 1px solid var(--rule);
+}
+.fc-next {
+  display: grid;
+  gap: 16px;
+  margin-top: 14px;
+}
+.fc-next .fc-next__title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+}
+.fc-next ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.fc-next li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+  padding: 18px 20px;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  background: var(--paper);
+}
+.fc-next__num {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--night);
+  color: var(--on-dark);
+  font-family: var(--f-display);
+  font-size: 17px;
+  font-weight: 700;
+}
+.fc-next h3 {
+  margin: 0 0 2px;
+  font-size: 17px;
+  font-weight: 600;
+}
+.fc-next p {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-2);
+}
 .fc-start__pitch {
   display: grid;
   gap: 18px;
@@ -1127,6 +1563,30 @@ section[id] {
 .fc-form form {
   display: grid;
   gap: 18px;
+}
+/* Two short fields side by side; stacked on phones. Each field's label, input
+   and help line sit on rows shared with its neighbour (subgrid), so the two
+   inputs always line up even when one label wraps. */
+.fc-form__row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 0 16px;
+}
+@supports (grid-template-rows: subgrid) {
+  @media (min-width: 561px) {
+    .fc-form__row > .fc-field {
+      grid-row: span 3;
+      grid-template-rows: subgrid;
+      align-content: start;
+    }
+  }
+}
+@media (max-width: 560px) {
+  .fc-form__row {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 18px;
+  }
 }
 .fc-form :focus-visible {
   outline-color: var(--accent);
@@ -1384,10 +1844,6 @@ section[id] {
   .fc-nav__cta:hover {
     background: var(--accent-hover);
   }
-  .fc-work__card:hover {
-    transform: translateY(-2px);
-    border-color: color-mix(in srgb, var(--text-2) 45%, var(--rule));
-  }
   .fc-pkg:hover {
     transform: translateY(-2px);
     border-color: color-mix(in srgb, var(--text-2) 45%, var(--rule));
@@ -1448,9 +1904,6 @@ section[id] {
   gap: 18px;
   max-width: 760px;
 }
-.fc-case__head .fc-eyebrow {
-  color: var(--on-dark-3);
-}
 .fc-case__actions {
   display: flex;
   flex-wrap: wrap;
@@ -1482,7 +1935,7 @@ section[id] {
 /* ---------- device preview: desktop frame with a phone overlapping its corner ---------- */
 .fc-devices {
   position: relative;
-  margin-top: clamp(36px, 5vw, 56px);
+  margin-top: var(--space-head);
 }
 .fc-devices figure {
   margin: 0;
@@ -1636,12 +2089,6 @@ section[id] {
   margin: 0;
   color: var(--text-2);
 }
-.fc-work__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 22px;
-  margin-top: 6px !important;
-}
 @media (hover: hover) {
   .fc-case__back:hover,
   .fc-case__next-link:hover {
@@ -1706,16 +2153,17 @@ section[id] {
   align-items: center;
   gap: 12px;
   width: fit-content;
+  font-weight: bold;
   letter-spacing: 0.12em;
 }
-.fc-eyebrow::before {
+/* .fc-eyebrow::before {
   content: "";
   flex: none;
   width: 24px;
   height: 1px;
   background: currentColor;
   opacity: 0.45;
-}
+} */
 
 /* ---------- nav ---------- */
 /* The nav stays a full-width bar with straight edges (see the nav rules above).
@@ -1727,7 +2175,7 @@ section[id] {
   border-radius: var(--r-xl);
 }
 /* Home: the start form runs edge to edge and sits straight on the footer,
-   rounded only at the top. (#home ~ #start only matches on the home page,
+   with no rounded corners. (#home ~ #start only matches on the home page,
    so /contact keeps the floating panel.) */
 #home ~ #start {
   margin-inline: 0;
@@ -1735,20 +2183,21 @@ section[id] {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
+/* The contact form section has square top corners everywhere. */
+#start {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
 /* Tinted sections curve gently into whatever comes next. */
 .fc-section--tint {
   border-bottom-left-radius: 50% var(--curve);
   border-bottom-right-radius: 50% var(--curve);
-  padding-bottom: calc(clamp(72px, 10vw, 120px) + var(--curve) * 0.5);
+  padding-bottom: calc(var(--space-section) + var(--curve) * 0.5);
 }
 
 /* ---------- cards ---------- */
-.fc-work__card,
 .fc-pkg {
   border-radius: var(--r-lg);
-}
-.fc-work__body {
-  padding: 24px 28px 30px;
 }
 .fc-pkg {
   padding: 32px;
@@ -1758,11 +2207,6 @@ section[id] {
 }
 .fc-case__frame {
   border-radius: var(--r-lg);
-}
-
-/* The About portrait or monogram gets an organic, pebble-like outline. */
-.fc-about__photo {
-  border-radius: 46% 54% 52% 48% / 52% 46% 54% 48%;
 }
 
 /* ---------- FAQ: each question is its own soft card ---------- */
@@ -1783,17 +2227,6 @@ section[id] {
 }
 .fc-faq__list details p {
   padding-right: 8px;
-}
-
-/* ---------- How it works: steps sit on soft cards along the line ---------- */
-.fc-steps li {
-  padding: 18px 22px;
-  border-radius: var(--r-md);
-  background: var(--paper);
-  border: 1px solid var(--rule);
-}
-.fc-steps li::before {
-  top: 24px;
 }
 
 /* ---------- project page facts ---------- */
@@ -1832,22 +2265,21 @@ section[id] {
     border-color: #cbd5e1;
   }
 }
-/* The card keeps a side gutter on small screens (it replaces .fc-wrap's padding). */
+/* The card's edges sit on the page's content edges, like every other card,
+   and keep a side gutter on small screens (it replaces .fc-wrap's padding). */
 .fc-cta-band__inner {
   max-width: min(
-    1120px,
+    calc(var(--page-w) - 40px),
     calc(100% - 2 * max(20px, env(safe-area-inset-left, 0px)))
   );
 }
 
 /* ---------- section followed by the closing band ---------- */
 /* Both sections' padding stacked into a ~240px empty gap (About, Work, FAQ).
-   Keep the curve, but let the closing card sit close beneath it. */
+   Keep the curve, but trim the section above. The closing band keeps the same
+   padding above and below its card (.fc-cta-band). */
 main > .fc-section--tint:has(+ .fc-cta-band) {
   padding-bottom: calc(clamp(40px, 5vw, 64px) + var(--curve) * 0.5);
-}
-main > .fc-section + .fc-cta-band {
-  padding-top: clamp(24px, 3vw, 40px);
 }
 
 /* ---------- page endings ---------- */
@@ -1855,5 +2287,5 @@ main > .fc-section + .fc-cta-band {
 main > .fc-section--tint:last-child {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  padding-bottom: clamp(72px, 10vw, 120px);
+  padding-bottom: var(--space-section);
 }

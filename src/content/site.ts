@@ -11,22 +11,21 @@ import ksMediaMobileImg from "../../assets/hero/ks-media-mobile.webp";
 import type { PackageId } from "../components/hero/heroContent";
 
 export const SITE = {
-  name: "FC Web Services",
+  name: "FC Web Development",
   owner: "Foti Ceci",
-  email: "foti.coding@gmail.com",
-  /** CONFIRM: your town or service area, e.g. "Queens, NY". Empty = hidden everywhere. */
-  location: "",
-  /** CONFIRM: your live address, e.g. "https://fcwebservices.com". Used for share images and links. */
-  url: "",
+  email: "support@fcwebdevelopment.com",
+  location: "New York, NY",
+  url: "https://fcwebdevelopment.com",
   description:
-    "I design and build websites for local shops, studios and creatives. Fixed price from $500, live in 7–21 days, and you own everything.",
+    "I design and build websites for local shops, studios and creatives. Fixed price starting at $500, live in 7–21 days, and you own everything.",
 };
 
 /** Top nav and footer, in this order. Contact is drawn as the nav's button. */
 export const NAV_LINKS = [
   { to: "/", label: "Home" },
-  { to: "/work", label: "Work" },
+  { to: "/portfolio", label: "Portfolio" },
   { to: "/how-it-works", label: "How it works" },
+  { to: "/pricing", label: "Pricing" },
   { to: "/about", label: "About" },
   { to: "/faq", label: "FAQ" },
 ];
@@ -55,8 +54,13 @@ export interface WorkItem {
 
 export const WORK = {
   eyebrow: "Recent work",
-  title: "Real projects. Real websites. Live for you to explore.",
-  lead: "Every project is different. Here's a look at what I build and how I turn ideas into websites that work.",
+  // Two lines: a softer first line in slate grey, then the second in black.
+  titleSoft: "Real projects.",
+  title: "Real websites.",
+  // Search and link-preview text for /portfolio (the section itself shows no intro).
+  description:
+    "Every project is different. Here's a look at what I build and how I turn ideas into websites that work.",
+  // lead: "Every project is different. Here's a look at what I build and how I turn ideas into websites that work.",
   items: [
     {
       // Client work, so it leads the list (and gets the wide featured card).
@@ -84,7 +88,7 @@ export const WORK = {
     },
     {
       slug: "wedding-albania",
-      name: "A wedding in Albania",
+      name: "Indiana & Foti",
       tag: "Wedding website · Custom build",
       body: "A wedding website designed to help guests travelling from abroad find everything they needed in one place, from the weekend schedule and travel tips to RSVPs.",
       url: "https://weddingfi.netlify.app/",
@@ -105,8 +109,8 @@ export const WORK = {
       ],
     },
     {
-      slug: "portfolio",
-      name: "foticeci.com",
+      slug: "foti-ceci",
+      name: "Foti Ceci",
       tag: "Personal portfolio · Custom build",
       body: "A personal portfolio built to showcase engineering work and personal projects.",
       url: "https://foticeci.com",
@@ -125,9 +129,8 @@ export const WORK = {
       ],
     },
   ] satisfies WorkItem[],
-  after:
-    "Don't see a business like yours? That's fine. Your website should fit your business, not a template. Whether you need more enquiries, easier bookings, online sales, or simply a professional online presence, we'll build around what your customers need.",
-  afterLink: "Tell me about your business",
+  // Button under the tiles on Home, to the full Work page.
+  moreLabel: "View projects",
 };
 
 export function workBySlug(slug: string | undefined): WorkItem | undefined {
@@ -140,8 +143,13 @@ export function workBySlug(slug: string | undefined): WorkItem | undefined {
 
 export const HOW = {
   eyebrow: "How it works",
-  title: "From first conversation to finished website.",
-  lead: "A straightforward process, a clear price, and no guesswork. Here's what to expect at every stage.",
+  // Two lines, like the Home sections: a softer first line, then the second in black.
+  titleSoft: "From first conversation",
+  title: "to finished website.",
+  // lead: "A straightforward process, a clear price, and no guesswork. Here's what to expect at every stage.",
+  // Search and link-preview text for /how-it-works (the page itself shows no intro).
+  description:
+    "A straightforward process, a clear price, and no guesswork. Here's what to expect at every stage, from the first call to launch.",
   steps: [
     {
       day: "Day 0 — Let's talk",
@@ -169,8 +177,79 @@ export const HOW = {
       body: "Once you've approved everything, I'll connect your domain, take care of the agreed Google setup, and walk you through how to manage your website.",
     },
   ],
-  footnote:
-    "These are example stages for the Professional package, not fixed calendar dates. Your timeline starts when I've received your content and the information I need. Starter websites typically take 7–10 days, Professional websites 10–14 days, and Shopify stores 14–21 days. I'll confirm your expected launch date before work begins.",
+  // The navy card after the steps: typical time to launch per package.
+  timing: {
+    title: "How long it takes",
+    rows: [
+      { name: "Starter", days: "7–10 days" },
+      { name: "Professional", days: "10–14 days" },
+      { name: "Local Shop", days: "14–21 days" },
+    ],
+    note: "The days above are an example for Professional. Your timeline starts once I have your content, and I'll confirm your launch date before work begins.",
+  },
+};
+
+// ---------------------------------------------------------------------------
+// Why us (Home, between Work and Prices)
+// ---------------------------------------------------------------------------
+
+export const WHY = {
+  eyebrow: "Why us",
+  // Two lines, like Work and Prices: a softer first line, then the second in white
+  // (this heading sits on the navy panel).
+  titleSoft: "Built by hand.",
+  title: "Built to last.",
+  // Each sentence restates something promised elsewhere (About, Prices, the hero).
+  paragraphs: [
+    "Your website is often the first thing a customer sees. Every site I build is designed for your business and coded by hand, so it loads fast, works on every phone and looks like no one else's.",
+    "You work directly with me from the first call to launch, for one fixed price agreed before we start. And once it's live, it's yours: the domain, hosting and code stay in your name, with no lock-in.",
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// Features (Home, between Why us and Work)
+// ---------------------------------------------------------------------------
+
+export type FeatureIcon =
+  "design" | "mobile" | "seo" | "form" | "gallery" | "reviews";
+
+export const FEATURES = {
+  eyebrow: "What you get",
+  // Two lines, like the other sections: a softer first line, then the second in black.
+  titleSoft: "Everything you need.",
+  title: "Nothing you don't.",
+  items: [
+    {
+      icon: "design",
+      title: "Custom design",
+      body: "Designed around your brand and your customers. Never a template.",
+    },
+    {
+      icon: "mobile",
+      title: "Mobile responsive",
+      body: "Looks right and works smoothly on every phone, tablet and desktop.",
+    },
+    {
+      icon: "seo",
+      title: "SEO setup",
+      body: "Page titles, descriptions and Google indexing set up, so customers can find you.",
+    },
+    {
+      icon: "form",
+      title: "Contact form",
+      body: "Customers reach you in a few taps, and every message lands in your inbox.",
+    },
+    {
+      icon: "gallery",
+      title: "Portfolio gallery",
+      body: "Show your best work in a clean, fast-loading image gallery.",
+    },
+    {
+      icon: "reviews",
+      title: "Testimonials",
+      body: "Kind words from your customers, placed where they build the most trust.",
+    },
+  ] satisfies { icon: FeatureIcon; title: string; body: string }[],
 };
 
 // ---------------------------------------------------------------------------
@@ -197,8 +276,14 @@ export interface PackageInfo {
 
 export const PRICES = {
   eyebrow: "Prices",
-  title: "Three packages. One fixed price each.",
-  lead: "The price you see is what you pay me. No hidden development fees. You only pay your domain and hosting separately, or your Shopify subscription for an online store.",
+  // Button under the summary cards on Home, to the full comparison on /pricing.
+  compareLabel: "Compare packages",
+  // Search and link-preview text for /pricing.
+  description:
+    "Three website packages at one fixed price each: Starter $500, Professional $800, Local Shop $2,000. Compare pages, changes, launch times and running costs.",
+  // Two lines, like Work: a softer first line in slate grey, then the second in black.
+  titleSoft: "Three packages.",
+  title: "One fixed price each.",
   packages: [
     {
       id: "starter",
@@ -215,7 +300,7 @@ export const PRICES = {
       ],
       rounds: "1 round",
       days: "7–10 days",
-      running: "Domain + hosting, about $40–50 a year",
+      running: "Domain about $10–30 a year, hosting $0–30 a month",
       cta: "Start with Starter",
     },
     {
@@ -233,7 +318,7 @@ export const PRICES = {
       ],
       rounds: "2 rounds",
       days: "10–14 days",
-      running: "Domain + hosting, about $40–50 a year",
+      running: "Domain about $10–30 a year, hosting $0–30 a month",
       cta: "Start with Professional",
       // Highlighted only. Not labelled "Most chosen" until that's true.
       featured: true,
@@ -260,21 +345,27 @@ export const PRICES = {
     },
   ] satisfies PackageInfo[],
   separately: {
-    title: "These costs go to the service provider, not to me.",
+    eyebrow: "Paid separately",
+    // Two lines, like the Home sections: a softer first line, then the second in black.
+    titleSoft: "Running costs.",
+    title: "Paid to the provider, not to me.",
     rows: [
       {
+        icon: "domain",
         cost: "Domain (yourname.com)",
         appliesTo: "All packages",
         amount: "Roughly $10–30 a year",
         note: "Your domain is registered in your name, so you retain control of it.",
       },
       {
+        icon: "hosting",
         cost: "Hosting",
         appliesTo: "Starter · Professional",
-        amount: "About $30 a year",
+        amount: "$0–30 a month",
         note: "I'll confirm the exact amount before we start.",
       },
       {
+        icon: "shop",
         cost: "Shopify plan",
         appliesTo: "Local Shop",
         amount: "$39/month, or $29/month billed yearly",
@@ -297,20 +388,43 @@ export const PRICES = {
 
 export const ABOUT = {
   eyebrow: "Who you'll work with",
-  title: "You'll always know who built your site.",
+  // Two lines, like the Home sections: a softer first line, then the second in black.
+  titleSoft: "You'll always know",
+  title: "who built your site.",
   /** Drop a portrait into assets/ and import it here. Until then a monogram shows. */
   portrait: undefined as string | undefined,
   paragraphs: [
-    "Hi, I'm Foti. I'm a software engineer by day, building web applications alongside teams around the world. That experience means I bring more than good design to your website. I know how to build sites that are fast, reliable, secure, and built to last.",
-    "FC Web Solutions is where I bring that expertise to businesses that want a better online presence, without the agency overhead.",
-    "No account managers. No middlemen. No hand-offs. You work directly with me, from our first conversation to launch.",
-    // Confirmed for every project. Custom builds include access to the code repository.
-    "And when your site is live, it's yours. Your domain, hosting, and account credentials stay in your name. No lock-in, no unnecessary dependency. If you ever need another developer, they can pick up where I left off.",
+    "Hi, I'm Foti. I'm a software engineer by day, building web applications alongside teams around the world. That experience means I bring more than good design to your website.",
+    "FC Web Development is where I bring that expertise to businesses that want a better online presence, without the agency overhead.",
   ],
   link: {
     label: "See my engineering work",
     url: "https://foticeci.com",
     host: "foticeci.com",
+  },
+  // The white section under the intro: three cards, like "What you get" on Home.
+  values: {
+    eyebrow: "How I work",
+    titleSoft: "One person.",
+    title: "Start to finish.",
+    items: [
+      {
+        icon: "code",
+        title: "Built by an engineer",
+        body: "I know how to build sites that are fast, reliable, secure, and built to last.",
+      },
+      {
+        icon: "direct",
+        title: "No middlemen",
+        body: "No account managers, no hand-offs. You work directly with me, from our first conversation to launch.",
+      },
+      // Confirmed for every project. Custom builds include access to the code repository.
+      {
+        icon: "key",
+        title: "It's yours",
+        body: "Your domain, hosting and logins stay in your name. No lock-in. If you ever need another developer, they can pick up where I left off.",
+      },
+    ],
   },
 };
 
@@ -320,7 +434,15 @@ export const ABOUT = {
 
 export const FAQ = {
   eyebrow: "Questions",
-  title: "Straight answers before you ask.",
+  // Two lines, like the Home sections: a softer first line, then the second in black.
+  titleSoft: "Straight answers",
+  title: "before you ask.",
+  // The navy card under the heading.
+  ask: {
+    title: "Still have a question?",
+    body: "Ask me anything about your website. I'll get back to you as soon as possible.",
+    button: "Ask me directly",
+  },
   items: [
     {
       q: "Do I own the website?",
@@ -332,7 +454,7 @@ export const FAQ = {
     },
     {
       q: "What does it cost after launch?",
-      a: "Only your domain and hosting, paid directly to them. Shopify stores also pay Shopify's monthly plan. The numbers are listed under Prices on the home page.",
+      a: "Only your domain and hosting, paid directly to them. Shopify stores also pay Shopify's monthly plan. The numbers are listed on the Pricing page.",
     },
     {
       q: "I don't have good photos or know what to write. Is that a problem?",
@@ -363,13 +485,28 @@ export const FAQ = {
 
 export const START = {
   eyebrow: "Start a project",
-  title: "Tell me about your business.",
-  body: "Answer a few quick questions, and I'll get back to you within one business day with a fixed price and an estimated launch date.",
-  reassurance: [
-    "Fixed price from $500",
-    "Live in 7–21 days",
-    "You own your website",
-  ],
+  // Two lines, like the Home sections: a softer first line, then the second line.
+  titleSoft: "Tell me about",
+  title: "your business.",
+  // Contact page only: three short rows under the intro, beside the form.
+  next: {
+    title: "What happens next",
+    steps: [
+      {
+        title: "I reply as soon as possible",
+        body: "With a fixed price and an estimated launch date.",
+      },
+      {
+        title: "We have a short call",
+        body: "About 30 minutes to talk through your business and confirm the details.",
+      },
+      {
+        title: "I start building",
+        body: "As soon as I have your content, with a preview link so you can follow along.",
+      },
+    ],
+  },
+  body: "Answer a few quick questions, and I'll get back to you as soon as possible with a fixed price and an estimated launch date.",
   form: {
     timeHint: "Takes about 2 minutes",
     submit: "Send my enquiry",
@@ -379,7 +516,7 @@ export const START = {
         ? `Thanks, ${first}. It's in my inbox.`
         : "Thanks. It's in my inbox.",
     successBody: (email: string) =>
-      `I'll reply to ${email || "you"} within one business day with a price and a launch date. Nothing by then? Check spam, or email me at ${SITE.email}.`,
+      `I'll reply to ${email || "you"} as soon as possible with a price and a launch date. Not seeing a reply? Check your spam folder, or email me at ${SITE.email}.`,
     networkError: `That didn't send. Your answers are still here, so try again, or email me at ${SITE.email}.`,
     errors: {
       name: "Add your name so I know who I'm writing to.",
@@ -398,7 +535,7 @@ export const START = {
 
 export const PAGE_CTA = {
   title: "Tell me about your business.",
-  body: "Answer a few quick questions, and within one business day, you'll receive a fixed-price quote and a target launch date. No guesswork, no obligation.",
+  body: "Answer a few quick questions, and I'll get back to you as soon as possible with a fixed-price quote and a target launch date. No guesswork, no obligation.",
   button: "Tell me about your project",
 };
 

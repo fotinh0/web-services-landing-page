@@ -24,8 +24,6 @@ export default function HeroSection() {
   return (
     <div className="fc-hero">
       <div className="fc-hero__inner">
-        <p className="fc-hero__eyebrow fc-hero__in">{copy.eyebrow}</p>
-
         <h1 className="fc-hero__title fc-hero__in">
           <Headline text={copy.headline} highlight={copy.highlight} />
         </h1>
@@ -51,12 +49,6 @@ export default function HeroSection() {
               {copy.secondaryLabel}
             </Link>
           </div>
-
-          {/* <ul className="fc-hero__trust">
-            {TRUST.map((t) => (
-              <li key={t}>{t}</li>
-            ))}
-          </ul> */}
         </div>
       </div>
 

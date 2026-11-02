@@ -6,16 +6,17 @@ export default {
   appDirectory: "src",
   ssr: false,
   // Every page, plus one entry per project in WORK (content/site.ts):
-  // add "/work/<slug>" for each new project.
+  // add "/portfolio/<slug>" for each new project.
   prerender: [
     "/",
     "/about",
-    "/work",
+    "/portfolio",
+    "/pricing",
     "/how-it-works",
     "/faq",
     "/contact",
-    "/work/ks-media-weddings",
-    "/work/wedding-albania",
-    "/work/portfolio",
+    "/portfolio/ks-media-weddings",
+    "/portfolio/wedding-albania",
+    "/portfolio/foti-ceci",
   ],
 } satisfies Config;

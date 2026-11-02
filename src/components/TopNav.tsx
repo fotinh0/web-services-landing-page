@@ -6,7 +6,7 @@ import { CONTACT_LINK, NAV_LINKS, SITE } from "../content/site";
 /**
  * Sticky, always visible (Contact stays one tap away). Compacts once the page
  * scrolls past the top. The current page is marked by NavLink (aria-current="page");
- * /work/<project> keeps Work marked.
+ * /portfolio/<project> keeps Portfolio marked.
  */
 export default function TopNav() {
   const [open, setOpen] = useState(false);
