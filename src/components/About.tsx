@@ -1,4 +1,5 @@
 import type { ReactElement } from "react";
+import { Link } from "react-router";
 import { ABOUT, SITE } from "../content/site";
 
 type ValueIcon = "code" | "direct" | "key";
@@ -52,15 +53,12 @@ export default function About({ level = 2 }: { level?: 1 | 2 }) {
             {ABOUT.paragraphs.map((p) => (
               <p key={p}>{p}</p>
             ))}
-            <a
-              className="fc-btn fc-btn--outline fc-btn--pill"
-              href={ABOUT.link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {ABOUT.link.label} <span aria-hidden="true">↗</span>
-              <span className="fc-sr"> at {ABOUT.link.host}, opens in a new tab</span>
-            </a>
+            <Link className="fc-btn fc-btn--outline fc-btn--pill" to={ABOUT.link.to}>
+              {ABOUT.link.label}{" "}
+              <span className="fc-btn__arrow" aria-hidden="true">
+                →
+              </span>
+            </Link>
           </div>
         </div>
       </section>

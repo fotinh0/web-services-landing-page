@@ -15,11 +15,18 @@ export default function Projects({ level = 2 }: { level?: 1 | 2 }) {
       <div className="fc-wrap">
         <header className="fc-head">
           <p className="fc-eyebrow">{WORK.eyebrow}</p>
-          <Title id="work-title">
-            <span className="fc-head__soft">{WORK.titleSoft}</span>
-            <br />
-            <span className="fc-head__strong">{WORK.title}</span>
-          </Title>
+          {level === 1 ? (
+            <Title id="work-title">
+              <span className="fc-head__strong">{WORK.page.title}</span>
+            </Title>
+          ) : (
+            <Title id="work-title">
+              <span className="fc-head__soft">{WORK.titleSoft}</span>
+              <br />
+              <span className="fc-head__strong">{WORK.title}</span>
+            </Title>
+          )}
+          <p className="fc-why__p">{level === 1 ? WORK.page.body : WORK.description}</p>
         </header>
 
         <ul className="fc-work" data-reveal>
@@ -54,11 +61,18 @@ export default function Projects({ level = 2 }: { level?: 1 | 2 }) {
               >
                 <span>
                   {/* Category only ("Wedding videographer"); the build type is on the project page. */}
-                  <span className="fc-work__tag">{item.tag.split(" · ")[0]}</span>
+                  <span className="fc-work__tag">
+                    {item.tag.split(" · ")[0]}
+                  </span>
                   <h3>{item.name}</h3>
                 </span>
                 <span className="fc-work__go" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="18" height="18" focusable="false">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="18"
+                    height="18"
+                    focusable="false"
+                  >
                     <path
                       d="M7 17 17 7M8 7h9v9"
                       fill="none"
@@ -77,7 +91,10 @@ export default function Projects({ level = 2 }: { level?: 1 | 2 }) {
         {/* Home only: on /portfolio the visitor is already on the projects page. */}
         {level === 2 && (
           <div className="fc-work__after">
-            <Link className="fc-btn fc-btn--outline fc-btn--pill" to="/portfolio">
+            <Link
+              className="fc-btn fc-btn--outline fc-btn--pill"
+              to="/portfolio"
+            >
               {WORK.moreLabel}{" "}
               <span className="fc-btn__arrow" aria-hidden="true">
                 →

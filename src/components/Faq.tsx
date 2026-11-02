@@ -25,11 +25,15 @@ export default function Faq({ level = 2 }: { level?: 1 | 2 }) {
               <br />
               <span className="fc-head__strong">{FAQ.title}</span>
             </Title>
+            <p className="fc-why__p">{FAQ.description}</p>
           </header>
           <div className="fc-faq__ask">
             <h2>{FAQ.ask.title}</h2>
             <p>{FAQ.ask.body}</p>
-            <Link className="fc-btn fc-btn--primary fc-btn--pill" to={CONTACT_HREF}>
+            <Link
+              className="fc-btn fc-btn--primary fc-btn--pill"
+              to={CONTACT_HREF}
+            >
               {FAQ.ask.button}{" "}
               <span className="fc-btn__arrow" aria-hidden="true">
                 →
@@ -41,7 +45,17 @@ export default function Faq({ level = 2 }: { level?: 1 | 2 }) {
           {FAQ.items.map((item) => (
             <details key={item.q}>
               <summary>{item.q}</summary>
-              <p>{item.a}</p>
+              <div className="fc-faq__a">
+                <p>{item.a}</p>
+                {item.list && (
+                  <ul>
+                    {item.list.map((li) => (
+                      <li key={li}>{li}</li>
+                    ))}
+                  </ul>
+                )}
+                {item.after && <p>{item.after}</p>}
+              </div>
             </details>
           ))}
         </div>

@@ -24,6 +24,7 @@ export default function RunningCosts() {
             <br />
             <span className="fc-head__strong">{separately.title}</span>
           </h2>
+          <p className="fc-why__p">{separately.description}</p>
         </header>
 
         <ul className="fc-costs__grid" data-reveal>
@@ -43,9 +44,22 @@ export default function RunningCosts() {
         <div className="fc-fine">
           <h3>{finePrintTitle}</h3>
           <ul>
-            {finePrint.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
+            {finePrint.map((line) => {
+              // The question (up to the first "?") in bold, the answer after it.
+              const cut = line.indexOf("? ") + 1;
+              return (
+                <li key={line}>
+                  {cut > 0 ? (
+                    <>
+                      <strong>{line.slice(0, cut)}</strong>
+                      {line.slice(cut)}
+                    </>
+                  ) : (
+                    line
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>

@@ -24,28 +24,32 @@ export default function Contact({ level = 2 }: { level?: 1 | 2 }) {
             <br />
             <span className="fc-head__strong">{START.title}</span>
           </Title>
-          <p className="fc-lead">{START.body}</p>
-
-          {page && (
-            <div className="fc-next">
-              <h2 className="fc-next__title">{START.next.title}</h2>
-              <ol>
-                {START.next.steps.map((s, i) => (
-                  <li key={s.title}>
-                    <span className="fc-next__num" aria-hidden="true">
-                      {i + 1}
-                    </span>
-                    <div>
-                      <h3>{s.title}</h3>
-                      <p>{s.body}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          )}
+          {START.body.map((p, i) => (
+            <p key={i} className="fc-lead">
+              {p}
+            </p>
+          ))}
         </div>
         <StartForm />
+        {/* After the form in reading order (and on phones); beside it, under the intro, on wide screens. */}
+        {page && (
+          <div className="fc-next">
+            <h2 className="fc-next__title">{START.next.title}</h2>
+            <ol>
+              {START.next.steps.map((s, i) => (
+                <li key={s.title}>
+                  <span className="fc-next__num" aria-hidden="true">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <h3>{s.title}</h3>
+                    <p>{s.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
       </div>
     </section>
   );

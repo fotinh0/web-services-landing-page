@@ -4,7 +4,7 @@ import { SITE, START } from "../content/site";
 import { pageMeta } from "../lib/meta";
 
 export const meta: MetaFunction = () =>
-  pageMeta({ title: `Contact · ${SITE.name}`, description: START.body, path: "/contact" });
+  pageMeta({ title: `Contact · ${SITE.name}`, description: START.body.join(" "), path: "/contact" });
 
 export default function ContactPage() {
   return <Contact level={1} />;

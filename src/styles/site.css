@@ -477,12 +477,22 @@ section[id] {
   top: 0;
   transform: rotate(-45deg);
 }
+/* Drops down over the page from under the bar, so opening it doesn't push the
+   content down. Scrolls on its own if it's taller than the screen. */
 .fc-nav__mobile {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: calc(100dvh - 100%);
+  overflow-y: auto;
   display: grid;
   gap: 2px;
   padding: 8px max(20px, env(safe-area-inset-right, 0px)) 20px
     max(20px, env(safe-area-inset-left, 0px));
   border-top: 1px solid var(--dark-rule);
+  background: var(--night);
+  box-shadow: 0 24px 40px -16px rgba(15, 23, 42, 0.45);
 }
 .fc-nav__mobile[hidden] {
   display: none;
@@ -1245,6 +1255,10 @@ main > .fc-section--tint#faq {
   line-height: 1.55;
   color: var(--on-dark-2);
 }
+.fc-fine li strong {
+  font-weight: 600;
+  color: var(--on-dark);
+}
 .fc-fine li::before {
   content: "";
   position: absolute;
@@ -1354,6 +1368,14 @@ main > .fc-about-values:has(+ .fc-cta-band) {
   .fc-faq {
     grid-template-columns: minmax(0, 1fr);
   }
+  /* Stacked: heading, then the questions, then the "Still have a question?"
+     card last (the side column dissolves so the card can move below). */
+  .fc-faq__side {
+    display: contents;
+  }
+  .fc-faq__ask {
+    order: 1;
+  }
 }
 .fc-faq__ask {
   /* On navy the accent swaps to the light colour, like the dark bands. */
@@ -1412,11 +1434,22 @@ main > .fc-about-values:has(+ .fc-cta-band) {
 .fc-faq__list details[open] summary::after {
   transform: rotate(45deg);
 }
-.fc-faq__list details p {
-  margin: 0;
+.fc-faq__a {
+  display: grid;
+  gap: 12px;
   padding: 0 40px 22px 0;
   color: var(--text-2);
   max-width: 64ch;
+}
+.fc-faq__a p,
+.fc-faq__a ul {
+  margin: 0;
+}
+.fc-faq__a ul {
+  display: grid;
+  gap: 4px;
+  padding-left: 1.2em;
+  list-style: disc;
 }
 /* Height animation where the browser supports it; instant elsewhere. */
 @media (prefers-reduced-motion: no-preference) {
@@ -1455,6 +1488,22 @@ main > .fc-about-values:has(+ .fc-cta-band) {
    with the same border as the other cards. */
 .fc-start--page .fc-form {
   border: 1px solid var(--rule);
+}
+/* Wide screens: the intro and "What happens next" share the left column, the
+   form spans both rows on the right. Stacked, the list follows the form. */
+@media (min-width: 901px) {
+  .fc-start--page .fc-start__grid {
+    grid-template-rows: auto 1fr;
+    row-gap: 18px;
+  }
+  .fc-start--page .fc-form {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+  .fc-start--page .fc-next {
+    grid-column: 1;
+    grid-row: 2;
+  }
 }
 .fc-next {
   display: grid;
@@ -2225,7 +2274,7 @@ main > .fc-about-values:has(+ .fc-cta-band) {
 .fc-faq__list details[open] {
   border-color: #cbd5e1;
 }
-.fc-faq__list details p {
+.fc-faq__a {
   padding-right: 8px;
 }
 

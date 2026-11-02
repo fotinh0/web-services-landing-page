@@ -23,11 +23,16 @@ export default function HowItWorks({ level = 2 }: { level?: 1 | 2 }) {
             <br />
             <span className="fc-head__strong">{HOW.title}</span>
           </Title>
+          <p className="fc-lead">{HOW.description}</p>
         </header>
 
         <ol className="fc-how" data-reveal>
           {HOW.steps.map((step, i) => (
-            <li key={step.title} className="fc-how__step" style={{ "--i": i } as CSSProperties}>
+            <li
+              key={step.title}
+              className="fc-how__step"
+              style={{ "--i": i } as CSSProperties}
+            >
               <span className="fc-how__num" aria-hidden="true">
                 {i + 1}
               </span>

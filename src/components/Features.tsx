@@ -4,7 +4,11 @@ import { FEATURES, type FeatureIcon } from "../content/site";
 /** What you get: six key features as small tinted cards on a white band, between Why us and Work. */
 export default function Features() {
   return (
-    <section id="features" className="fc-section fc-features fc-section--wave" aria-labelledby="features-title">
+    <section
+      id="features"
+      className="fc-section fc-features fc-section--wave"
+      aria-labelledby="features-title"
+    >
       <div className="fc-wrap fc-features__wrap">
         <header className="fc-head">
           <p className="fc-eyebrow">{FEATURES.eyebrow}</p>
@@ -13,6 +17,8 @@ export default function Features() {
             <br />
             <span className="fc-head__strong">{FEATURES.title}</span>
           </h2>
+
+          <p className="fc-why__p">{FEATURES.subheader}</p>
         </header>
 
         <ul className="fc-features__grid" data-reveal>
@@ -36,7 +42,10 @@ export default function Features() {
         aria-hidden="true"
         focusable="false"
       >
-        <path d="M0 74C214 122 452 30 742 50c290 20 470 66 698-14v84H0Z" fill="currentColor" />
+        <path
+          d="M0 74C214 122 452 30 742 50c290 20 470 66 698-14v84H0Z"
+          fill="currentColor"
+        />
       </svg>
     </section>
   );
@@ -84,7 +93,9 @@ function Icon({ name }: { name: FeatureIcon }) {
       </>
     ),
     // Star
-    reviews: <path d="M12 2.5l2.9 5.9 6.6 1-4.8 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5-4.8-4.6 6.6-1z" />,
+    reviews: (
+      <path d="M12 2.5l2.9 5.9 6.6 1-4.8 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5-4.8-4.6 6.6-1z" />
+    ),
   };
   return (
     <svg

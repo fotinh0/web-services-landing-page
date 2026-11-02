@@ -173,6 +173,7 @@ export default function StartForm() {
         action={FORMS_ENDPOINT}
         noValidate
         onSubmit={onSubmit}
+        data-netlify="true"
       >
         <input type="hidden" name="form-name" value="start" />
         <p className="fc-hp" aria-hidden="true">
@@ -232,7 +233,7 @@ export default function StartForm() {
         <div className="fc-form__row">
           <div className="fc-field">
             <label htmlFor="start-business">
-              Your business name and what you do
+              Business, brand, or project name
             </label>
             <input
               id="start-business"
@@ -268,7 +269,7 @@ export default function StartForm() {
         <div className="fc-form__row">
           <div className="fc-field">
             <label htmlFor="start-package">
-              Which package fits your needs?
+              Which package are you interested in?
             </label>
             <select
               id="start-package"
@@ -297,7 +298,8 @@ export default function StartForm() {
           </div>
           <div className="fc-field">
             <label htmlFor="start-launch">
-              Ideal launch date <span className="fc-optional">Optional</span>
+              When would you like to launch?{" "}
+              <span className="fc-optional">Optional</span>
             </label>
             <select
               id="start-launch"

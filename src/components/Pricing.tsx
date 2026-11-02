@@ -23,6 +23,7 @@ export default function Pricing({ level = 2 }: { level?: 1 | 2 }) {
             <br />
             <span className="fc-head__strong">{PRICES.title}</span>
           </Title>
+          <p className="fc-why__p">{PRICES.description}</p>
         </header>
 
         <div className="fc-pkgs" data-reveal>
@@ -52,7 +53,10 @@ export default function Pricing({ level = 2 }: { level?: 1 | 2 }) {
           aria-hidden="true"
           focusable="false"
         >
-          <path d="M0 74C214 122 452 30 742 50c290 20 470 66 698-14v84H0Z" fill="currentColor" />
+          <path
+            d="M0 74C214 122 452 30 742 50c290 20 470 66 698-14v84H0Z"
+            fill="currentColor"
+          />
         </svg>
       )}
     </section>
