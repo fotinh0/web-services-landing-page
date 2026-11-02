@@ -17,6 +17,8 @@ export default function Projects({ level = 2 }: { level?: 1 | 2 }) {
           <p className="fc-eyebrow">{WORK.eyebrow}</p>
           {level === 1 ? (
             <Title id="work-title">
+              <span className="fc-head__soft">{WORK.page.titleSoft}</span>
+              <br />
               <span className="fc-head__strong">{WORK.page.title}</span>
             </Title>
           ) : (
@@ -26,7 +28,9 @@ export default function Projects({ level = 2 }: { level?: 1 | 2 }) {
               <span className="fc-head__strong">{WORK.title}</span>
             </Title>
           )}
-          <p className="fc-why__p">{level === 1 ? WORK.page.body : WORK.description}</p>
+          <p className="fc-why__p">
+            {level === 1 ? WORK.page.body : WORK.description}
+          </p>
         </header>
 
         <ul className="fc-work" data-reveal>

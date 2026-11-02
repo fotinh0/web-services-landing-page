@@ -62,7 +62,8 @@ export const WORK = {
     "Every website has a different purpose. Here's a look at some of the businesses, brands, and ideas I've helped bring online.",
   // The /portfolio page has its own heading and intro (Home keeps the two lines above).
   page: {
-    title: "Websites built with purpose.",
+    titleSoft: "Websites built",
+    title: "with purpose.",
     body: "A selection of websites designed and developed for businesses, brands, and creative projects. Each one tailored to its audience, goals, and identity.",
   },
   // lead: "Every project is different. Here's a look at what I build and how I turn ideas into websites that work.",
@@ -73,7 +74,7 @@ export const WORK = {
       name: "KS Media Weddings",
       // CONFIRM: "Custom build" is a guess; change it if the site runs on a platform.
       tag: "Wedding videographer · Custom build",
-      body: "A professional website designed to showcase wedding films, present packages, and generate enquiries.",
+      body: "A professional website designed to showcase wedding films, present packages, and generate inquiries.",
       url: "https://ks-media-weddings.com/",
       host: "ks-media-weddings.com",
       image: ksMediaImg,
@@ -157,24 +158,24 @@ export const HOW = {
     "A clear, straightforward process that takes your website from initial consultation to launch, with defined steps and timelines along the way.",
   steps: [
     {
-      day: "Day 0",
+      day: "Day 1",
       title: "An initial consultation",
-      body: "We discuss your business, your goals, and what you need your website to achieve. Based on our conversation, I'll provide a fixed-price quote and an estimated launch date.",
+      body: "We discuss your business and goals for your website. Based on our conversation, I'll recommend a package and an estimated launch date.",
     },
     {
-      day: "Days 1–3",
+      day: "Days 2–4",
       title: "Gather your content",
       body: "Once the project is confirmed, I'll send you a simple checklist outlining everything needed to get started, including your logo, images, business information, and any written content. Rough notes are welcome.",
     },
     {
-      day: "Days 4–9",
+      day: "Days 5–10",
       title: "Design and development",
-      body: "I'll design and build your website around your brand, content, and goals. You'll receive a private preview link to follow progress and see how your website is taking shape.",
+      body: "I'll design and build your website around your brand, content, and goals.",
     },
     {
-      day: "Day 10",
+      day: "Day 11",
       title: "Review and refinements",
-      body: "You'll receive your completed website to review. This is your opportunity to request adjustments and provide feedback. Your package includes one or two rounds of revisions, depending on the package selected.",
+      body: "You'll receive your completed website to review. This is your opportunity to request adjustments and provide feedback.",
     },
     {
       day: "DAY 14",
@@ -190,7 +191,7 @@ export const HOW = {
       { name: "Professional", days: "10–14 days" },
       { name: "Local Shop", days: "14–28 days" },
     ],
-    note: "The days above are an example for Professional. Your timeline starts once I have your content, and I'll confirm your launch date before work begins.",
+    note: "The days above are an example for the Professional package. Your timeline starts once I have your content, and I'll confirm your launch date before work begins.",
   },
 };
 
@@ -229,32 +230,32 @@ export const FEATURES = {
     {
       icon: "design",
       title: "Custom design",
-      body: "A unique design built around your brand, not a template shared with hundreds of other websites.",
+      body: "Unique design tailored to your brand, creating a website that reflects what makes your business or work different.",
     },
     {
       icon: "mobile",
       title: "Responsive on every device",
-      body: "A seamless experience whether someone visits from their phone, tablet, or desktop.",
+      body: "Consistent experience across phones, tablets, and desktops, making your website easy to use on any screen.",
     },
     {
       icon: "seo",
       title: "SEO essentials",
-      body: "Page titles, descriptions, and Google indexing configured to help people discover your website.",
+      body: "SEO settings configured to help search engines understand your website and make your pages easier to discover.",
     },
     {
       icon: "form",
       title: "Contact forms",
-      body: "Make it easy for potential customers and clients to reach you, with enquiries delivered straight to your inbox.",
+      body: "Forms that allow potential customers and clients to get in touch, with inquiries delivered directly to your inbox.",
     },
     {
       icon: "gallery",
       title: "Showcase your work",
-      body: "Present your projects, products, or portfolio in a way that puts your best work first.",
+      body: "Thoughtful layouts that present your projects, products, or portfolio and help visitors focus on what matters most.",
     },
     {
       icon: "reviews",
       title: "Build trust",
-      body: "Use testimonials and social proof to give visitors confidence in choosing you.",
+      body: "Testimonials and social proof that highlight your credibility and help visitors feel confident choosing you.",
     },
   ] satisfies { icon: FeatureIcon; title: string; body: string }[],
 };
@@ -316,7 +317,7 @@ export const PRICES = {
       name: "Professional",
       price: "$800",
       forLine:
-        "More room to showcase your work, build trust, and turn visitors into enquiries.",
+        "More room to showcase your work, build trust, and turn visitors into inquiries.",
       pages: "Up to 8",
       includes: [
         "Everything in Starter",
@@ -428,7 +429,7 @@ export const ABOUT = {
       {
         icon: "direct",
         title: "Direct communication",
-        body: "Your domain, hosting, and website accounts remain in your name. There are no long-term commitments or platform lock-ins. If you ever work with another developer, they can take over.",
+        body: "You work directly with me throughout the project. From the initial conversation to launch, you'll know who's handling your website and where things stand.",
       },
       {
         icon: "key",
@@ -525,8 +526,8 @@ export const START = {
     title: "What happens next",
     steps: [
       {
-        title: "I review your enquiry",
-        body: "I'll get back to you as soon as possible with a fixed-price quote and an estimated launch date.",
+        title: "I review your inquiry",
+        body: "I'll get back to you as soon as possible with a fixed price and an estimated launch date.",
       },
       {
         title: "We discuss the details",
@@ -544,14 +545,14 @@ export const START = {
   ],
   form: {
     timeHint: "Takes about 2 minutes",
-    submit: "Send my enquiry",
+    submit: "Send my inquiry",
     sending: "Sending…",
     successTitle: (first: string) =>
       first
-        ? `Thanks, ${first}. Your enquiry has been received.`
-        : "Thanks. Your enquiry has been received.",
+        ? `Thanks, ${first}. Your inquiry has been received.`
+        : "Thanks. Your inquiry has been received.",
     successBody: (email: string) =>
-      `I'll review your project and reply to ${email || "you"} as soon as possible with a fixed-price quote and an estimated launch date. If you don't see my reply, please check your spam folder or contact me directly at ${SITE.email}.`,
+      `I'll review your project and reply to ${email || "you"} as soon as possible with a fixed price and an estimated launch date. If you don't see my reply, please check your spam folder or contact me directly at ${SITE.email}.`,
     networkError: `That didn't send. Your answers are still here, so try again, or email me at ${SITE.email}.`,
     errors: {
       name: "Add your name so I know who I'm writing to.",
@@ -569,7 +570,7 @@ export const START = {
 
 export const PAGE_CTA = {
   title: "Have a project in mind?",
-  body: "Whether you're starting something new or looking to improve your existing website, I'd be happy to discuss your project. Get in touch to receive a fixed-price quote and an estimated launch date, with no obligation.",
+  body: "Whether you're starting something new or looking to improve your existing website, I'd be happy to discuss your project. Get in touch to receive a fixed price and an estimated launch date, with no obligation.",
   button: "Tell me about your project",
 };
 
