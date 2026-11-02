@@ -548,16 +548,15 @@ export const START = {
     sending: "Sending…",
     successTitle: (first: string) =>
       first
-        ? `Thanks, ${first}. It's in my inbox.`
-        : "Thanks. It's in my inbox.",
+        ? `Thanks, ${first}. Your enquiry has been received.`
+        : "Thanks. Your enquiry has been received.",
     successBody: (email: string) =>
-      `I'll reply to ${email || "you"} as soon as possible with a price and a launch date. Not seeing a reply? Check your spam folder, or email me at ${SITE.email}.`,
+      `I'll review your project and reply to ${email || "you"} as soon as possible with a fixed-price quote and an estimated launch date. If you don't see my reply, please check your spam folder or contact me directly at ${SITE.email}.`,
     networkError: `That didn't send. Your answers are still here, so try again, or email me at ${SITE.email}.`,
     errors: {
       name: "Add your name so I know who I'm writing to.",
       email: "Add an email I can reply to, like you@yourbusiness.com.",
-      business:
-        "Tell me your business name and what you do, even in a few words.",
+      business: "Tell me your business or project, even in a few words.",
       package: 'Pick one, or choose "Not sure yet".',
     },
   },

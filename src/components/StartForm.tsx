@@ -115,7 +115,7 @@ export default function StartForm() {
     setErrors(next);
     const firstBad = required.find((f) => next[f]);
     if (firstBad) {
-      document.getElementById(`start-${firstBad}`)?.focus();
+      document.getElementById(`inquiry-${firstBad}`)?.focus();
       return;
     }
 
@@ -129,7 +129,7 @@ export default function StartForm() {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
-          "form-name": "start",
+          "form-name": "inquiryForm",
           "bot-field": bot,
           ...values,
         }).toString(),
@@ -163,19 +163,19 @@ export default function StartForm() {
   }
 
   const describedBy = (f: Required) =>
-    errors[f] ? `start-${f}-error` : undefined;
+    errors[f] ? `inquiry-${f}-error` : undefined;
 
   return (
     <div className="fc-form">
       <form
-        name="start"
+        name="inquiryForm"
         method="POST"
         action={FORMS_ENDPOINT}
         noValidate
         onSubmit={onSubmit}
         data-netlify="true"
       >
-        <input type="hidden" name="form-name" value="start" />
+        <input type="hidden" name="form-name" value="inquiryForm" />
         <p className="fc-hp" aria-hidden="true">
           <label>
             Leave this empty{" "}
@@ -188,10 +188,10 @@ export default function StartForm() {
         {/* Short fields share a row on wider screens; they stack on phones. */}
         <div className="fc-form__row">
           <div className="fc-field">
-            <label htmlFor="start-name">Your name</label>
+            <label htmlFor="inquiry-name">Your name</label>
             <input
               ref={nameRef}
-              id="start-name"
+              id="inquiry-name"
               name="name"
               autoComplete="name"
               placeholder="Maria Lopez"
@@ -201,15 +201,15 @@ export default function StartForm() {
               aria-describedby={describedBy("name")}
             />
             {errors.name && (
-              <p id="start-name-error" className="fc-field__error">
+              <p id="inquiry-name-error" className="fc-field__error">
                 {errors.name}
               </p>
             )}
           </div>
           <div className="fc-field">
-            <label htmlFor="start-email">Email address</label>
+            <label htmlFor="inquiry-email">Email address</label>
             <input
-              id="start-email"
+              id="inquiry-email"
               name="email"
               type="email"
               autoComplete="email"
@@ -219,11 +219,11 @@ export default function StartForm() {
               onChange={set("email")}
               aria-invalid={!!errors.email}
               aria-describedby={
-                errors.email ? "start-email-error" : "start-email-help"
+                errors.email ? "inquiry-email-error" : "inquiry-email-help"
               }
             />
             {errors.email && (
-              <p id="start-email-error" className="fc-field__error">
+              <p id="inquiry-email-error" className="fc-field__error">
                 {errors.email}
               </p>
             )}
@@ -232,11 +232,11 @@ export default function StartForm() {
 
         <div className="fc-form__row">
           <div className="fc-field">
-            <label htmlFor="start-business">
+            <label htmlFor="inquiry-business">
               Business, brand, or project name
             </label>
             <input
-              id="start-business"
+              id="inquiry-business"
               name="business"
               autoComplete="organization"
               placeholder="Bloom & Co., a flower shop"
@@ -246,17 +246,17 @@ export default function StartForm() {
               aria-describedby={describedBy("business")}
             />
             {errors.business && (
-              <p id="start-business-error" className="fc-field__error">
+              <p id="inquiry-business-error" className="fc-field__error">
                 {errors.business}
               </p>
             )}
           </div>
           <div className="fc-field">
-            <label htmlFor="start-website">
+            <label htmlFor="inquiry-website">
               Current website <span className="fc-optional">Optional</span>
             </label>
             <input
-              id="start-website"
+              id="inquiry-website"
               name="website"
               autoComplete="url"
               placeholder="yourbusiness.com"
@@ -268,17 +268,19 @@ export default function StartForm() {
 
         <div className="fc-form__row">
           <div className="fc-field">
-            <label htmlFor="start-package">
+            <label htmlFor="inquiry-package">
               Which package are you interested in?
             </label>
             <select
-              id="start-package"
+              id="inquiry-package"
               name="package"
               value={values.package}
               onChange={set("package")}
               aria-invalid={!!errors.package}
               aria-describedby={
-                errors.package ? "start-package-error" : "start-package-help"
+                errors.package
+                  ? "inquiry-package-error"
+                  : "inquiry-package-help"
               }
             >
               <option value="" disabled>
@@ -291,18 +293,18 @@ export default function StartForm() {
               ))}
             </select>
             {errors.package && (
-              <p id="start-package-error" className="fc-field__error">
+              <p id="inquiry-package-error" className="fc-field__error">
                 {errors.package}
               </p>
             )}
           </div>
           <div className="fc-field">
-            <label htmlFor="start-launch">
+            <label htmlFor="inquiry-launch">
               When would you like to launch?{" "}
               <span className="fc-optional">Optional</span>
             </label>
             <select
-              id="start-launch"
+              id="inquiry-launch"
               name="launch"
               value={values.launch}
               onChange={set("launch")}
@@ -318,12 +320,12 @@ export default function StartForm() {
         </div>
 
         <div className="fc-field">
-          <label htmlFor="start-notes">
+          <label htmlFor="inquiry-notes">
             Anything else I should know?{" "}
             <span className="fc-optional">Optional</span>
           </label>
           <textarea
-            id="start-notes"
+            id="inquiry-notes"
             name="notes"
             rows={3}
             placeholder="What you sell, a site you like, a deadline"
