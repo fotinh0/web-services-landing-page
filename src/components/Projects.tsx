@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { Link } from "react-router";
-import { WORK } from "../content/site";
+import { WORK, type WorkItem } from "../content/site";
 
 /** Work: one tile per project, a screenshot and a short caption. The full story is on /portfolio/<slug>. */
 /** level 1 when this section is the page itself, 2 when it sits on the home page. */
@@ -35,60 +35,7 @@ export default function Projects({ level = 2 }: { level?: 1 | 2 }) {
 
         <ul className="fc-work" data-reveal>
           {WORK.items.map((item, i) => (
-            <li
-              key={item.url}
-              className="fc-work__tile"
-              style={{ "--i": i } as CSSProperties}
-            >
-              {/* The caption below is the real link; this one is a bigger target for pointers. */}
-              <Link
-                className="fc-work__frame"
-                to={`/portfolio/${item.slug}`}
-                viewTransition
-                tabIndex={-1}
-                aria-hidden="true"
-                style={{ "--vt": `work-${item.slug}` } as CSSProperties}
-              >
-                <img
-                  src={item.image}
-                  alt=""
-                  width={1280}
-                  height={800}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </Link>
-              <Link
-                className="fc-work__caption"
-                to={`/portfolio/${item.slug}`}
-                viewTransition
-              >
-                <span>
-                  {/* Category only ("Wedding videographer"); the build type is on the project page. */}
-                  <span className="fc-work__tag">
-                    {item.tag.split(" · ")[0]}
-                  </span>
-                  <h3>{item.name}</h3>
-                </span>
-                <span className="fc-work__go" aria-hidden="true">
-                  <svg
-                    viewBox="0 0 24 24"
-                    width="18"
-                    height="18"
-                    focusable="false"
-                  >
-                    <path
-                      d="M7 17 17 7M8 7h9v9"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </span>
-              </Link>
-            </li>
+            <WorkTile key={item.url} item={item} index={i} />
           ))}
         </ul>
 
@@ -108,5 +55,57 @@ export default function Projects({ level = 2 }: { level?: 1 | 2 }) {
         )}
       </div>
     </section>
+  );
+}
+
+/**
+ * One project tile: the screenshot and a caption linking to /portfolio/<slug>.
+ * Also used for "More projects" on each project page.
+ */
+export function WorkTile({ item, index }: { item: WorkItem; index: number }) {
+  return (
+    <li className="fc-work__tile" style={{ "--i": index } as CSSProperties}>
+      {/* The caption below is the real link; this one is a bigger target for pointers. */}
+      <Link
+        className="fc-work__frame"
+        to={`/portfolio/${item.slug}`}
+        viewTransition
+        tabIndex={-1}
+        aria-hidden="true"
+        style={{ "--vt": `work-${item.slug}` } as CSSProperties}
+      >
+        <img
+          src={item.image}
+          alt=""
+          width={1280}
+          height={800}
+          loading="lazy"
+          decoding="async"
+        />
+      </Link>
+      <Link
+        className="fc-work__caption"
+        to={`/portfolio/${item.slug}`}
+        viewTransition
+      >
+        <span>
+          {/* Category only ("Wedding videographer"); the build type is on the project page. */}
+          <span className="fc-work__tag">{item.tag.split(" · ")[0]}</span>
+          <h3>{item.name}</h3>
+        </span>
+        <span className="fc-work__go" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" focusable="false">
+            <path
+              d="M7 17 17 7M8 7h9v9"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+      </Link>
+    </li>
   );
 }

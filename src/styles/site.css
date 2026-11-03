@@ -1349,7 +1349,8 @@ main > .fc-section--tint#faq {
   background: var(--paper);
 }
 /* White cards band, then the white closing card: one gap, not two stacked. */
-main > .fc-about-values:has(+ .fc-cta-band) {
+main > .fc-about-values:has(+ .fc-cta-band),
+main > .fc-case-more:has(+ .fc-cta-band) {
   padding-bottom: clamp(16px, 2vw, 24px);
 }
 
@@ -1938,75 +1939,141 @@ main > .fc-about-values:has(+ .fc-cta-band) {
   line-height: 1.02;
   letter-spacing: -0.03em;
 }
+/* ---------- project page ---------- */
+/* White intro: text on the left, the site on a browser and a phone on the
+   right (the Why us drawing), waving into the tinted "What's on the site". */
 .fc-case {
   padding-top: clamp(32px, 5vw, 56px);
 }
 .fc-case__back {
   display: inline-block;
-  margin-bottom: clamp(28px, 4vw, 44px);
-  color: var(--on-dark-2);
+  margin-bottom: clamp(24px, 4vw, 40px);
+  color: var(--text-2);
   text-decoration: none;
   font-weight: 500;
 }
-.fc-case__head {
+.fc-case__grid {
   display: grid;
-  gap: 18px;
-  max-width: 760px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(40px, 5vw, 72px);
+}
+@media (max-width: 860px) {
+  .fc-case__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.fc-case__text .fc-head {
+  margin-bottom: clamp(20px, 3vw, 28px);
 }
 .fc-case__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  padding-top: 6px;
+  margin-top: clamp(24px, 3vw, 32px);
 }
-.fc-case .fc-btn--ghost {
-  color: var(--on-dark);
-  border: 1px solid #334155;
+.fc-case__devices figure {
+  margin: 0;
 }
-.fc-case__frame {
-  border: 1px solid var(--dark-rule);
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--ink);
+/* The browser morphs in from the project's tile (same view-transition name). */
+.fc-case__devices .fc-why__browser {
   view-transition-name: var(--vt);
 }
 .fc-work__frame {
   view-transition-name: var(--vt);
 }
-.fc-case__frame img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  object-position: top;
+/* The tint starts closer, since the wave already separates the two. */
+.fc-case + .fc-case-features {
+  padding-top: var(--space-wave);
 }
-/* ---------- device preview: desktop frame with a phone overlapping its corner ---------- */
-.fc-devices {
-  position: relative;
-  margin-top: var(--space-head);
+/* Feature cards are white on the tint. Each is one short line, so the icon
+   sits beside it rather than above. */
+.fc-case-features .fc-feature {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  padding: clamp(18px, 2vw, 24px);
+  background: var(--paper);
 }
-.fc-devices figure {
+.fc-case-features .fc-feature__icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0;
+}
+.fc-case-features .fc-feature h3 {
+  font-size: 17px;
+  line-height: 1.4;
+}
+/* Project details: a navy card, like "Good to know" on Pricing. */
+.fc-case__facts {
+  display: grid;
+  grid-template-columns: minmax(0, 0.6fr) minmax(0, 1.4fr);
+  gap: 16px clamp(24px, 4vw, 56px);
+  align-items: center;
+  margin-top: clamp(16px, 2vw, 24px);
+  padding: clamp(24px, 3vw, 40px);
+  border-radius: var(--r-md);
+  background: var(--night);
+  color: var(--on-dark);
+}
+@media (max-width: 760px) {
+  .fc-case__facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.fc-case__facts h2 {
   margin: 0;
+  font-size: clamp(19px, 1.8vw, 22px);
+  font-weight: 600;
+  color: inherit;
 }
-.fc-devices figcaption {
-  margin-top: 12px;
+.fc-case__facts dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px 32px;
+}
+@media (max-width: 560px) {
+  .fc-case__facts dl {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.fc-case__facts dt {
   font-family: var(--f-mono);
   font-size: 11.5px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--on-dark-3);
 }
-.fc-devices__desktop {
-  width: 84%;
+.fc-case__facts dd {
+  margin: 4px 0 0;
+  font-size: 17px;
+  font-weight: 600;
 }
-.fc-devices__phone {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: clamp(120px, 22%, 250px);
-  text-align: center;
+.fc-case__facts a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--on-dark-3);
 }
+/* More projects: two tiles side by side (one on phones). */
+.fc-work--pair {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 760px) {
+  .fc-work--pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (hover: hover) {
+  .fc-case__back:hover {
+    color: var(--text);
+  }
+  .fc-case__facts a:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
 /* A plain phone: dark bezel, rounded corners, a small notch. */
 .fc-phone {
   position: relative;
@@ -2037,112 +2104,6 @@ main > .fc-about-values:has(+ .fc-cta-band) {
   border-radius: 999px;
   background: var(--ink);
   z-index: 1;
-}
-@media (max-width: 640px) {
-  .fc-devices__desktop {
-    width: 88%;
-  }
-  .fc-devices__phone {
-    width: 34%;
-  }
-  .fc-devices figcaption {
-    font-size: 10.5px;
-  }
-}
-
-.fc-case__body {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-  gap: clamp(32px, 6vw, 72px);
-  align-items: start;
-}
-@media (max-width: 760px) {
-  .fc-case__body {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-.fc-case__h2 {
-  margin: 0 0 18px;
-  font-size: clamp(26px, 3vw, 34px);
-  font-weight: 700;
-}
-.fc-case__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 10px;
-}
-.fc-case__list li {
-  position: relative;
-  padding-left: 24px;
-  font-size: 18px;
-}
-.fc-case__list li::before {
-  content: "";
-  position: absolute;
-  left: 2px;
-  top: 0.55em;
-  width: 10px;
-  height: 5px;
-  border-left: 2px solid var(--text-2);
-  border-bottom: 2px solid var(--text-2);
-  transform: rotate(-45deg);
-}
-.fc-case__facts {
-  margin: 0;
-  display: grid;
-  gap: 0;
-  border-top: 1px solid var(--rule);
-}
-.fc-case__facts div {
-  display: grid;
-  gap: 2px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--rule);
-}
-.fc-case__facts dt {
-  font-family: var(--f-mono);
-  font-size: 11.5px;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--text-2);
-}
-.fc-case__facts dd {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-}
-.fc-case__next {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: end;
-  gap: 32px;
-}
-.fc-case__next-link {
-  display: inline-block;
-  margin-top: 8px;
-  font-family: var(--f-display);
-  font-size: clamp(26px, 3.4vw, 38px);
-  font-weight: 700;
-  color: var(--text);
-  text-decoration: none;
-}
-.fc-case__cta {
-  display: grid;
-  gap: 12px;
-  justify-items: start;
-}
-.fc-case__cta p {
-  margin: 0;
-  color: var(--text-2);
-}
-@media (hover: hover) {
-  .fc-case__back:hover,
-  .fc-case__next-link:hover {
-    color: var(--accent);
-  }
 }
 
 /* ---------- page transitions (motion spec §08) ---------- */
@@ -2254,9 +2215,6 @@ main > .fc-about-values:has(+ .fc-cta-band) {
 .fc-form {
   border-radius: var(--r-lg);
 }
-.fc-case__frame {
-  border-radius: var(--r-lg);
-}
 
 /* ---------- FAQ: each question is its own soft card ---------- */
 .fc-faq__list {
@@ -2276,17 +2234,6 @@ main > .fc-about-values:has(+ .fc-cta-band) {
 }
 .fc-faq__a {
   padding-right: 8px;
-}
-
-/* ---------- project page facts ---------- */
-.fc-case__facts {
-  padding: 4px 22px;
-  border: 1px solid var(--rule);
-  border-radius: var(--r-md);
-  background: var(--paper);
-}
-.fc-case__facts div:last-child {
-  border-bottom: 0;
 }
 
 /* ---------- closing band: a rounded card instead of a ruled strip ---------- */

@@ -111,7 +111,7 @@ export const WORK = {
         "RSVP form",
         "Photo gallery",
         "Guest FAQs",
-        "Works on every phone",
+        "Date countdown",
       ],
     },
     {
@@ -129,9 +129,8 @@ export const WORK = {
       platform: "Custom build",
       features: [
         "Project showcase",
-        "Smooth animations",
+        "Work experience and skills",
         "Contact form",
-        "Works on every screen",
       ],
     },
   ] satisfies WorkItem[],
@@ -434,7 +433,7 @@ export const ABOUT = {
       {
         icon: "key",
         title: "Full ownership",
-        body: "Your domain, hosting and logins stay in your name. No lock-in. If you ever need another developer, they can pick up where I left off.",
+        body: "Your domain, hosting and logins stay in your name. If you ever need another developer, they can pick up where I left off.",
       },
     ],
   },
