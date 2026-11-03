@@ -1,8 +1,8 @@
 import type { CSSProperties } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useLocation, useParams } from "react-router";
 import type { MetaFunction } from "react-router";
 import PageCta from "../components/PageCta";
-import { WorkTile } from "../components/Projects";
+import { WorkTile, type WorkState } from "../components/Projects";
 import { SITE, WORK, workBySlug } from "../content/site";
 import { pageMeta } from "../lib/meta";
 import { contactHref } from "../lib/startProject";
@@ -34,6 +34,9 @@ export default function WorkPage() {
   useReveal();
   const { slug } = useParams();
   const item = workBySlug(slug);
+  // Back to wherever the project was opened from: Home's projects section, or
+  // Portfolio (also for a direct visit, when there's no state).
+  const fromHome = (useLocation().state as WorkState | null)?.back === "/";
   if (!item) {
     return (
       <section className="fc-section fc-section--light">
@@ -65,8 +68,12 @@ export default function WorkPage() {
         aria-labelledby="case-title"
       >
         <div className="fc-wrap">
-          <Link className="fc-case__back" to="/portfolio" viewTransition>
-            ← Portfolio
+          <Link
+            className="fc-case__back"
+            to={fromHome ? "/#work" : "/portfolio"}
+            viewTransition
+          >
+            ← {fromHome ? "Home" : "Portfolio"}
           </Link>
           <div className="fc-case__grid">
             <div className="fc-case__text">

@@ -1,0 +1,5 @@
+# Everything may be crawled except the hidden Netlify form stub.
+User-agent: *
+Disallow: /__forms.html
+
+Sitemap: https://fcwebdevelopment.com/sitemap.xml

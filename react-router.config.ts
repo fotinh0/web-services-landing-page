@@ -6,7 +6,7 @@ export default {
   appDirectory: "src",
   ssr: false,
   // Every page, plus one entry per project in WORK (content/site.ts):
-  // add "/portfolio/<slug>" for each new project.
+  // add "/portfolio/<slug>" for each new project (and to public/sitemap.xml).
   prerender: [
     "/",
     "/about",

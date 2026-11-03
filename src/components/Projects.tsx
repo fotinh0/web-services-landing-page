@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { WORK, type WorkItem } from "../content/site";
 
 /** Work: one tile per project, a screenshot and a short caption. The full story is on /portfolio/<slug>. */
@@ -58,17 +58,31 @@ export default function Projects({ level = 2 }: { level?: 1 | 2 }) {
   );
 }
 
+/** The page a project was opened from, carried in the link's history state. */
+export type WorkBack = "/" | "/portfolio";
+export type WorkState = { back?: WorkBack };
+
 /**
  * One project tile: the screenshot and a caption linking to /portfolio/<slug>.
  * Also used for "More projects" on each project page.
  */
 export function WorkTile({ item, index }: { item: WorkItem; index: number }) {
+  const location = useLocation();
+  // Where the project page's back link returns to: Home or Portfolio. From
+  // "More projects" on a project page, keep that page's own way back.
+  const back: WorkBack = location.pathname.startsWith("/portfolio/")
+    ? ((location.state as WorkState | null)?.back ?? "/portfolio")
+    : location.pathname === "/"
+      ? "/"
+      : "/portfolio";
+  const state: WorkState = { back };
   return (
     <li className="fc-work__tile" style={{ "--i": index } as CSSProperties}>
       {/* The caption below is the real link; this one is a bigger target for pointers. */}
       <Link
         className="fc-work__frame"
         to={`/portfolio/${item.slug}`}
+        state={state}
         viewTransition
         tabIndex={-1}
         aria-hidden="true"
@@ -86,6 +100,7 @@ export function WorkTile({ item, index }: { item: WorkItem; index: number }) {
       <Link
         className="fc-work__caption"
         to={`/portfolio/${item.slug}`}
+        state={state}
         viewTransition
       >
         <span>

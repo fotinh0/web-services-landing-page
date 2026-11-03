@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Every pre-rendered page (the prerender list in react-router.config.ts).
+     Add a line here when you add a page or a project. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://fcwebdevelopment.com/</loc></url>
+  <url><loc>https://fcwebdevelopment.com/about/</loc></url>
+  <url><loc>https://fcwebdevelopment.com/portfolio/</loc></url>
+  <url><loc>https://fcwebdevelopment.com/pricing/</loc></url>
+  <url><loc>https://fcwebdevelopment.com/how-it-works/</loc></url>
+  <url><loc>https://fcwebdevelopment.com/faq/</loc></url>
+  <url><loc>https://fcwebdevelopment.com/contact/</loc></url>
+  <url><loc>https://fcwebdevelopment.com/portfolio/ks-media-weddings/</loc></url>
+  <url><loc>https://fcwebdevelopment.com/portfolio/wedding-albania/</loc></url>
+  <url><loc>https://fcwebdevelopment.com/portfolio/foti-ceci/</loc></url>
+</urlset>

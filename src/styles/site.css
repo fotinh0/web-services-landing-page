@@ -1255,7 +1255,10 @@ main > .fc-section--tint#faq {
   line-height: 1.55;
   color: var(--on-dark-2);
 }
+/* The question on its own line, the answer below it. */
 .fc-fine li strong {
+  display: block;
+  margin-bottom: 4px;
   font-weight: 600;
   color: var(--on-dark);
 }
