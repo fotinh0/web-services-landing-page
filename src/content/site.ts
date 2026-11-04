@@ -17,7 +17,7 @@ export const SITE = {
   location: "New York, NY",
   url: "https://fcwebdevelopment.com",
   description:
-    "I design and build websites for local shops, studios and creatives. Fixed price starting at $500, live in 7–28 days, and you own everything.",
+    "NJ & NYC Web Development & Web Design - Websites for small businesses, studios and creatives. Price starting at $500, live in 7–28 days, and you own everything.",
 };
 
 /** Top nav and footer, in this order. Contact is drawn as the nav's button. */
